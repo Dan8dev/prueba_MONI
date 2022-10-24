@@ -1,0 +1,214 @@
+<?php 
+date_default_timezone_set("America/Mexico_City");
+	class AdminWebex{
+        
+        public function consultarAdmin_ById($id){
+			$conexion = new Conexion(); 
+			$con = $conexion->conectar(); 
+			$response = [];
+
+			if($con["info"] == "ok"){ 
+				$con = $con["conexion"];
+				$sql = "SELECT * FROM `a_webex` WHERE idPersona  = :id;"; 
+
+				$statement = $con->prepare($sql); 
+				$statement->bindParam(":id", $id);			  
+				$statement->execute();			  
+					
+				if($statement->errorInfo()[0] == "00000"){
+					$response = ["estatus"=>"ok", "data"=>$statement->fetch(PDO::FETCH_ASSOC)];
+				}else{
+					$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql];
+				}
+			}
+
+			$conexion = null;
+			$con = null;
+			return $response;
+		}
+
+        public function listarsesiones(){
+            $conexion = new Conexion();
+            $con = $conexion->conectar();
+            $response = [];
+        
+            if($con['info'] == 'ok'){
+                $con = $con['conexion'];
+        
+                $sql = "SELECT *
+                        FROM accesos_sesion_webex;";
+        
+                $statement = $con->prepare($sql);
+                $statement->execute();
+            
+                $conexion = null;
+                $con = null;
+        
+                return $statement;
+            }
+        }
+
+        public function obtenerSesion($idconcepto){
+            $conexion = new Conexion();
+            $con = $conexion->conectar();
+            $response = [];
+          
+            if($con['info'] == 'ok'){
+            $con = $con['conexion'];
+            $sql = "SELECT *
+                    FROM accesos_sesion_webex
+                    WHERE id=:idsesion";
+          
+            $statement = $con->prepare($sql);
+        
+            $statement->execute($idconcepto);
+          
+            if($statement->errorInfo()[0] == 00000){
+              $response = ["estatus"=>"ok", "data"=>$statement->fetch(PDO::FETCH_ASSOC)];
+              }else{
+              $response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql, "data"=>$id];
+              }
+              $conexion = null;
+              $con = null;
+          
+              return $response;
+            }
+          }
+
+          function actualizarSesion($data){
+			$conexion = new Conexion();
+			$con = $conexion->conectar();
+			$response = [];
+
+			if($con["info"] == "ok"){
+				$con = $con["conexion"];
+
+				$sql = "UPDATE `accesos_sesion_webex` 
+				SET `nombre_clase` = :editarnombresesion, `id_sesion` = :editaridsesion, `contrasena_sesion` = :editarcontrasenasesion
+				WHERE id = :idsesion;";
+
+				$statement = $con->prepare($sql);
+
+				$statement->execute($data);
+
+				if($statement->errorInfo()[0] == '00000'){
+					$response = ["estatus"=>"ok", "data"=>$statement->rowCount()];
+					// $response = ["estatus"=>"ok", "data"=>$correo];
+				}else{
+					$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql, "data"=>$data];
+				}
+			}
+
+			$conexion = null;
+			$con = null;
+		
+			return $response;
+		}
+
+		function activarSesion($data){
+			$conexion = new Conexion();
+			$con = $conexion->conectar();
+			$response = [];
+
+			if($con["info"] == "ok"){
+				$con = $con["conexion"];
+
+				$sql = "UPDATE `accesos_sesion_webex` 
+				SET `estatus` = 1
+				WHERE id = :idsesion;";
+
+				$statement = $con->prepare($sql);
+
+				$statement->execute($data);
+
+				if($statement->errorInfo()[0] == '00000'){
+					$response = ["estatus"=>"ok", "data"=>$statement->rowCount()];
+					// $response = ["estatus"=>"ok", "data"=>$correo];
+				}else{
+					$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql, "data"=>$data];
+				}
+			}
+
+			$conexion = null;
+			$con = null;
+		
+			return $response;
+		}
+
+		function desactivarSesion($data){
+			$conexion = new Conexion();
+			$con = $conexion->conectar();
+			$response = [];
+
+			if($con["info"] == "ok"){
+				$con = $con["conexion"];
+
+				$sql = "UPDATE `accesos_sesion_webex` 
+				SET `estatus` = 2
+				WHERE id = :idsesion;";
+
+				$statement = $con->prepare($sql);
+
+				$statement->execute($data);
+
+				if($statement->errorInfo()[0] == '00000'){
+					$response = ["estatus"=>"ok", "data"=>$statement->rowCount()];
+					// $response = ["estatus"=>"ok", "data"=>$correo];
+				}else{
+					$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql, "data"=>$data];
+				}
+			}
+
+			$conexion = null;
+			$con = null;
+		
+			return $response;
+		}
+
+		function consultar_carreras(){
+			$conexion = new Conexion();
+			$con = $conexion->conectar();
+			$con = $con["conexion"];
+			$sql = "SELECT carr.* FROM `a_carreras` carr
+				JOIN planes_estudios est ON carr.idCarrera = est.id_carrera WHERE carr.estatus = 1 GROUP BY carr.idCarrera;";
+			$statement = $con->prepare($sql);
+			$statement->execute();
+			return $statement->fetchAll(PDO::FETCH_ASSOC);
+		}
+
+		function consultar_generaciones_carrera($carrera){
+			$conexion = new Conexion();
+			$con = $conexion->conectar();
+			$con = $con["conexion"];
+			$sql = "SELECT * FROM `a_generaciones` WHERE idCarrera = :carrera ORDER BY nombre;";
+			$statement = $con->prepare($sql);
+			$statement->bindParam(":carrera", $carrera);
+			$statement->execute();
+			return $statement->fetchAll(PDO::FETCH_ASSOC);
+		}
+
+		function consultar_clases_generaciones($generacion){
+			$conexion = new Conexion();
+			$con = $conexion->conectar();
+			$con = $con["conexion"];
+			$sql = "SELECT cls.*, mat.nombre as nombre_materia FROM `clases` cls
+			JOIN materias mat ON mat.id_materia = cls.idMateria
+			WHERE cls.idClase NOT IN (SELECT ses.id_clase FROM accesos_sesion_webex ses WHERE ses.id_clase IS NOT NULL)
+			AND cls.idGeneracion = :generacion
+			ORDER BY cls.fecha_hora_clase;";
+			$statement = $con->prepare($sql);
+			$statement->bindParam(":generacion", $generacion);
+			$statement->execute();
+			return $statement->fetchAll(PDO::FETCH_ASSOC);
+		}
+
+		function registrar_sesion_webex($data){
+			$conexion = new Conexion();
+			$con = $conexion->conectar()["conexion"];
+			$sql = "INSERT INTO accesos_sesion_webex (nombre_clase, id_clase, id_sesion, contrasena_sesion, estatus)
+					VALUES (:inp_nombresesion, :select_clases, :inp_idsesion, :inp_contrasenasesion, 1);";
+			$statement = $con->prepare($sql);
+			$statement->execute($data);
+			return $con->lastInsertId();
+		}
+    }

@@ -1,0 +1,110 @@
+ <?php 
+if (isset($_POST["action"])) {
+	date_default_timezone_set("America/Mexico_City");
+	require_once '../../Model/conexion/conexion.php';
+	require_once '../../Model/marketing/marketingModel.php';
+	require_once '../../Model/eventos/eventosModel.php';
+	
+	require_once '../../Model/prospectos/prospectosModel.php';
+	
+	$mktM = new Marketing();
+	$prospM = new Prospecto();
+
+	switch ($_POST["action"]) {
+		case 'lista_atencion':
+			echo json_encode($mktM->atender_listado_eventos());
+			break;
+		case 'consultar_todo_ejecutivas':
+			$ejecutivas = $mktM->consultar_todo_ejecutivas()['data'];
+			$especiales = ['(',')','-','_',' ','.'];
+			for ($i=0; $i < sizeof($ejecutivas); $i++) { 
+				$ejecutivas[$i]['telefono_noformat'] = str_replace($especiales, '', $ejecutivas[$i]['telefono']);
+				$ejecutivas[$i]['prospectos_eventos'] = $mktM->consultar_todo_fila_atencion_ejecutiva($ejecutivas[$i]['idPersona'],'evento')['data'];
+
+				$j=0;
+				foreach ($ejecutivas[$i]['prospectos_eventos'] as $key) {
+					$ejecutivas[$i]['prospectos_eventos'][$j]['seguimiento'] = $prospM->consultar_historial_seguimientos($key['idReg'], 'comentario')['data'];
+					$ejecutivas[$i]['prospectos_eventos'][$j]['pagos'] = array_reduce(
+						$prospM->consultar_pagos_prospectos($key['idAsistente'], 0)['data'], 
+						function($acum, $item){
+							if($item['id_concepto'] != 8){
+								array_push($acum, $item);
+							}
+							return $acum;
+						}
+						,[]);
+
+					$j++;
+				}
+
+				$ejecutivas[$i]['prospectos_carreras'] = $mktM->consultar_todo_fila_atencion_ejecutiva($ejecutivas[$i]['idPersona'],'carrera')['data'];
+				$j=0;
+				foreach ($ejecutivas[$i]['prospectos_carreras'] as $key) {
+					$ejecutivas[$i]['prospectos_carreras'][$j]['seguimiento'] = $prospM->consultar_historial_seguimientos($key['idReg'], 'comentario')['data'];
+					$ejecutivas[$i]['prospectos_carreras'][$j]['pagos'] = array_reduce(
+						$prospM->consultar_pagos_prospectos($key['idAsistente'], 0)['data'], 
+						function($acum, $item){
+							if($item['id_concepto'] != 8){
+								array_push($acum, $item);
+							}
+							return $acum;
+						}
+						,[]);
+
+					$j++;
+				}
+			}
+			echo(json_encode($ejecutivas));
+			break;
+		case 'asignar_prospecto':
+			unset($_POST['action']);
+
+			$ultimoReg = null;
+			
+			$asoc = $mktM->set_prospecto_fila($_POST['n_prosp_tipo'], $_POST['prospecto'], $_POST['n_prosp_personaMk']);
+
+			if($asoc['estatus'] == 'ok'){
+				$resp = $asoc;
+			}else{
+				$resp = ['estatus'=>'error', 'info'=>'registro_ok-asignacion_no_ok'];
+			}
+
+			echo json_encode($resp);
+			break;
+		case 'reasignar_prospecto':
+			unset($_POST['action']);
+			$resp = [];
+			if(isset($_POST['inp_prospect']) && intval($_POST['inp_prospect']) > 0){
+				$resp = $mktM->reasignar_prospecto($_POST['inp_prospect'], $_POST['change_ejecutiva']);
+			}else{
+				$resp = ['estatus'=>'error','info'=>'Prospecto no valido'];
+			}
+
+			echo json_encode($resp);
+			break;
+		case 'agenda_llamadas':
+			unset($_POST['action']);
+
+			session_start();
+			if(isset($_SESSION['usuario'])){
+				$resp = $mktM->consultar_llamadas_ejecutiva($_SESSION['usuario']['persona']['idPersona']);
+			}else{
+				$resp = ['estatus'=>'error','info'=>'no_session'];
+			}
+			// $resp = [];
+			// if(isset($_POST['inp_prospect']) && intval($_POST['inp_prospect']) > 0){
+			// 	$resp = $mktM->reasignar_prospecto($_POST['inp_prospect'], $_POST['change_ejecutiva']);
+			// }else{
+			// 	$resp = ['estatus'=>'error','info'=>'Prospecto no valido'];
+			// }
+			echo json_encode($resp);
+			break;
+		
+		default:
+			echo json_encode(["estatus"=>"error","info"=>"noaction"]);
+			break;
+	}
+}else{
+	header('HTTP/1.0 403 Forbidden');
+}
+?>

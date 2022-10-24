@@ -1,0 +1,90 @@
+<?php
+session_start();
+if (isset($_POST["action"])) {
+    require_once '../../Model/conexion/conexion.php';
+    require_once '../../Model/adminwebex/AdminWebex.php';
+    $adminwebex = new AdminWebex();
+
+    $accion=@$_POST["action"];
+
+    switch ($accion) {
+        case 'listarsesiones':
+            unset($_POST['action']);
+            $csul = $adminwebex->listarsesiones();
+            $data = Array();
+            while($dato=$csul->fetchObject()){
+                $data[]=array(
+                    0=> $dato->nombre_clase,
+                    1=> $dato->id_sesion,
+                    2=> $dato->contrasena_sesion,
+                    3=> ($dato->estatus==1)?'<div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="customSwitch'.$dato->id.'" onclick="desactivarsesion('.$dato->id.')" checked>
+                                                <label class="custom-control-label" for="customSwitch'.$dato->id.'">Habilitado</label>
+                                            </div>':
+                                            '<div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="customSwitch'.$dato->id.'" onclick="activarsesion('.$dato->id.')">
+                                                <label class="custom-control-label" for="customSwitch'.$dato->id.'">Deshabilitado</label>
+                                            </div>',
+                    4=>'<a class="btn btn-primary" data-toggle="modal" data-target="#modal-editar-concepto" onclick="editarsesion('.$dato->id.')">Modificar</a> '
+                );
+            }
+            $result = array(
+                'sEcho'=>1,
+                'iTotalRecords'=>count($data),
+                'iTotalDisplayRecords'=>count($data),
+                'aaData'=>$data
+            );
+            echo json_encode($result);
+            break;
+        case 'obtenersesion':
+            unset($_POST['action']);
+            $rspta=$adminwebex->obtenerSesion($_POST);
+            echo json_encode($rspta['data']);
+            break;
+        case 'actualizarsesion':
+            unset($_POST['action']);
+            $rspta=$adminwebex->actualizarSesion($_POST);
+            echo $rspta['data'];
+            break;
+        case 'activarsesion':
+            unset($_POST['action']);
+            $rspta=$adminwebex->activarSesion($_POST);
+            echo $rspta['data'];
+            break;
+        case 'desactivarsesion':
+            unset($_POST['action']);
+            $rspta=$adminwebex->desactivarSesion($_POST);
+            echo $rspta['data'];
+            break;
+        case 'consultar_carreras':
+            $carreras=$adminwebex->consultar_carreras();
+            echo json_encode($carreras);
+            break;
+        case 'consultar_generaciones_carrera':
+            $carreras=$adminwebex->consultar_generaciones_carrera($_POST['carrera']);
+            echo json_encode($carreras);
+            break;
+        case 'consultar_clases_generaciones':
+            $carreras=$adminwebex->consultar_clases_generaciones($_POST['generacion']);
+            echo json_encode($carreras);
+            break;
+        case 'agregar_nueva_sesion':
+            $resp = [];
+            unset($_POST['action']);
+            unset($_POST['select_carrera']);
+            unset($_POST['select_generaciones']);
+            $rspta=$adminwebex->registrar_sesion_webex($_POST);
+            if($rspta > 0){
+                $resp = ['estatus'=>'ok','info'=>'Sesion registrada correctamente'];
+            }else{
+                $resp = ['estatus'=>'error','info'=>'Error al registrar la sesion'];
+            }
+            echo json_encode($resp);
+            break;
+        default:
+            # code...
+            break;
+    }
+}else {
+    header('Location: ../../../../index.php');
+}

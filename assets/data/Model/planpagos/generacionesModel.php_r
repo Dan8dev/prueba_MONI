@@ -1,0 +1,699 @@
+<?php 
+date_default_timezone_set("America/Mexico_City");
+
+class Generaciones{
+
+	public function crearGeneracion($data){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+  
+		if($con["info"] == "ok"){
+		$con = $con["conexion"];
+
+		$sql = "INSERT INTO a_generaciones 
+		(nombre, estatus, fecharegistro, fechafinal, creadoPor, fechaCreado, actualizado_por, fecha_actualizacion)
+		VALUES(:nombreG, 1, :fechainicio, :fechafin, :creador_por, :fCreado, NULL, NULL)";
+		/*$sql = "INSERT INTO a_generaciones 
+		(IDPlanPago, nombre, estatus, fecharegistro, fechafinal, creadoPor, fechaCreado, fecha_actualizacion)
+		VALUES(:selectPago, :nombreG, 1, :fechainicio, :fechafin, :creador_por, :fCreado, '')";*/
+					
+		$statement = $con->prepare($sql);
+		$statement->execute($data);
+			if($statement->errorInfo()[0] == '00000'){
+				$response = ["estatus"=>"ok", "data"=>$con->lastInsertId()];
+			}else{
+				$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql, "data"=>$data];
+			}
+			
+		}
+	$conexion = null;
+	$con = null;  
+	
+	return $response;
+	}
+
+	public function addGeneracion($add, $dato){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+
+		if($con['info'] == 'ok'){
+			$con = $con['conexion'];
+
+			$sql = "UPDATE a_carreras SET idGeneracion = :idGene WHERE idCarrera = :idCarrer";
+
+			$statement = $con->prepare($sql);
+			$statement->bindParam(':idCarrer', $add);
+			$statement->bindParam(':idGene', $dato);
+			$statement->execute();
+
+			if($statement->errorInfo()[0] == "00000"){
+				$response = ["estatus"=>"ok", "data"=>$statement->rowCount()];
+			}else{
+				$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql, "data"=>$dato];
+			}
+				
+		}
+		$conexion = null;
+		$con = null;
+
+		return $response;
+	}
+
+    public function obtenerListaCarreras(){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+
+		if($con["info"] == "ok"){
+			$con = $con['conexion'];
+			$sql = "SELECT idCarrera, nombre FROM a_carreras WHERE estatus = 1 AND idGeneracion = 0";
+
+			$statement = $con->prepare($sql);
+			$statement->execute();
+
+			if($statement->errorInfo()[0] == 00000){
+				$response = ["estatus"=>"ok", "data"=>$statement->fetchAll(PDO::FETCH_ASSOC)];
+			}else{
+				$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql];
+			}
+		}
+		$conexion = null;
+		$con = null;
+		return $response;
+	}
+
+	public function obtenerGeneraciones(){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+
+		if($con['info'] == 'ok'){
+			$con = $con['conexion'];
+
+			$sql = "SELECT gen.*
+				FROM `a_generaciones` gen
+                WHERE gen.estatus = 1";
+
+			$statement = $con->prepare($sql);
+			$statement->execute();
+			}
+		$conexion = null;
+		$con = null;
+		return $statement;
+	}
+
+	public function eliminarGeneracion($del){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+
+		if($con['info'] == 'ok'){
+			$con = $con['conexion'];
+
+			$sql = "UPDATE a_generaciones SET estatus = 2 WHERE idGeneracion = :idEliminar";
+
+			$statement = $con->prepare($sql);
+			$statement->execute($del);
+
+			if($statement->errorInfo()[0] == "00000"){
+				$response = ["estatus"=>"ok", "data"=>$statement->rowCount()];
+			}else{
+				$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql, "data"=>$del];
+			}
+				
+		}
+		$conexion = null;
+		$con = null;
+
+		return $response;
+	}
+	//por espera
+	public function buscarCarrerasG($busC){
+		$conexion = new Conexion();
+		$con = $conexion->Conectar();
+		$response = [];
+
+		if($con['info'] == 'ok'){
+			$con = $con['conexion'];
+
+			$sql = "SELECT idCarrera FROM a_carreras WHERE idGeneracion = :cap";
+
+			$statement = $con->prepare($sql);
+			$statement->bindParam(':cap',$busC);
+			$statement->execute();
+
+			if($statement->errorInfo()[0] == "00000"){
+				$response = ["estatus"=>"ok", "data"=>$statement->fetchAll(PDO::FETCH_ASSOC)];
+			}else{
+				$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql, "data"=>$carrer];
+			}
+				
+		}
+		$conexion = null;
+		$con = null;
+
+		return $response;
+	}
+
+	public function buscarGeneracion($bus){
+		$conexion = new Conexion();
+		$con = $conexion->Conectar();
+		$response = [];
+
+		if($con['info'] == 'ok'){
+			$con = $con['conexion'];
+			
+			/*$sql = "SELECT gen.*, carrer.idCarrera
+			FROM a_generaciones gen
+			INNER JOIN a_carreras carrer ON gen.idGeneracion = carrer.idGeneracion
+			WHERE gen.idGeneracion = :idEditar";*/
+
+			$sql = "SELECT gen.*, av_gen.ciclo_actual
+			FROM a_generaciones gen
+			JOIN avance_generaciones av_gen ON gen.idGeneracion = av_gen.id_generacion
+			WHERE gen.idGeneracion = :idEditar";
+
+			$statement = $con->prepare($sql);
+			$statement->bindParam(':idEditar',$bus);
+			$statement->execute();
+
+			if($statement->errorInfo()[0] == "00000"){
+				$response = ["estatus"=>"ok", "data"=>$statement->fetch(PDO::FETCH_ASSOC)];
+			}else{
+				$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql, "data"=>$bus];
+			}
+				
+		}
+		$conexion = null;
+		$con = null;
+
+		return $response;
+	}
+
+	public function buscarCarrerasMod($id){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+
+		if($con["info"] == "ok"){
+			$con = $con['conexion'];
+			$sql = "SELECT idCarrera FROM a_carreras WHERE estatus = 1 AND idGeneracion = :id";
+
+			$statement = $con->prepare($sql);
+			$statement->execute($id);
+
+			if($statement->errorInfo()[0] == 00000){
+				$response = ["estatus"=>"ok", "data"=>$statement->fetchAll(PDO::FETCH_ASSOC)];
+			}else{
+				$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql];
+			}
+		}
+		$conexion = null;
+		$con = null;
+		return $response;
+	}
+
+	public function modificarGeneracion($modify){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+
+		if($con['info'] == 'ok'){
+			$con = $con['conexion'];
+
+			$sql = "UPDATE a_generaciones SET nombre = :modnombreG, fecharegistro = :modfechainicio, fechafinal = :modfechafin, actualizado_por = :actualizado_por, fecha_actualizacion = :fActualizacion 
+				WHERE idGeneracion = :idG";
+			/*$sql = "UPDATE a_generaciones SET IDPlanPago = :modselectPago, nombre = :modnombreG, fecharegistro = :modfechainicio, fechafinal = :modfechafin, fecha_actualizacion = :fActualizacion 
+			WHERE idGeneracion = :idG";*/
+
+			$statement = $con->prepare($sql);
+			$statement->execute($modify);
+
+			if($statement->errorInfo()[0] == "00000"){
+				$response = ["estatus"=>"ok", "data"=>$statement->rowCount()];
+			}else{
+				$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql, "data"=>$modify];
+			}
+		}
+		$conexion = null;
+		$con = null;
+
+		return $response;
+	}
+
+	public function notAddGeneracion($rest, $id){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+
+		if($con['info'] == 'ok'){
+			$con = $con['conexion'];
+
+			$sql = "UPDATE a_carreras SET idGeneracion = 0 WHERE idCarrera = :idCarrer AND idGeneracion = :idGene";
+
+			$statement = $con->prepare($sql);
+			$statement->bindParam(':idCarrer', $rest);
+			$statement->bindParam(':idGene', $id);
+			$statement->execute();
+
+			if($statement->errorInfo()[0] == "00000"){
+				$response = ["estatus"=>"ok", "data"=>$statement->rowCount()];
+			}else{
+				$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql, "data"=>$dato];
+			}
+				
+		}
+		$conexion = null;
+		$con = null;
+
+		return $response;
+	}
+
+	public function obtenerListaCarrerasMod($id){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+
+		if($con["info"] == "ok"){
+			$con = $con['conexion'];
+			$sql = "SELECT idCarrera, nombre FROM a_carreras WHERE estatus = 1 AND idGeneracion = :id OR idGeneracion = 0";
+
+			$statement = $con->prepare($sql);
+			$statement->execute($id);
+
+			if($statement->errorInfo()[0] == 00000){
+				$response = ["estatus"=>"ok", "data"=>$statement->fetchAll(PDO::FETCH_ASSOC)];
+			}else{
+				$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql];
+			}
+		}
+		$conexion = null;
+		$con = null;
+		return $response;
+	}
+	// consultas chuy
+	public function obtenerListaGeneraciones_carrera($carrera){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+
+		if($con["info"] == "ok"){
+			$con = $con['conexion'];
+			$sql = "SELECT * FROM a_generaciones WHERE estatus = 1 AND idCarrera = :carrera ORDER BY `fecha_inicio` ASC ;";
+
+			$statement = $con->prepare($sql);
+			$statement->bindParam(':carrera', $carrera);
+			$statement->execute();
+
+			if($statement->errorInfo()[0] == 00000){
+				$response = ["estatus"=>"ok", "data"=>$statement->fetchAll(PDO::FETCH_ASSOC)];
+			}else{
+				$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql];
+			}
+		}
+		$conexion = null;
+		$con = null;
+		return $response;
+	}
+
+	public function buscarAsignacion($alumno, $generacion){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+
+		if($con["info"] == "ok"){
+			$con = $con['conexion'];
+			$sql = "SELECT * FROM alumnos_generaciones WHERE idalumno = :alumno AND idgeneracion = :generacion;";
+
+			$statement = $con->prepare($sql);
+			$statement->bindParam(':alumno', $alumno);
+			$statement->bindParam(':generacion', $generacion);
+			$statement->execute();
+
+			if($statement->errorInfo()[0] == 00000){
+				$response = ["estatus"=>"ok", "data"=>$statement->fetchAll(PDO::FETCH_ASSOC)];
+			}else{
+				$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql];
+			}
+		}
+		$conexion = null;
+		$con = null;
+		return $response;
+	}
+
+	public function asignar_generacion_alumno($alumno, $generacion){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+		$fecha_hoy = date('Y-m-d H:i:s');
+		if($con["info"] == "ok"){
+			$con = $con['conexion'];
+			$sql = "INSERT INTO `alumnos_generaciones`(`idalumno`, `idgeneracion`, `fecha_inscripcion`) 
+			VALUES (:alumno,:generacion,:fecha)";
+
+			$statement = $con->prepare($sql);
+			$statement->bindParam(':alumno', $alumno);
+			$statement->bindParam(':generacion', $generacion);
+			$statement->bindParam(':fecha', $fecha_hoy);
+			$statement->execute();
+
+			if($statement->errorInfo()[0] == 00000){
+				$response = ["estatus"=>"ok", "data"=>$con->lastInsertId()];
+			}else{
+				$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql];
+			}
+		}
+		$conexion = null;
+		$con = null;
+		return $response;
+	}
+
+	// consulta de chuy
+	public function obtener_conceptos_generacion($generacion){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		return $con['conexion']->query("SELECT * FROM pagos_conceptos WHERE id_generacion = $generacion;")->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	public function generaciones_alumno($alumno){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+		$fecha_hoy = date('Y-m-d H:i:s');
+		if($con["info"] == "ok"){
+			$con = $con['conexion'];
+			$sql = "SELECT carr.idInstitucion, a_gen.*, carr.idCarrera, carr.nombre, carr.imagen, carr.imgFondo, gen.fecha_inicio as fechainicio_gen, gen.imagen_generacion, gen.nombre as nombre_generacion FROM `alumnos_generaciones` a_gen
+			JOIN `a_generaciones` gen ON a_gen.idgeneracion = gen.idGeneracion
+			JOIN `a_carreras` carr ON gen.idCarrera = carr.idCarrera
+			WHERE a_gen.idalumno = :alumno;";
+
+			$statement = $con->prepare($sql);
+			$statement->bindParam(':alumno', $alumno);
+			$statement->execute();
+
+			if($statement->errorInfo()[0] == 00000){
+				$response = ["estatus"=>"ok", "data"=>$statement->fetchAll(PDO::FETCH_ASSOC)];
+			}else{
+				$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql];
+			}
+		}
+		$conexion = null;
+		$con = null;
+		return $response;
+	}
+
+	public function obtenerConceptosPago($id){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+		
+		if($con['info'] == 'ok'){
+			$con = $con['conexion'];
+			$sql = "SELECT id_concepto, categoria, fechalimitepago
+				FROM pagos_conceptos
+				WHERE id_generacion = :id";
+
+			$statement = $con->prepare($sql);
+			$statement->bindParam(':id', $id);
+			$statement->execute();
+
+			if($statement->errorInfo()[0] == '00000'){
+				$response = ['estatus'=>'ok', 'data'=>$statement->fetchAll(PDO::FETCH_ASSOC)];
+			}else{
+				$response = ['estatus'=>'error', 'info'=>$statement->errorInfo(), 'sql'=>$sql];
+			}
+		}
+	$conexion = null;
+	$conexion = null;
+	return $response;
+	}
+
+	public function validarsigeneraciontienebeca($id,$idProspecto){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+		
+		if($con['info'] == 'ok'){
+			$con = $con['conexion'];
+			$sql = "SELECT ac.callcenter 
+					FROM a_generaciones as agen
+					JOIN a_carreras  as ac on ac.idCarrera = agen.idCarrera
+					JOIN alumnos_generaciones as algen on algen.idgeneracion = agen.idGeneracion
+					WHERE agen.idGeneracion = :id AND algen.idalumno = :idProspecto";
+
+			$statement = $con->prepare($sql);
+			$statement->bindParam(':id', $id);
+			$statement->bindParam(':idProspecto', $idProspecto);
+			$statement->execute();
+
+			if($statement->errorInfo()[0] == '00000'){
+				$response = ['estatus'=>'ok', 'data'=>$statement->fetchAll(PDO::FETCH_ASSOC)];
+			}else{
+				$response = ['estatus'=>'error', 'info'=>$statement->errorInfo(), 'sql'=>$sql];
+			}
+		}
+	$conexion = null;
+	$conexion = null;
+	return $response;
+	}
+	//funciones chuy
+	function consultar_pagos_concepto_alumno($alumno, $concepto){
+		$conexion = new Conexion();
+		$con = $conexion->conectar()['conexion'];
+		return $con->query("SELECT * FROM `a_pagos` WHERE `id_prospecto` = {$alumno} AND `id_concepto` = {$concepto} AND estatus = 'verificado';")->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	function info_promocion($promocion){
+		$conexion = new Conexion();
+		$con = $conexion->conectar()['conexion'];
+		return $con->query("SELECT * FROM `promociones` WHERE `idPromocion` = {$promocion};")->fetch(PDO::FETCH_ASSOC);
+	}
+	//fin funciones chuy
+
+	public function obtenerInscripcionAlumno($idAlumno, $idInscripcion){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+
+		if($con['info'] == 'ok'){
+			$con = $con['conexion'];
+			$sql = "SELECT fechapago
+				FROM a_pagos
+				WHERE id_prospecto = :idAlum AND id_concepto = :idConcep AND estatus = 'verificado'";
+
+			$statement = $con->prepare($sql);
+			$statement->bindParam(':idAlum', $idAlumno);
+			$statement->bindParam(':idConcep', $idInscripcion);
+			$statement->execute();
+
+			if($statement->errorInfo()[0] == "00000"){
+				$response = ['estatus'=>'ok', 'data'=>$statement->fetch(PDO::FETCH_ASSOC)];
+			}else{
+				$response = ['estatus'=>'error', 'info'=>$statement->errorInfo(), 'sql'=>$sql];
+			}
+		}
+	$conexion = null;
+	$con = null;
+	return $response;
+	}
+
+	public function obtenerMensualidadesAlumno($idAlumno, $idReinscripcion){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+
+		if($con['info'] == 'ok'){
+			$con = $con['conexion'];
+			$sql = "SELECT fechapago
+				FROM a_pagos
+				WHERE id_prospecto = :idAlum AND id_concepto = :idConcep AND estatus = 'verificado'
+				ORDER BY fechapago ASC";
+
+			$statement = $con->prepare($sql);
+			$statement->bindParam(':idAlum', $idAlumno);
+			$statement->bindParam(':idConcep', $idReinscripcion);
+			$statement->execute();
+
+			if($statement->errorInfo()[0] == "00000"){
+				$response = ['estatus'=>'ok', 'data'=>$statement->fetchAll(PDO::FETCH_ASSOC)];
+			}else{
+				$response = ['estatus'=>'error', 'info'=>$statement->errorInfo(), 'sql'=>$sql];
+			}
+		}
+	$conexion = null;
+	$con = null;
+	return $response;
+	}
+
+	public function obtenerFechaAlumnoEspecial($id, $idGeneracion){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+
+		if($con['info'] == 'ok'){
+			$con = $con['conexion'];
+			$sql = "SELECT fecha_primer_colegiatura
+				FROM alumnos_generaciones
+				WHERE idalumno = :idAlumno AND idgeneracion = :idGen";
+
+			$statement = $con->prepare($sql);
+			$statement->bindParam(':idAlumno', $id);
+			$statement->bindParam(':idGen',$idGeneracion);
+			$statement->execute();
+
+			if($statement->errorInfo()[0] == "00000"){
+				$response = ['estatus'=>'ok', 'data'=>$statement->fetch(PDO::FETCH_ASSOC)];
+			}else{
+				$response = ['estatus'=>'error', 'info'=>$statement->errorInfo(), 'sql'=>$sql];
+			}
+		}
+	$conexion = null;
+	$con = null;
+	return $response;
+	}
+
+	public function obtenerFechaGeneracion($idGeneracion){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+
+		if($con['info'] == 'ok'){
+			$con = $con['conexion'];
+			$sql = "SELECT fecha_inicio
+				FROM a_generaciones
+				WHERE idGeneracion = :id";
+
+			$statement = $con->prepare($sql);
+			$statement->bindParam(':id', $idGeneracion);
+			$statement->execute();
+
+			if($statement->errorInfo()[0] == "00000"){
+				$response = ['estatus'=>'ok', 'data'=>$statement->fetch(PDO::FETCH_ASSOC)];
+			}else{
+				$response = ['estatus'=>'error', 'info'=>$statement->errorInfo(), 'sql'=>$sql];
+			}
+		}
+	$conexion = null;
+	$con = null;
+	return $response;
+	}
+
+	public function obtenerTipoCarrera($id){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+
+		if($con['info'] == 'ok'){
+			$con = $con['conexion'];
+			$sql = "SELECT carr.tipo
+				FROM a_generaciones gen
+				INNER JOIN a_carreras carr ON carr.idCarrera = gen.idCarrera
+				WHERE gen.idGeneracion = :id";
+
+			$statement = $con->prepare($sql);
+			$statement->bindParam(':id',$id);
+			$statement->execute();
+
+			if($statement->errorInfo()[0] == "00000"){
+				$response = ['estatus'=>'ok', 'data'=>$statement->fetch(PDO::FETCH_ASSOC)];
+			}else{
+				$response = ['estatus'=>'error', 'info'=>$statement->errorInfo(), 'sql'=>$sql];
+			}
+		}
+	$conexion = null;
+	$con = null;
+	return $response;
+	}
+
+	public function validarsialumnotienebeca($id){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+
+		if($con['info'] == 'ok'){
+			$con = $con['conexion'];
+			$sql = "SELECT carr.tipo
+				FROM a_generaciones gen
+				INNER JOIN a_carreras carr ON carr.idCarrera = gen.idCarrera
+				WHERE gen.idGeneracion = :id";
+
+			$statement = $con->prepare($sql);
+			$statement->bindParam(':id',$id);
+			$statement->execute();
+
+			if($statement->errorInfo()[0] == "00000"){
+				$response = ['estatus'=>'ok', 'data'=>$statement->fetch(PDO::FETCH_ASSOC)];
+			}else{
+				$response = ['estatus'=>'error', 'info'=>$statement->errorInfo(), 'sql'=>$sql];
+			}
+		}
+	$conexion = null;
+	$con = null;
+	return $response;
+	}
+public function validarBecaAlumno($idProspecto, $idGeneracion){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+
+		if($con['info'] == 'ok'){
+			$con = $con['conexion'];
+			$sql = "SELECT pc.categoria, promo.porcentaje 
+			FROM promociones as promo 
+			JOIN pagos_conceptos as pc on pc.id_concepto=promo.id_concepto 
+			join a_generaciones as agen on agen.idGeneracion=pc.id_generacion 
+			JOIN alumnos_generaciones AS algen on algen.idgeneracion=agen.idGeneracion 
+			JOIN a_prospectos as apro ON apro.idAsistente=algen.idalumno 
+			WHERE agen.idGeneracion=:idGeneracion AND promo.id_prospecto=:idProspecto AND apro.idAsistente=:idProspecto";
+
+			$statement = $con->prepare($sql);
+			$statement->bindParam(':idProspecto',$idProspecto);
+			$statement->bindParam(':idGeneracion',$idGeneracion);
+
+			$statement->execute();
+
+			if($statement->errorInfo()[0] == "00000"){
+				$response = ['estatus'=>'ok', 'data'=>$statement->fetchAll(PDO::FETCH_ASSOC)];
+			}else{
+				$response = ['estatus'=>'error', 'info'=>$statement->errorInfo(), 'sql'=>$sql];
+			}
+		}
+	$conexion = null;
+	$con = null;
+	return $response;
+	}
+
+	public function validarBecaGen($idProspecto, $idGeneracion){
+		$conexion = new Conexion();
+		$con = $conexion->conectar();
+		$response = [];
+
+		if($con['info'] == 'ok'){
+			$con = $con['conexion'];
+			$sql = "SELECT pc.categoria, promo.porcentaje 
+			FROM promociones as promo 
+			JOIN pagos_conceptos as pc on pc.id_concepto=promo.id_concepto 
+			join a_generaciones as agen on agen.idGeneracion=pc.id_generacion 
+			JOIN alumnos_generaciones AS algen on algen.idgeneracion=agen.idGeneracion 
+			JOIN a_prospectos as apro ON apro.idAsistente=algen.idalumno 
+			WHERE apro.idAsistente=:idProspecto and  promo.id_generacion =:idGeneracion";
+
+			$statement = $con->prepare($sql);
+			$statement->bindParam(':idProspecto',$idProspecto);
+			$statement->bindParam(':idGeneracion',$idGeneracion);
+
+			$statement->execute();
+
+			if($statement->errorInfo()[0] == "00000"){
+				$response = ['estatus'=>'ok', 'data'=>$statement->fetchAll(PDO::FETCH_ASSOC)];
+			}else{
+				$response = ['estatus'=>'error', 'info'=>$statement->errorInfo(), 'sql'=>$sql];
+			}
+		}
+	$conexion = null;
+	$con = null;
+	return $response;
+	}
+}

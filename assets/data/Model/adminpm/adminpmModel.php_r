@@ -1,0 +1,348 @@
+<?php 
+date_default_timezone_set("America/Mexico_City");
+
+	class AdminPM{
+
+        public function consultarAdminPM_ById($id){
+			$conexion = new Conexion(); 
+			$con = $conexion->conectar(); 
+			$response = [];
+
+			if($con["info"] == "ok"){ 
+				$con = $con["conexion"];
+				$sql = "SELECT * FROM `ac_adminpm` WHERE id = :id;"; 
+
+				$statement = $con->prepare($sql); 
+				$statement->bindParam(":id", $id);			  
+				$statement->execute();			  
+					
+				if($statement->errorInfo()[0] == "00000"){
+					$response = ["estatus"=>"ok", "data"=>$statement->fetch(PDO::FETCH_ASSOC)];
+				}else{
+					$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql];
+				}
+			}
+
+			$conexion = null;
+			$con = null; 
+			return $response;
+		}
+
+		public function consultarMedicos(){
+			$conexion = new Conexion(); 
+			$con = $conexion->conectar(); 
+			$response = [];
+
+			if($con["info"] == "ok"){ 
+				$con = $con["conexion"];
+				
+				$sql = "SELECT * FROM pm_medicos";
+
+				$statement = $con->prepare($sql); 		  
+				$statement->execute();			  
+					
+				$conexion = null;
+				$con = null;
+				return $statement;
+			}
+		}//consultarMedicos
+
+		public function desactivarMedico($data){
+			$conexion = new Conexion();
+			$con = $conexion->conectar();
+			$response = [];
+
+			if($con['info'] == 'ok'){
+				$con = $con['conexion'];
+
+				$sql = "UPDATE pm_medicos SET estado = :vEstado WHERE id = :idDesactivar";
+
+				$statement = $con->prepare($sql);
+				$statement->execute($data);
+
+				if($statement->errorInfo()[0] == "00000"){
+					$response = ["estatus"=>"ok", "data"=>$statement->rowCount()];
+				}else{
+					$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql, "data"=>$data];
+				}
+				
+			}
+			$conexion = null;
+			$con = null;
+
+			return $response;
+		}
+
+		public function agregarMedico($data){
+			$conexion = new Conexion();
+			$con = $conexion->conectar();
+			$response = [];
+
+			include('../../Model/acceso/keys.php');
+
+			if($con['info'] == 'ok'){
+				$con = $con['conexion'];
+
+				$sql = "INSERT INTO pm_medicos (apellidop, apellidom, nombre, tipo) VALUES ( '".$data['apellidop']."', '".$data['apellidom']."', '".$data['nombres']."', '".$data['rol']."' )";
+				$statement = $con->prepare($sql);
+				$statement->execute();
+
+				$sql = "INSERT INTO a_accesos (idTipo_Persona, idPersona, correo, contrasenia) VALUES ( 20, ".$con->lastInsertId().",  '".$data['email']."', AES_ENCRYPT('abc', '{$DECRYPT_PASS}') )";
+				$statement = $con->prepare($sql);
+				$statement->execute();
+
+				if($statement->errorInfo()[0] == "00000"){
+					$response = ["estatus"=>"ok", "data"=>$statement->rowCount()];
+				}else{
+					$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql, "data"=>$data];
+				}
+				
+			}
+			$conexion = null;
+			$con = null;
+
+			return $response;
+		}//fin agregarMedico
+
+		public function editarMedico($data){
+			$conexion = new Conexion();
+			$con = $conexion->conectar();
+			$response = [];
+			include('../../Model/acceso/keys.php');
+
+			if($con['info'] == 'ok'){
+				$con = $con['conexion'];
+
+				if( isset( $data['reset_e'] ) ) $reset = ", contrasenia = AES_ENCRYPT('abc', '{$DECRYPT_PASS}') ";
+				else $reset = '';
+
+				$sql = "UPDATE pm_medicos SET apellidop = '".$data['apellidop_e']."', apellidom = '".$data['apellidom_e']."', nombre = '".$data['nombres_e']."', tipo = '".$data['rol_e']."' WHERE id = ".$data['idMedico']."; 
+				UPDATE a_accesos SET correo = '".$data['email_e']."' ".$reset." WHERE idPersona = ".$data['idMedico']." AND idTipo_Persona = 20";
+				$statement = $con->prepare($sql);
+				$statement->execute();
+
+				if($statement->errorInfo()[0] == "00000"){
+					$response = ["estatus"=>"ok", "data"=>$statement->rowCount()];
+				}else{
+					$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql, "data"=>$data];
+				}
+				
+			}
+			$conexion = null;
+			$con = null;
+
+			return $response;
+		}//editarMedico
+
+		public function buscarMedico($buscar){
+			$conexion = new Conexion();
+			$con = $conexion->Conectar();
+			$response = [];
+
+			if($con['info'] == 'ok'){
+				$con = $con['conexion'];
+
+				$sql = "SELECT pm_medicos.*, a_accesos.correo FROM pm_medicos, a_accesos WHERE pm_medicos.id = $buscar AND a_accesos.idTipo_Persona = 20 AND a_accesos.idPersona = $buscar";
+				$statement = $con->prepare($sql);
+				$statement->execute();
+
+				if($statement->errorInfo()[0] == "00000"){
+					$response = ["estatus"=>"ok", "data"=>$statement->fetchAll(PDO::FETCH_ASSOC)];
+				}else{
+					$response = ["estatus"=>"error", "info"=>$statement->erroInfo(), "sql"=>$sql, "data"=>$buscar];
+				}
+				$conexion = null;
+				$con = null;
+
+				return $response;
+			}
+		}//Fin buscarMedico
+
+		public function consultarHospitales(){
+			$conexion = new Conexion(); 
+			$con = $conexion->conectar(); 
+			$response = [];
+
+			if($con["info"] == "ok"){ 
+				$con = $con["conexion"];
+				
+				$sql = "SELECT * FROM pm_sitios";
+
+				$statement = $con->prepare($sql); 		  
+				$statement->execute();			  
+					
+				$conexion = null;
+				$con = null;
+				return $statement;
+			}
+		}//consultarMedicos
+
+		public function agregarHospital($data){
+			$conexion = new Conexion();
+			$con = $conexion->conectar();
+			$response = [];
+
+			//include('../../Model/acceso/keys.php');
+
+			if($con['info'] == 'ok'){
+				$con = $con['conexion'];
+
+				$sql = "INSERT INTO pm_sitios (nombre, direccion) VALUES ( '".$data['nombre']."', '".$data['direccion']."' )";
+				$statement = $con->prepare($sql);
+				$statement->execute();
+
+				if($statement->errorInfo()[0] == "00000"){
+					$response = ["estatus"=>"ok", "data"=>$statement->rowCount()];
+				}else{
+					$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql, "data"=>$data];
+				}
+				
+			}
+			$conexion = null;
+			$con = null;
+
+			return $response;
+		}//Fin agregarHospital
+
+		public function buscarHospital($buscar){
+			$conexion = new Conexion();
+			$con = $conexion->Conectar();
+			$response = [];
+
+			if($con['info'] == 'ok'){
+				$con = $con['conexion'];
+
+				$sql = "SELECT * FROM pm_sitios WHERE idsitio = $buscar";
+				$statement = $con->prepare($sql);
+				$statement->execute();
+
+				if($statement->errorInfo()[0] == "00000"){
+					$response = ["estatus"=>"ok", "data"=>$statement->fetchAll(PDO::FETCH_ASSOC)];
+				}else{
+					$response = ["estatus"=>"error", "info"=>$statement->erroInfo(), "sql"=>$sql, "data"=>$buscar];
+				}
+				$conexion = null;
+				$con = null;
+
+				return $response;
+			}
+		}//Fin buscarHospital
+
+		public function editarHospital($data){
+			$conexion = new Conexion();
+			$con = $conexion->conectar();
+			$response = [];
+
+			if($con['info'] == 'ok'){
+				$con = $con['conexion'];
+
+				$sql = "UPDATE pm_sitios SET nombre = '".$data['nombre_e']."', direccion = '".$data['direccion_e']."' WHERE idsitio = ".$data['idHospital'];
+				$statement = $con->prepare($sql);
+				$statement->execute();
+
+				if($statement->errorInfo()[0] == "00000"){
+					$response = ["estatus"=>"ok", "data"=>$statement->rowCount()];
+				}else{
+					$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql, "data"=>$data];
+				}
+				
+			}
+			$conexion = null;
+			$con = null;
+
+			return $response;
+		}//editarHospital
+
+		public function desactivarHospital($data){
+			$conexion = new Conexion();
+			$con = $conexion->conectar();
+			$response = [];
+
+			if($con['info'] == 'ok'){
+				$con = $con['conexion'];
+
+				$sql = "UPDATE pm_sitios SET estado = :vEstado WHERE idsitio = :idDesactivar";
+
+				$statement = $con->prepare($sql);
+				$statement->execute($data);
+
+				if($statement->errorInfo()[0] == "00000"){
+					$response = ["estatus"=>"ok", "data"=>$statement->rowCount()];
+				}else{
+					$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql, "data"=>$data];
+				}
+				
+			}
+			$conexion = null;
+			$con = null;
+
+			return $response;
+		}//Fin DesactivarHospital
+
+		public function consultarProcedimientos(){
+			$conexion = new Conexion(); 
+			$con = $conexion->conectar(); 
+			$response = [];
+
+			if($con["info"] == "ok"){ 
+				$con = $con["conexion"];
+				
+				$sql = "SELECT pm_procedimientos.*, a_carreras.nombre AS carrera_nombre FROM pm_procedimientos, a_carreras WHERE a_carreras.idCarrera = pm_procedimientos.idCarrera";
+
+				$statement = $con->prepare($sql); 		  
+				$statement->execute();			  
+					
+				$conexion = null;
+				$con = null;
+				return $statement;
+			}
+		}//consultarProcedimientos
+
+		public function buscarCarreras(){
+			$conexion = new Conexion(); 
+			$con = $conexion->conectar(); 
+			$response = [];
+
+			if($con["info"] == "ok"){ 
+				$con = $con["conexion"];
+				
+				$sql = "SELECT nombre, idCarrera FROM a_carreras ORDER BY nombre";
+
+				$statement = $con->prepare($sql); 		  
+				$statement->execute();			  
+					
+				$conexion = null;
+				$con = null;
+				return $statement;
+			}
+		}//buscarCarreras
+
+		public function agregarProcedimiento($data){
+			$conexion = new Conexion();
+			$con = $conexion->conectar();
+			$response = [];
+
+			//include('../../Model/acceso/keys.php');
+
+			if($con['info'] == 'ok'){
+				$con = $con['conexion'];
+
+				$sql = "INSERT INTO pm_procedimientos (nombre, idCarrera, costo, descripcion) VALUES ( '".$data['nombrep']."', ".$data['listacarreras'].", '".$data['costop']."', '-' )";
+				$statement = $con->prepare($sql);
+				$statement->execute();
+
+				if($statement->errorInfo()[0] == "00000"){
+					$response = ["estatus"=>"ok", "data"=>$statement->rowCount()];
+				}else{
+					$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql, "data"=>$data];
+				}
+				
+			}
+			$conexion = null;
+			$con = null;
+
+			return $response;
+		}//Fin agregarHospital
+	
+    }
+?>

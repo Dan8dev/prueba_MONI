@@ -1,0 +1,1050 @@
+ <?php
+ header('Access-Control-Allow-Origin: https://conacon.org', false);
+session_start();
+if (isset($_POST["action"])) {
+	date_default_timezone_set("America/Mexico_City");
+	require_once '../../Model/conexion/conexion.php';
+
+	require_once '../../Model/eventos/eventosModel.php';
+	require_once '../../Model/carreras/carrerasModel.php';
+
+	require_once '../../Model/prospectos/prospectosModel.php';
+
+	require_once '../../Model/marketing/marketingModel.php';
+
+	require_once '../../Model/alumnos/alumnosInstitucionesModel.php';
+	require_once '../../Model/planpagos/pagosModel.php'; // <-- para la funcion de consultar administrativo
+	$pagosM = new pagosModel();
+	
+	$tipos_prospectos = ['evento', 'carrera'];
+	$promos = ['cismac-congreso'=>['CISMAC3000']];
+
+	$evtM = new Evento();
+	$carrM = new Carrera();
+
+	$prospM = new Prospecto();
+
+	$alumnInst = new AccesosAlumnosInstituciones();
+	$marketM = new Marketing();
+	
+	switch ($_POST["action"]) {
+		case 'registrar_prospecto':
+			if(!isset($_POST['tipo_moneda_prospecto'])){
+				$_POST['tipo_moneda_prospecto']=1;
+			}
+
+			$infoDest = null;
+
+			//No enviar en caso de que se registe desde mkt
+			$Curp = "";
+			if(isset($_POST['Curp'])){
+				$Curp=$_POST['Curp'];
+				unset($_POST['Curp']);
+			}
+			$estatus = isset($_POST['estatus'])? $_POST['estatus'] : false;
+			unset($_POST['estatus']);
+			
+			$_POST['name']=$prospM->quitaracentosconvertirmayusculas($_POST['name']);
+			$_POST['paterno']=$prospM->quitaracentosconvertirmayusculas($_POST['paterno']);
+			$_POST['materno']=$prospM->quitaracentosconvertirmayusculas($_POST['materno']);
+			if(!isset($_POST['inp_codigo_pro'])){
+				$_POST['inp_codigo_pro'] = '';
+			}
+
+				$bandRequ = Validador::validar_datos_insertar($_POST, ['email','name', 'paterno', 'materno', 'telefono']);
+				$tam_telefono = (strlen(str_replace(['(',')',' ','-'],'',$_POST['telefono'])) < 10)? false : true;
+				$regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/'; 
+				$correo_ok = preg_match($regex, strtolower(trim($_POST['email'])));
+
+				if(isset($_POST['tipo_prospecto']) && in_array($_POST['tipo_prospecto'], $tipos_prospectos) && $bandRequ['estatus']=='ok' && $tam_telefono && $correo_ok){
+					$_POST['email'] = strtolower(trim($_POST['email']));
+					$tipoP = $_POST['tipo_prospecto'];
+					// si no se ha provisto el id del evento / carrera :: registro desde formulario
+					if(!isset($_POST['id_destino']) && isset($_POST['nombre_clave_destino'])){
+						$_POST['nombre_clave_destino'] = str_replace('/','',$_POST['nombre_clave_destino']);
+						// solo evento es probable que reciba el nombre_clave en vez del id requerido
+						if($tipoP == 'carrera'){
+							$aux_info = $carrM->consultarCarreraBy_codigo($_POST['nombre_clave_destino'])['data'];
+						}else{
+							$aux_info = $evtM->consultarEvento_Clave($_POST['nombre_clave_destino'])['data'];
+						}
+						
+						if(sizeof($aux_info) > 0){
+							if($tipoP == 'carrera'){
+								$_POST['id_destino'] = $aux_info['idCarrera'];
+								// validar si el correo ya es prospecto para esta carrera. 
+								$ya_prospecto_carrera = $carrM->validarCorreo_Carrera($_POST['email'], $_POST['id_destino']);
+								if(!empty($ya_prospecto_carrera['data'])){
+									echo json_encode(['estatus'=>'error', 'info'=>'El correo ya se encuentra registrado en esta oferta académica']);
+									die();
+								}
+							}else{
+								$_POST['id_destino'] = $aux_info[0]['idEvento'];
+							}
+						}
+						// cuando se desarrolle el formulario de registro a carreras se determinara si se recibe el codigo
+					}
+					
+					if($tipoP == 'evento'){
+						$infoDest = $evtM->consultarEvento_Id($_POST['id_destino']);
+						
+						if(strtotime($infoDest['data']['fechaLimite']) < strtotime(date('Y-m-d'))){
+							echo json_encode(['estatus'=>'error','info'=>'El evento seleccionado ya no esta disponible']);
+							die();
+						}
+					}else if($tipoP == 'carrera'){
+						$infoDest = $carrM->consultarCarreraByID($_POST['id_destino']);
+						$_POST['id_destino'] = $infoDest['data']['idCarrera'];
+						// validar si el correo ya es prospecto para esta carrera. 
+						$ya_prospecto_carrera = $carrM->validarCorreo_Carrera($_POST['email'], $_POST['id_destino']);
+						
+						if(!empty($ya_prospecto_carrera['data'])){
+							echo json_encode(['estatus'=>'error', 'info'=>'El correo ya se encuentra registrado en esta oferta académica']);
+							die();
+						}
+					}
+					if($infoDest != null && $infoDest['data']){
+						$infoDest = $infoDest['data'];
+						
+						$continuar = true;
+						$error_info = "";
+						
+						// si el evento o carrera es patrocinio de CONACON entonces se le manda acceso al panel siscon
+						$distintivo = false;
+						if(isset($infoDest['idCarrera']) && $infoDest['idCarrera'] == 5){
+							$distintivo = true;
+						}
+						
+						// validaciones extras de eventos (no haya registro previo al mismo evento con el mismo correo)
+						
+						if($tipoP == 'evento'){
+							// 1.- lugares disponibles
+							$continuar = (intval($infoDest['numAsistentes']) < intval($infoDest['limiteProspectos'])) ? true : false;
+							if(!$continuar){
+								echo json_encode(['estatus'=>'error', 'info'=>'El evento seleccionado ha alcanzado el limite de asistentes']);
+								die();
+							}
+							  $error_info = (!$continuar)? 'limite_cubierto' : $error_info;
+							// 2.- correo no registrado antes
+							if($continuar){
+								$inf_ac = $evtM->validarCorreo_Evento($_POST['email'], $infoDest['idEvento'])['data'];
+								$continuar = (sizeof($inf_ac) > 0) ? false : $continuar;
+								$prosp_inf = $prospM->consultar_prospecto_by_campo('correo', $_POST['email']);
+								
+								if(!empty($prosp_inf['data'])){
+									if($estatus != false && $estatus == '10'){
+										$prospM->actualizar_dato_afiliado('estatus', $estatus, $prosp_inf['data'][0]['idAsistente']);
+										$prospM->actualizar_dato_afiliado('clinicaResponsable', $_POST['IDOrganizacion'], $prosp_inf['data'][0]['idAsistente']);
+									}
+								}
+								if(!$continuar){
+									$inf = $prosp_inf['data'][0];
+									$info_upd = ['edit_pr_nombre' => $inf['nombre'],
+										'edit_pr_apaterno' => $inf['aPaterno'],
+										'edit_pr_amaterno' => $inf['aMaterno'],
+										'edit_pr_telefono' => $_POST['telefono'],
+										'edit_pr_correo' => $inf['correo'],
+										'edit_pr_institucion' => $_POST['IDOrganizacion'],
+										'inp_prospect_edit' => $inf['idAsistente']];
+									$upd_prosp = $prospM->actalizar_informacion_contacto($info_upd);
+									echo json_encode(['estatus'=>'error', 'info'=>'El correo ya se encuentra registrado en este evento']);
+									die();
+								}
+							}
+						}
+						//elseif($tipoP == 'carrera'){
+							#if($infoDest['idInstitucion'] == 13 && !$distintivo){
+							#	$continuar = ($carrM->validar_correo_afiliado($_POST['email'])['data'])? false : $continuar; 
+							#	$error_info = (!$continuar)? 'membresia_existente' : $error_info;
+							#}
+							//}
+							// var_dump($continuar);
+							// var_dump($error_info);
+							// die();
+						// si se agregan validaciones extras a rqgistro de prospectos a carreras se agregan aqui
+						if($continuar){
+							$id_evento = ($tipoP=='evento')? $infoDest['idEvento'] : null;
+							$id_carrera = ($tipoP=='carrera')? $infoDest['idCarrera'] : null;
+							$codigo = ($tipoP=='evento')? $infoDest['next_id'].$infoDest['codigo_prospectos'] : '';
+							
+							$data_insert = [
+								'idEvento' 		=>$id_evento,
+								'idCarrera' 	=>$id_carrera,
+								'idAsociacion'=>$_POST['IDOrganizacion'],
+								'nombre' 			=>$_POST['name'],
+								'aPaterno' 		=>$_POST['paterno'],
+								'aMaterno' 		=>$_POST['materno'],
+								'correo' 			=>$_POST['email'],
+								'telefono' 		=>$_POST['telefono'],
+								'codigo' 			=>$codigo,
+								'codigo_promocional'=> $_POST['inp_codigo_pro'],
+								'tipo_moneda_prospecto' => $_POST['tipo_moneda_prospecto']
+							];
+							
+							if(isset($_POST['tipo_alumno']) && intval($_POST['tipo_alumno']) > 0){
+								# si se ha definido tipo de alumno crear el registro de su institucion
+								#
+								$data_prosp = [
+									'evento' => $id_evento,
+									'carrera' => $id_carrera,
+									'nombre' => $_POST['name'], 
+									'paterno' => $_POST['paterno'],
+									'materno' => $_POST['materno'],
+									'genero' => 0,
+									'correo' => $_POST['email'],
+									'telefono' => $_POST['telefono'],
+									'registro' => date("Y-m-d H:i:s"),
+									'tipo_moneda_prospecto' => $_POST['tipo_moneda_prospecto']];
+								$registrar = $alumnInst->RegistrarAlumnoInstitucion($data_prosp, $_POST['tipo_alumno']);
+								$info_inst = $alumnInst->getInfo_Institucion($_POST['tipo_alumno']);
+
+								require_once '../../functions/correos_prospectos.php';
+									// contenido constante del mail
+								$destinatarios = [[$_POST['email'],$_POST['name']]];
+								$plantilla = $infoDest["plantilla_bienvenida"];
+								if(substr($plantilla, -5) != '.html'){
+									$plantilla = $plantilla.'_'.$info_inst['panel_url'].'.html';
+								}
+
+								$titulo = ($tipoP == 'evento')? $infoDest["titulo"] : $infoDest["nombre"];
+
+								$asunto = 'Confirmación de registro.';
+
+								$claves = ['%%tipoEvento','%%tituloEvento','%%prospecto', '%%CONTRASENIA', '%%USUARIO'];
+								$valores = [$infoDest["tipo"], $titulo, $_POST["name"], '123', $_POST['email']];
+										
+
+								$send = enviar_correo_registro($asunto, $destinatarios, $plantilla, $claves, $valores);
+	
+								if($registrar['estatus'] == 'ok'){
+									if($_POST['inp_codigo_pro'] != '' && isset($infoDest['idCarrera']) && $infoDest['idCarrera'] == 13){
+										$prospM->alumno_colaborador($_POST['inp_codigo_pro'], $registrar['data']);
+									}
+									$resp = ['estatus'=>'ok', 'info'=>'registrado_como_alumno', 'data' => $registrar['data'], 'list_val' => $registrar['data']];
+								}else{
+									$resp = ['estatus'=>'error', 'info'=>'error_al_registrar','details'=>$registrar];
+								}
+								// "info"=>"correo_no_enviado"
+							}else{
+								// verificar si ya existe correo como prospecto
+								$ya_correo_prospecto = $prospM->consultar_prospecto_by_campo('correo', $_POST['email']);
+								if(!empty($ya_correo_prospecto['data'])){
+									if(!isset($_POST['marketing'])){
+										$meter_a_carrusel = $marketM->actualzar_fila_atencion($ya_correo_prospecto['data'][0]['idAsistente'], $tipoP, $_POST['id_destino']);
+										if($meter_a_carrusel['estatus'] != 'ok'){
+											$ult_ejecutiva_aten = $marketM->buscar_ultima_ejecutiva($ya_correo_prospecto['data'][0]['idAsistente']);
+											if($ult_ejecutiva_aten == 0){
+												$ult_ejecutiva_aten = 1;
+											}
+											$id_persona = $ult_ejecutiva_aten;
+											$asoc = $marketM->set_prospecto_fila($tipoP, $ya_correo_prospecto['data'][0]['idAsistente'], $ult_ejecutiva_aten, $_POST['id_destino']);
+										}
+										// actualizar si informacion de prospecto es diferente a la que se esta registrando
+										$inf = $ya_correo_prospecto['data'][0];
+										$info_upd = ['edit_pr_nombre' => $inf['nombre'],
+										'edit_pr_apaterno' => $inf['aPaterno'],
+										'edit_pr_amaterno' => $inf['aMaterno'],
+										'edit_pr_telefono' => $_POST['telefono'],
+										'edit_pr_correo' => $inf['correo'],
+										'edit_pr_institucion' => $_POST['IDOrganizacion'],
+										'inp_prospect_edit' => $inf['idAsistente']];
+										$upd_prosp = $prospM->actalizar_informacion_contacto($info_upd);
+									}
+									echo json_encode(['estatus'=>'ok', 'info'=>'registrado_como_prospecto', 'list_val' => $ya_correo_prospecto['data'][0]['idAsistente']]);
+									die();
+								}
+								if(isset($_POST['genero'])){
+									$data_insert['genero'] = $_POST['genero'];
+								}
+								foreach(['telefono_casa', 'telefono_recados', 'inp_titulo_estudio', 'select_nacionalidad', 'inp_cedula', 'escuela_proc', 'fecha_egreso'] as $keisset){
+									if(isset($_POST[$keisset])){
+										$data_insert[$keisset] = $_POST[$keisset];
+									}
+								}
+								$insert = $prospM->registrarAsistencia($data_insert);		// <--------------------------------- INSERTAR PROSPECTO
+								if($insert['estatus'] == 'ok'){
+									require_once '../../functions/correos_prospectos.php';
+									 // contenido constante del mail
+									$destinatarios = [[$_POST['email'],$_POST['name']]];
+									$plantilla = $infoDest["plantilla_bienvenida"];
+									$titulo = ($tipoP == 'evento')? $infoDest["titulo"] : $infoDest["nombre"];
+	
+									// si el evento o carrera es patrocinio de CONACON entonces se le manda acceso al panel siscon
+									$distintivo = false;
+									if(isset($infoDest['idCarrera']) && $infoDest['idCarrera'] == 5){
+										$distintivo = true;
+									}
+									if($infoDest['idInstitucion'] == 13 && !$distintivo){ // id carrera 5 = distintivo conacon, no crea registro a siscon
+										
+										#  insertar en siscon
+										
+										$pswd = substr(md5(time()),0,7);
+										$d_i = [
+											'id_prospecto'=>$insert['data'],
+											'nombre' => $_POST['name'],
+											'aPaterno' => $_POST['paterno'],
+											'aMaterno' => $_POST['materno'],
+											'correo' => $_POST['email'],
+											'telefono' => $_POST['telefono']
+										];
+										if($Curp != ''){
+											$d_i['curp'] = $Curp;
+										}
+										foreach(['inp_titulo_estudio', 'select_nacionalidad', 'inp_cedula'] as $keisset){ // agregar otros campos a insertar a afiliados
+											if(isset($_POST[$keisset])){
+												$d_i[$keisset] = $_POST[$keisset];
+											}
+										}
+										if($estatus !== false){
+											$d_i['estatus'] = $estatus;
+											$d_i['clinicaResponsable'] = $_POST['IDOrganizacion'];
+											$afiliar = $carrM->registrar_afiliado_conacon($d_i);
+											$asist = $marketM->set_prospecto_fila('evento', $insert['data'], 8, $id_evento);
+										}else{
+											$afiliar = $carrM->registrar_afiliado_conacon($d_i);
+										}
+										$fechafinmembresia = date('Y-m-d', strtotime('+1 month'));
+										$carrM->insertar_membresia_gratis($insert['data'], $fechafinmembresia);
+										// si se registro correctamente al afiliado se hace insercion a la generacion
+										if($afiliar['estatus'] == 'ok'){
+											if(isset($infoDest['idCarrera']) && $infoDest['idCarrera'] == 22){
+												$carrM->insertar_generacion_default($insert['data'], 86);
+												$carrM->insertar_vista_cursos_default($insert['data'], 2, 1);
+											}
+										}
+										//$pruebagratis = $carrM->registrar_prueba_gratis($insert['data'],$id_evento);
+										$asunto = 'Confirmación de registro.';
+										
+										$claves = ['%%tipoEvento','%%tituloEvento','%%prospecto', '%%CONTRASENIA', '%%USUARIO'];
+										$valores = [$infoDest["tipo"], $titulo, $_POST["name"], $afiliar['data']['contrasenia'], $_POST['email']];
+										
+										
+										
+										$send = enviar_correo_registro($asunto, $destinatarios, $plantilla, $claves, $valores);
+										
+										if($send['1'] == 'Mensaje enviado'){
+											$resp = ["estatus"=>"ok", 'list_val' => $insert['data']];
+										}else{
+											$resp = ["estatus"=>"ok", "info"=>"correo_no_enviado", 'list_val' => $insert['data'], 'envio' => $send];
+										}
+	
+									}else{
+										$asunto = 'Confirmación de registro.';
+	
+										$claves = ['%%tipoEvento','%%tituloEvento','%%prospecto'];
+										$valores = [$infoDest["tipo"], $titulo, $_POST["name"]];
+	
+										if($tipoP == 'evento'){
+											array_push($claves, '%%CODIGO');
+											array_push($valores, $codigo);
+										}
+										$send = enviar_correo_registro($asunto, $destinatarios, $plantilla, $claves, $valores);
+										if($send['1'] == 'Mensaje enviado'){
+											$resp = ["estatus"=>"ok", 'list_val' => $insert['data']];
+										}else{
+											$resp = ["estatus"=>"ok", "info"=>"correo_no_enviado", 'list_val' => $insert['data'], 'envio'=>$send];
+										}
+									}
+									if($_POST['inp_codigo_pro'] != '' && isset($infoDest['idCarrera']) && $infoDest['idCarrera'] == 13){
+										$prospM->alumno_colaborador($_POST['inp_codigo_pro'], $insert['data']);
+									}
+								}else{
+									$resp = ['estatus'=>'error', 'info'=>'error_al_registrar','details'=>$insert];
+								}
+							}
+						}else{
+							if ($error_info=='membresia_existente'||$error_info=='correo_existente') {
+								$validarsiexiste=$carrM->obtenercontrasena($_POST['email']);
+								  require("../../functions/mailer.php");
+								  //--CORREO--//
+								  $HTML =
+								  "
+								  <div style=\"padding: 5%; background-color: #F8F8F8;\">
+									  <div style=\"padding: 3%; background-color: #FFFFFF; border: 1px solid #625B55; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;\">
+										  <div style=\"padding: 3%;\">
+										  <p style=\"font-family: Verdana; font-size: 26px; color: #625B55; text-align: center;\"><b>Accesos Conacon</b><br/></p>
+											  <p style=\"font-family: Verdana; font-size: 26px; color: #625B55;\">Hola:<br/> <b> ".$validarsiexiste['data']['nombre']."</b></p>
+											  <p style=\"font-family: Verdana; font-size: 16px; color: #625B55; text-align: justify;\">Ya te encuentras registrado, inicia sesión en la siguiente dirección: <b> https://conacon.org/moni/siscon/app/index.php?user=".$_POST['email']."&psw=".$validarsiexiste['data']['contrasena']." </b>, tu usuario es:<b> ".$_POST['email']."</b> y la contraseña: <b>".$validarsiexiste['data']['contrasena']."</b></p>
+											  <p style=\"font-family: Verdana; font-size: 16px; color: #625B55; text-align: center;\">A T E N T A M E N T E</p>
+											  <p style=\"font-family: Verdana; font-size: 20px; color: #625B55; text-align: center;\"><b>CONACON</b></p>
+											  <p style=\"font-family: Verdana; font-size: 10px; text-align: justify;\">
+												  <b>Alerta de confidencialidad:</b> Este correo electr&oacute;nico contiene informaci&oacute;n que es para uso exclusivo de la persona o entidad 
+												  cuyo nombre aparece al rubro. Si usted no es el destinatario pretendido de esta comunicaci&oacute;n, est&aacute; formalmente notificado de que 
+												  cualquier uso no autorizado, difusi&oacute;n o copiado de esta nota electr&oacute;nica, as&iacute; como de su contenido textual o adjunto(s), queda 
+												  estrictamente prohibido. Si por equivocaci&oacute;n ha recibido esta comunicaci&oacute;n, b&oacute;rrela y avise inmediatamente por correo electr&oacute;nico 
+												  a la persona arriba mencionada. Gracias por su atenci&oacute;n.
+											  </p>
+										  </div>
+									  </div>
+								  </div>
+								  ";
+								  $email=$_POST['email'];
+								  $destinatarios = [[$email,"Sistemas"]];
+								  $asunto = 'REENVÍO DE ACCESOS CONACON';
+								  $message = 'grats';
+								  $adjunto='none';
+								  $result=sendEmailOwn($destinatarios, $asunto, $HTML, $adjunto);
+							}
+							$resp = ['estatus'=>'error', 'info'=>$error_info, 'details'=>$infoDest];
+						}
+					}else{
+						$resp = ['estatus'=>'error', 'info'=>'error_obteniendo_detalles', 'details'=>$infoDest];
+					}
+				}else{
+					$resp['estatus']= 'error';
+					if(!$tam_telefono){
+						$resp['info'] = 'Número de teléfono no valido';
+					}else if(!$correo_ok){
+						$resp['info'] = 'El correo no tiene un formato valido';
+					}else{
+						$resp['info'] = 'Interés no definido';
+					}
+				}
+
+				echo(json_encode($resp));
+			break;
+		case 'validar_asistencia':
+			unset($_POST['action']);
+			$usuario = $prospM->validar_acceso_asistente($_POST);
+			$resp = [];
+			$estatus_acceso_ok = [0, 1, 2, null];
+			if($usuario["estatus"] == 'ok' && !empty($usuario['data']) && in_array($usuario['data'][0]['etapa_seguimiento'], $estatus_acceso_ok)){
+				$usr = $usuario['data'][0];
+
+				$usr['perfil'] = $prospM->consultar_pagos_prospectos($usr['idAsistente'], $usr['idEvento'])['data'];
+				$_SESSION['usuario'] = $usr;
+				$resp['estatus'] = 'ok';
+				$resp['data'] = $usr;
+				$resp['relocation'] = 'panel.php';
+			}else{
+				$resp['estatus'] = "error";
+				$resp['info'] = ($usuario['estatus']=='error')? 'error_interno' : ((empty($usuario['data']))?'sin_coincidencias' : 'prospecto_rechazado');
+				if($resp['info'] == 'error_interno'){
+					$resp['data'] = $usuario;
+				}
+			}
+			echo(json_encode($resp));
+			break;
+		case 'registrar_pago':
+
+			$evento = (isset($_POST['evento'])) ? $_POST['evento'] : null ;
+			$persona = (isset($_POST['persona'])) ? $_POST['persona'] : null ;
+			$detalle = (isset($_POST['detalle'])) ? $_POST['detalle'] : null ;
+			$plan_pago = (isset($_POST['plan_pago'])) ? $_POST['plan_pago'] : null ;
+
+			 if($evento !== null && $persona !== null && $detalle !== null && $plan_pago !== null){
+				$resp = $prospM->registrarPagoEvento($evento, $persona, $detalle, $plan_pago);
+			 }else{
+			 	$resp = ["estatus"=>"error"];
+			 }
+
+			 echo json_encode($resp);
+			 // echo json_encode([$evento, $persona, $detalle, $plan_pago]);
+			break;
+		case 'historial_seguimientos':
+			$resp = [];
+			if(isset($_POST['prospecto'])){
+				if(isset($_POST['tipo_seguimiento'])) {
+					$info = $prospM->consultar_historial_seguimientos($_POST['prospecto'], $_POST['tipo_seguimiento']);
+					$resp = $info;
+					
+				}else{
+					$arr = [];
+					$arr['comentarios'] = $prospM->consultar_historial_seguimientos($_POST['prospecto'], 'comentarios')['data'];
+					foreach($arr['comentarios'] as $key => $value){
+						$ejecutiva_r = '';
+						if($value['idEjecutiva'] !== null){
+							$quien_registro = $pagosM->quien_registro($value['idEjecutiva'])['data'];
+							if (isset($quien_registro['idTipo_Persona'])==3) {
+								$info_p = $pagosM->nombre_marketing($quien_registro['idPersona']);
+								if($info_p['data']){
+									$ejecutiva_r = $info_p['data']['nombres'];
+								}
+							}
+						}
+						$arr['comentarios'][$key]['ejecutiva_registro'] = $ejecutiva_r;
+					}
+					$arr['llamadas'] = $prospM->consultar_historial_seguimientos($_POST['prospecto'], 'llamadas')['data'];
+					$resp = ['estatus'=>'ok', 'data'=>$arr];
+				}
+				$resp['data']['seguim_estatus'] = $prospM->get_estatus_seguimiento($_POST['prospecto']);
+			}
+
+			echo(json_encode($resp));
+			break;
+		case 'agregar_comentario':
+			if(isset($_SESSION['usuario'])){
+			unset($_POST['action']);
+			$resp = [];
+			if((isset($_POST['id_atencion']) && intval($_POST['id_atencion']) > 0) && (isset($_POST['inp_comentario']) && trim($_POST['inp_comentario']) != '')){
+				$_POST['fecha'] = date("Y-m-d H:i:s");
+				$_POST['ejecutiva'] = $_SESSION['usuario']['idAcceso'];
+				$resp = $prospM->registrar_comentario_seguimiento($_POST);
+			}
+			echo(json_encode($resp));
+			}else{
+				$array=array("error"=>'no_session');
+				echo(json_encode($array));
+			}
+			break;
+		case 'agregar_comentario_llamada':
+			if(trim($_POST['comentario']) != ''){
+				$resp = $prospM->registrar_comentario_seguimiento(['id_atencion'=>$_POST['idAtencion'], 'inp_comentario'=>$_POST['comentario']."|".$_POST['idLlamada'], 'fecha'=>date("Y-m-d H:i:s"), 'ejecutiva'=>$_SESSION['usuario']['idAcceso']]);
+				if($resp['estatus'] == 'ok'){
+					$resp = $prospM->actualizar_llamada_seguimiento($_POST['idLlamada'], 2, $resp['data']);
+				}
+			}else{
+				$resp = $prospM->actualizar_llamada_seguimiento($_POST['idLlamada'], 2);
+			}
+			
+			echo json_encode($resp);
+			break;
+		case 'actualizar_estatus_llamada':
+			$resp = [];
+			if(intval($_POST['estatus_cambio']) == 4){
+				$resp = $prospM->actualizar_llamada_seguimiento($_POST['idLlamada'], 4);
+				if($resp['estatus'] == 'ok'){
+					$resp = $prospM->agendar_llamada_seguimiento($_POST['atencion'], $_POST['fecha_llamada']);
+				}
+			}else if(intval($_POST['estatus_cambio']) == 3){
+				$resp = $prospM->actualizar_llamada_seguimiento($_POST['idLlamada'], 3);
+			}
+			echo json_encode($resp);
+			break;
+		case 'agendar_llamada':
+			if(isset($_SESSION['usuario'])){
+			unset($_POST['action']);
+			$resp = [];
+			if((isset($_POST['prospecto_llamar']) && intval($_POST['prospecto_llamar']) > 0) && isset($_POST['fecha_llamada']) && isset($_POST['hora_llamada'])){
+				$fecha_agendar = $_POST['fecha_llamada']." ".$_POST['hora_llamada'];
+				$resp = $prospM->agendar_llamada_seguimiento($_POST['prospecto_llamar'], $fecha_agendar);
+			}
+			echo(json_encode($resp));
+			}else{
+				$array=array("error"=>'no_session');
+				echo(json_encode($array));
+			}
+			break;
+		case 'pago_prospecto':
+			if(isset($_SESSION['usuario'])){
+			unset($_POST['action']);
+			$resp = [];
+			if((isset($_POST['person_pago']) && intval($_POST['person_pago']) > 0 ) && (isset($_POST['inp_monto_pago']) && intval(str_replace(["$", ","], "", $_POST["inp_monto_pago"])) > 0) && $_FILES['inp_comprobante_pago']['error'] == 0){
+				$prospecto = $prospM->consultar_prospecto_by_campo('idAsistente',$_POST['person_pago'])['data'][0];
+				$plan_pago = $_POST['tipo_pago'];
+
+				$tmp_name = $_FILES["inp_comprobante_pago"]["tmp_name"];
+				$uploads_dir = "../../../files/comprobantes_pago";
+		        $name = basename($_FILES["inp_comprobante_pago"]["name"]);
+		        $fileT = explode(".", $_FILES["inp_comprobante_pago"]["name"]);
+		        $fileT = $fileT[sizeof($fileT)-1];
+		        
+		        $nName = $_POST['inp_folio_pago']."_".strtotime(date("Y-m-d H:i:s")).".".$fileT;
+		        $statFile = move_uploaded_file($tmp_name, "$uploads_dir/$nName");
+
+		        $detalle = formato_pago($_POST['inp_folio_pago'], str_replace(["$", ","], "", $_POST["inp_monto_pago"]), $_POST['inp_fecha_pago'], $prospecto['nombre'], $prospecto['aPaterno'], $prospecto['aMaterno'], $prospecto['correo'], $plan_pago);
+		        if($statFile){
+					$reg_p = $prospM->registrarPagoEvento($_POST['evento_pago'], $_POST['person_pago'], json_encode($detalle), $plan_pago, $nName);
+                    
+                    $fecha= date('Y-m-d H:i:s');
+                    $finmembresia = date("Y-m-d H:i:s",strtotime($fecha."+ 1 year"));
+					$detalle = formato_pago($_POST['inp_folio_pago'], "00", $_POST['inp_fecha_pago'], $prospecto['nombre'], $prospecto['aPaterno'], $prospecto['aMaterno'], $prospecto['correo'], $plan_pago);
+					if ($plan_pago==5) {
+                        $resp3 = $prospM->asignarmembresiagratis($_POST['evento_pago'], $_POST['person_pago'], json_encode($detalle), 7,$finmembresia);
+                    }
+                    if ($plan_pago==1) {
+                        $resp3 = $prospM->asignarmembresiagratis($_POST['evento_pago'], $_POST['person_pago'], json_encode($detalle), 6,$finmembresia);
+                    }
+                    if ($plan_pago==11) {
+                        $resp3 = $prospM->asignarmembresiagratis($_POST['evento_pago'], $_POST['person_pago'], json_encode($detalle), 12,$finmembresia);
+                    }
+					if ($plan_pago==15) {
+                        $resp3 = $prospM->asignarmembresiagratis($_POST['evento_pago'], $_POST['person_pago'], json_encode($detalle), 17,$finmembresia);
+                    }
+					if ($plan_pago==16) {
+                        $resp3 = $prospM->asignarmembresiagratis($_POST['evento_pago'], $_POST['person_pago'], json_encode($detalle), 18,$finmembresia);
+                    }
+					if ($plan_pago==19) {
+                        $resp3 = $prospM->asignarmembresiagratis($_POST['evento_pago'], $_POST['person_pago'], json_encode($detalle), 20,$finmembresia);
+                    }
+					if ($plan_pago==21) {
+						$fecha= date('Y-m-d H:i:s');
+						$finmembresia = date("d-m-Y",strtotime($fecha."+ 6 month"));
+                        $resp3 = $prospM->asignarmembresiagratis($_POST['evento_pago'], $_POST['person_pago'], json_encode($detalle), 22,$finmembresia);
+                    }
+
+					$resp = $reg_p;
+		        }else{
+				    unlink("$uploads_dir/$nName");
+					$resp = ['estatus'=>'error', 'info'=>'error_al_adjuntar_comprobante'];
+		        }
+			}
+			echo(json_encode($resp));
+			}else{
+				$array=array("error"=>'no_session');
+				echo(json_encode($array));
+			}
+			break;
+		case 'conceptosPago':
+			echo json_encode($prospM->conceptos_pago());
+			break;
+		case 'validar_codigo':
+			if (isset($_POST['cod']) && isset($_POST['event']) && trim($_POST['cod']) != '') {
+				echo json_encode(in_array(strtoupper($_POST['cod']), $promos[$_POST['event']])? 1 : 0);
+			}else{
+				echo json_encode(0);
+			}
+			break;
+		case 'actualizar_info_prospecto':
+			unset($_POST['action']);
+
+			$resp = [];
+			if (isset($_POST['inp_prospect_edit']) && intval($_POST['inp_prospect_edit']) > 0) {
+				$_POST["edit_pr_nombre"] = $prospM->quitaracentosconvertirmayusculas($_POST["edit_pr_nombre"]);
+				$_POST["edit_pr_apaterno"] = $prospM->quitaracentosconvertirmayusculas($_POST["edit_pr_apaterno"]);
+				$_POST["edit_pr_amaterno"] = $prospM->quitaracentosconvertirmayusculas($_POST["edit_pr_amaterno"]);
+
+				// validar actualizar correo
+				$info_prosp = $prospM->obtenerdatosprospecto($_POST['inp_prospect_edit']);
+				if($info_prosp['data'] && $info_prosp['data']['correo'] != $_POST['edit_pr_correo']){
+					$existe_correo = $prospM->validar_email_afiliado($_POST['edit_pr_correo']);
+					if($existe_correo){
+						echo json_encode(['estatus'=>'error', 'mensaje'=>'Este correo ya está siendo utilizado por otro usuario.']);
+						die();
+					}
+				}
+
+				if (isset($_POST['edit_pr_curp']) && strlen($_POST['edit_pr_curp']) > 0) {
+					$Afiliado_cambio = $prospM->actalizar_curp_afiliado($_POST["edit_pr_curp"],$_POST["inp_prospect_edit"]);
+				}
+				unset($_POST['edit_pr_curp']);
+
+				$resp = $prospM->actalizar_informacion_contacto($_POST);
+			}else{
+				$resp = ['estatus'=>'error','info'=>'Prospecto incorrecto'];
+			}
+			echo json_encode($resp);
+			break;
+		case 'asistencias_eventos_prospecto':
+			unset($_POST['action']);
+			$resp = [];
+
+			# 1) verificar que el input haya leido un json, si no, pone el valor del input dentro de llaves
+			if(substr($_POST['jsonasistencia'], 0, 1) != '{'){
+				$_POST['jsonasistencia'] = '{'.$_POST['jsonasistencia'].'}';
+			}
+			
+			# 2) decodificar el json del input
+			if(!json_decode($_POST['jsonasistencia'],true)){
+				echo json_encode(['estatus'=>'error', 'info' => "Error al decodificar el QR"]);
+				die();
+			}
+
+			$json_r = json_decode($_POST['jsonasistencia'],true);
+			# 3) buscar todos los pagos del prospecto
+			$arr_pagos = $prospM->consultar_todo_pagos_prospecto($json_r['id_persona']);
+
+			if(isset($arr_pagos) && isset($arr_pagos)){
+				# 4) suma de pagos registrados 
+				$id_cismac = [1,5,10,11,14,15,16,19,21];
+	 			
+	 			//$becados = [654, 653, 549, 533, 524, 432, 216,48,126,78,81,708,707,706,705,704,703,702,701,700,140,722,688,723,264,33,156,155,726,727,725,137,99,732,724,728,730,337,212,739,695,11,21];
+				$becados = [704,732,700,724,705,728,727,730,703,722,702,725,708,682,688,726,706,140,337,701,707,21,48,11,81,65,70,370,59,209,732,724,337,137,216,212,432,437,632,549,533,654,653,695];
+				$sum_cismac = 0; //(suma de cismac contiene todos los cismac y precongreso)
+				$id_pago_precongreso = 10;
+				$sum_prec = 0;
+	
+				if($arr_pagos['estatus'] == 'ok'){
+				  $a_p = $arr_pagos['data'];
+				  
+				  $conceptos_p = [];
+				  for ($i=0; $i < sizeof($a_p); $i++) { 
+				    $a_p[$i]['detalle_pago'] = json_decode($a_p[$i]['detalle_pago'],true);
+				    if(!in_array($a_p[$i]['concepto'], array_keys($conceptos_p))){
+				      $conceptos_p[$a_p[$i]['concepto']] = floatval($a_p[$i]['monto_pago']);
+				    }else{
+				      $conceptos_p[$a_p[$i]['concepto']] += floatval($a_p[$i]['monto_pago']);
+				    }
+	
+				    if(in_array($a_p[$i]['id_concepto'], $id_cismac)){
+				      $sum_cismac+=floatval($a_p[$i]['monto_pago']);
+				    }
+	
+				    if($a_p[$i]['id_concepto'] == $id_pago_precongreso){
+				      $sum_prec+=floatval($a_p[$i]['monto_pago']);
+				    }
+				  }
+				}
+	
+				$li_cis = ($sum_cismac >= 3000)? true : false;
+				$li_pre = ($sum_cismac >= 1500)?true : false;
+
+				# 5) consultar que exista el evento
+				$resp['info_evento'] = $evtM->consultarEvento_Id($json_r['id_evento'])['data'];
+				if($resp['info_evento']){
+					# 6) si el eveto es 2 (cismac) busca talleres registrados
+					if($resp['info_evento']['idEvento'] == 2){
+						$resp['talleres'] = $prospM->asistente_talleres_reservados($json_r['id_persona'])['data'];
+					}
+
+					$resp['monto_pago'] = $sum_cismac;
+					$resp['persona'] = $prospM->consultar_info_prospecto_afiliado($json_r['id_persona'])['data'];
+					/*
+						* ESTO SE TIENE QUE QUITAR |
+						*						   v
+					*/
+						// $resp['info_evento']['fechaE'] = "2021-11-05";
+						// $resp['info_evento']['fechaLimite'] = "2021-11-05";
+					
+					# 7) convertir fechas para comparar
+					$f_evento = strtotime($resp['info_evento']['fechaE']);
+					$ult_dia_ev = strtotime(substr($resp['info_evento']['fechaLimite'], 0, 10));
+
+					$_hoy = strtotime(date("Y-m-d"));
+
+					$resp['dia_evento'] = ($_hoy >= $f_evento)? true : false;
+
+					# 8) verificar que el dia del evento sea presente Y tiene los montos completos de los pagos
+						# o es alguna persona becada
+					if($resp['dia_evento'] && (($li_pre || $li_cis) || in_array($json_r['id_persona'], $becados))){
+						require_once '../../Model/asistentes/asistentesModel.php';
+						$asistM = new Asistentes();
+						$verificar_asistencia_e = $asistM->consultar_asistencia_evento($json_r['id_persona'],$json_r['id_evento']);
+						$resp['becado'] = in_array($json_r['id_persona'], $becados) ? true : false;
+						# 9) verificar si al dia de hoy ya tiene alguna asistencia
+						if(sizeof($verificar_asistencia_e['data']) > 0){
+							$ult_fe_asistencia = strtotime(substr($verificar_asistencia_e['data'][0]['hora'], 0, 10));
+							# 10) verificar que la ultima asistencia registrada sea de un dia distinto al de hoy
+							if($ult_fe_asistencia != $_hoy){
+
+								# 11) si la asistencia se esta tomando el mismo dia del evento se enviaran las constancias
+								if(date("Y-m-d", $_hoy) == substr($resp['info_evento']['fechaLimite'], 0, 10)){
+
+									// 12) generar constancias
+									require_once '../../functions/constancias.php';
+									$plantilla = '';
+
+									if($json_r['id_evento'] == 2){
+										$plantilla = '../../functions/plantillas_constancias/reconocimientogeneral.jpg';
+									}else if($json_r['id_evento'] == 30){
+										$plantilla = '../../functions/plantillas_constancias/precongreso.jpg';
+									}
+
+									$nombre = $resp['persona']['nombre'].' '.$resp['persona']['aPaterno'].' '.$resp['persona']['aMaterno'];
+									$nombre_reconocimiento = $resp['info_evento']['tipo']."_".$resp['info_evento']['titulo']."_".str_replace(' ', '_', $nombre).'_'.$json_r['id_persona'].'_'.$json_r['id_evento'];
+									$salida = "../../../images/constancias/";
+									$file = generar_pdf_constancia($plantilla, $nombre, $nombre_reconocimiento, $salida);
+									$resp['constancia'] = $file;
+
+									# 13) enviar constancias
+									
+									$asistencia = $asistM->registrarasistencia($file, $json_r['id_persona'],$json_r['id_evento'],'');
+									$resp['asistencia'] = true;
+
+									require_once '../../functions/correos_prospectos.php';
+									$asunto = "Envío de constancia de asistencia";
+
+									$destinatarios = [[$resp['persona']['email'], $resp['persona']['nombre']]];
+									// $destinatarios = [['pajaro.octavio96@gmail.com', $resp['persona']['nombre']]];
+									$plantilla_c = 'notificacion_constancias.html';
+									$claves = ['%%PERSONA_INTERES','%%EVENTO'];
+									$valores = [$resp['persona']['nombre'], $resp['info_evento']['titulo']];
+									$adjunto = "../../../images/constancias/".$file;
+									$enviar = enviar_correo_registro($asunto, $destinatarios, $plantilla_c, $claves, $valores, $adjunto);
+									$resp['envio'] = $enviar;
+
+								}else{
+									# 11 B) si no solo se registra la asistencia
+									$asistencia = $asistM->registrarasistencia('',$json_r['id_persona'],$json_r['id_evento'],'');
+									$resp['asistencia'] = true;
+								}
+
+							}else{
+								# 10 B) si no, no toma asistencia
+								$resp['asistencia'] = false;
+							}
+						}else{
+							# 9 B) si no, marca su primer asistencia
+							if(date("Y-m-d", $_hoy) == substr($resp['info_evento']['fechaLimite'], 0, 10)){
+
+									// 12) generar constancias
+									require_once '../../functions/constancias.php';
+									$plantilla = '';
+
+									if($json_r['id_evento'] == 2){
+										$plantilla = '../../functions/plantillas_constancias/reconocimientogeneral.jpg';
+									}else if($json_r['id_evento'] == 30){
+										$plantilla = '../../functions/plantillas_constancias/precongreso.jpg';
+									}
+
+									$nombre = $resp['persona']['aPaterno'].' '.$resp['persona']['aMaterno'].' '.$resp['persona']['nombre'];
+									$nombre_reconocimiento = $resp['info_evento']['tipo']."_".$resp['info_evento']['titulo']."_".str_replace(' ', '_', $nombre).'_'.$json_r['id_persona'].'_'.$json_r['id_evento'];
+									$salida = "../../../images/constancias/";
+									$file = generar_pdf_constancia($plantilla, $nombre, $nombre_reconocimiento, $salida);
+									$resp['constancia'] = $file;
+
+									# 13) enviar constancias
+									
+									$asistencia = $asistM->registrarasistencia($file, $json_r['id_persona'],$json_r['id_evento'],'');
+									$resp['asistencia'] = true;
+
+									require_once '../../functions/correos_prospectos.php';
+									$asunto = "Envío de constancia de asistencia";
+
+									$destinatarios = [[$resp['persona']['email'], $resp['persona']['nombre']]];
+									// $destinatarios = [['pajaro.octavio96@gmail.com', $resp['persona']['nombre']]];
+									$plantilla_c = 'notificacion_constancias.html';
+									$claves = ['%%PERSONA_INTERES','%%EVENTO'];
+									$valores = [$resp['persona']['nombre'], $resp['info_evento']['titulo']];
+									$adjunto = "../../../images/constancias/".$file;
+									$enviar = enviar_correo_registro($asunto, $destinatarios, $plantilla_c, $claves, $valores, $adjunto);
+									$resp['envio'] = $enviar;
+
+								}else{
+									# 11 B) si no solo se registra la asistencia
+									$asistencia = $asistM->registrarasistencia('',$json_r['id_persona'],$json_r['id_evento'],'');
+									$resp['asistencia'] = true;
+								}
+						}
+					}
+				}else{
+					$resp = ['estatus'=>'error','info'=>'No hay información referente al evento buscado.', 'ev'=>$resp['info_evento']];
+				}
+			}else{
+				$resp = ['estatus'=>'error','info'=>'Asistente no identificado'];
+			}
+
+			echo json_encode($resp);
+			break;
+		case 'prospectos_permiso_evento':
+			$resp = [];
+			$evento = null;
+			if(isset($_POST['evento'])){
+				$evento = $evtM->consultarEvento_Id($_POST['evento']);
+				if($evento['data']){
+					$institucion_e = $evento['data']['idInstitucion'];
+					if($evento['data']['idEvento'] == 35){
+						$institucion_e = [19,20];
+					}
+					if(gettype($institucion_e) == 'array'){
+						$ids = (sizeof($institucion_e) > 1)? implode(', ', $institucion_e) : $institucion_e[0];
+					}else{
+						$ids = $institucion_e;
+					}
+					$resp = $prospM->obtener_afiliados_instituciones($ids);
+				}else{
+					$resp = ['estatus'=>'error','info'=>'Evento no valido.'];
+				}
+			}else{
+				$resp = ['estatus'=>'error','info'=>'No se definió el evento.'];
+			}
+
+			echo json_encode($resp);
+			break;
+		case 'consultar_prospectos_conceptos-pago':
+			$id_ota = [2, 5, 7, 9, 16, 18];
+			$datos = $prospM->consultar_alumnos_con_conceptos_pago($id_ota);
+			foreach ($datos['data'] as $key => $value) {
+				// print_r($value);
+				$datos['data'][$key]['detalle_pago'] = json_decode($value['detalle_pago'], TRUE);
+			}
+			echo json_encode($datos);
+			break;
+		case 'cambio_estatus_prospecto':
+			$resp = [];
+			if(!isset($_POST['seguim']) || !isset($_POST['stat'])){
+				$resp = ['estatus'=>'error','info'=>'Falta información para procesar la solicitud.'];
+			}else{
+				$stat_prosp = $prospM->get_estatus_seguimiento($_POST['seguim']);
+				if($stat_prosp){
+					if(intval($stat_prosp['etapa']) != 3){
+						$resp = $prospM->actualizar_estatus_seguimiento($_POST['stat'], $_POST['seguim']);
+					}else{
+						$resp = ['estatus'=>'error','info'=>'No es posible cambiar a un prospecto una vez que ya fue confirmado.'];
+					}
+				}else{
+					$resp = ['estatus'=>'error','info'=>'No se encontró el estatus de seguimiento.'];
+				}
+			}
+			echo json_encode($resp);
+			break;
+		case 'actualizar_destino':
+			$resp = [];
+			if(isset($_POST['reg_id']) && isset($_POST['select_cambio_d']) && isset($_POST['dest_t'])){
+				$estatus_actual = $prospM->get_estatus_seguimiento($_POST['reg_id']);
+				if($estatus_actual){
+					if(($estatus_actual['tipo_atencion'] == 'evento' && $_POST['dest_t'] == 'e') && ($estatus_actual['evento_carrera'] == $_POST['select_cambio_d'])){
+						$resp = ['estatus'=>'error','info'=>'No hay cambios a aplicar.'];
+					}else if(($estatus_actual['tipo_atencion'] == 'carrera' && $_POST['dest_t'] == 'c') && ($estatus_actual['evento_carrera'] == $_POST['select_cambio_d'])){
+						$resp = ['estatus'=>'error','info'=>'No hay cambios a aplicar.'];
+					}else{
+						$resp = $prospM->actualizar_destino($_POST['reg_id'], $_POST['select_cambio_d']);
+					}
+				}else{
+					$resp = ['estatus'=>'error','info'=>'No se encontró el estatus de seguimiento.'];
+				}
+			}else{
+				$resp = ['estatus'=>'error','info'=>'Falta información para procesar la solicitud.'];
+			}
+			echo json_encode($resp);
+			break;
+		case 'consultar_prospecto':
+			$pinfo_prs = $prospM->consultar_info_prospecto_a($_POST['prospecto']);
+			if(intval($pinfo_prs['data']['idAsociacion']) > 0){
+				$verificar_clinica = $alumnInst->getInfo_Institucion($pinfo_prs['data']['idAsociacion']);
+				$pinfo_prs['data']['acuerdo_asociacion'] = $verificar_clinica['acuerdo'];
+			}
+			echo json_encode($pinfo_prs);
+			break;
+		case 'consultar_prospectos_institucion':
+			if($_POST['institucion'] != ''){
+
+				$refs = $prospM->consultar_prospecto_by_campo('idAsociacion', $_POST['institucion']);
+				if(isset($_SESSION['alumno'])){
+					foreach($refs['data'] as $key => $value){
+						if($value['correo'] == $_SESSION['alumno']['email']){
+							unset($refs['data'][$key]);
+						}
+					}
+					$refs = array_values($refs['data']);
+				}
+				echo json_encode($refs);
+			}else{
+				echo json_encode(['estatus'=>'error','info'=>'No se definió la institución.']);
+			}
+			break;
+		case 'consultar_eventos_prospecto':
+			if(isset($_POST['prospecto']) || isset($_SESSION['alumno']['id_prospecto'])){
+				$prospecto = isset($_POST['prospecto']) ? $_POST['prospecto'] : $_SESSION['alumno']['id_prospecto'];
+				$resp = $prospM->consultar_eventos_prospecto($prospecto)['data'];
+				if(isset($_POST['tipo'])){
+					foreach($resp as $var => $evento){
+						if($evento['tipo_evento'] != $_POST['tipo']){
+							unset($resp[$var]);
+						}
+					}
+				}
+				foreach($resp as $var => $evento){
+					if($evento['webex_id'] != null && $evento['webex_id'] > 0){
+						$f_disp = strtotime($evento['fechaDisponible']);
+						$f_fin = strtotime($evento['fechaLimite']);
+						$f_actual = strtotime(date('Y-m-d'));
+						if($f_actual < $f_disp && $f_actual > $f_fin){
+							$resp[$var]['webex_id'] = null;
+						}
+					}
+				}
+				$resp = array_values($resp);
+				echo json_encode($resp);
+			}else{
+				echo json_encode(['estatus'=>'error','info'=>'No se definió el prospecto.']);
+			}
+			break;
+		case 'registrar_muchos':
+			$agregados = false;
+			foreach($_POST['prospectos'] as $prospect){
+				$datos = $prospM->obtenerdatosprospecto($prospect);
+				$asistencia = $evtM->validarCorreo_Evento($datos['data']['correo'], $_POST['evento']);
+				if(empty($asistencia['data'])){
+					$asoc = $marketM->set_prospecto_fila('evento', $prospect, 8, $_POST['evento']);
+					$agregados = true;
+				}
+			}
+			echo json_encode(['estatus'=>($agregados) ? 'ok' : 'error', 'info'=>($agregados) ? 'Prospectos agregados.' : 'No se agregaron prospectos.']);
+			break;
+		case 'consultar_prospectos_institucion_eventos':
+			$listados = [];
+			foreach($_POST['prosps'] as $prosp){
+				$evts = $prospM->consultar_eventos_prospecto($prosp);
+				foreach($evts['data'] as $evt){
+					// print_r($evt);
+					if($evt['evento_carrera'] == $_POST['evento']){
+						$listados[] = $prosp;
+					}
+				}
+			}
+			echo json_encode($listados);
+			break;
+		default:
+				echo('noaction');
+			break;
+	}
+}else{
+	header('Location: ../../../../index.php');
+}
+
+function formato_pago($id_pago, $monto, $fecha, $nombres, $apellidoP, $apellidoM, $correo, $plan_pago){
+	$nombre_completo = $nombres." ".$apellidoP." ".$apellidoM;           
+
+	$infopago = array(
+		'id' => $id_pago,
+		'intent' => 'CAPTURE',
+		'status' => 'COMPLETED',
+		'purchase_units' => array(
+			array(
+				'reference_id' => 'default',
+				'amount' => array(
+					'currency_code' => 'MXN',
+					'value' => $monto
+				),
+				'payee' => array(
+					'email_address' => 'pagos@universidaddelconde.edu.mx',
+					'merchant_id' => 'AZUHGK3DWV9NC'
+				),
+				'description' => $plan_pago,
+				'soft_descriptor' => 'PAYPAL *UNIVERSIDAD',
+				'shipping' => array(
+					'name' => array(
+						'full_name' => $nombre_completo
+					),
+					'address' => array(
+						'address_line_1' => '',
+						'address_line_2' => '',
+						'admin_area_2' => '',
+						'admin_area_1' => '',
+						'postal_code' => '',
+						'country_code' => 'MX'
+					)
+				),
+				'payments' => array(
+					'captures' => array(
+						array(
+							'id' => $id_pago,
+							'status' => 'COMPLETED',
+							'amount' => array(
+								'currency_code' => 'MXN',
+								'value' => $monto
+							),
+							'final_capture' => true,
+							'seller_protection' => array(
+								'status' => 'ELIGIBLE',
+								'dispute_categories' => array(
+									'ITEM_NOT_RECEIVED',
+									'UNAUTHORIZED_TRANSACTION'
+								)
+							),
+							'create_time' => $fecha.'T16:36:52Z',
+							'update_time' => $fecha.'T16:36:52Z'
+						)
+					)
+				)
+			)
+		),
+		'payer' => array(
+			'name' => array(
+				'given_name' => $nombres,
+				'surname' => $apellidoP
+			),
+			'email_address' => $correo,
+			'payer_id' => '-',
+			'address' => array(
+				'country_code' => 'MX'
+			)
+		),
+		'create_time' => $fecha.'T16:36:52Z',
+		'update_time' => $fecha.'T16:36:52Z'
+	);
+
+	return $infopago;
+}
+?>

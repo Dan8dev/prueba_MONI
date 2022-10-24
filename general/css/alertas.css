@@ -1,0 +1,73 @@
+.swal-overlay {
+    background-color: rgba(29, 28, 28, 0.70);
+  }
+
+.swal-button {
+    padding: 7px 19px;
+    border-radius: 2px;
+    background-color: #469cd3;
+    font-size: 12px;
+    border: 1px solid #469cd3;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
+}
+
+.swal-button:not([disabled]):hover {
+    padding: 7px 19px;
+    border-radius: 2px;
+    background-color: #3d3d3d;
+    font-size: 12px;
+    border: 1px solid #3d3d3d;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
+}
+
+
+.swal-icon--success {
+    border-color: #469cd3;
+}
+
+.swal-icon--success__line {
+    height: 5px;
+    background-color: #469cd3;
+    display: block;
+    border-radius: 2px;
+    position: absolute;
+    z-index: 2;
+}
+
+.swal-icon--success__ring {
+    width: 80px;
+    height: 80px;
+    border: 4px solid hsl(98deg 1% 9% / 20%);
+    border-radius: 50%;
+    box-sizing: content-box;
+    position: absolute;
+    left: -4px;
+    top: -4px;
+    z-index: 2;
+}
+
+.swal-icon--info::after, .swal-icon--info::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    background-color: #469cd3;
+}
+
+.swal-icon--info {
+    border-color: #469cd3;
+}
+
+
+.swal-icon--warnign {
+    border-color: #469cd3;
+}
+
+.swal-button--cancel {
+    color: #555;
+    background-color: #efefef!important;
+}
+
+
+
+
+

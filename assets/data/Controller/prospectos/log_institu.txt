@@ -1,0 +1,1 @@
+UPDATE afiliados_conacon SET `estatus` = '10' WHERE id_prospecto = '81'

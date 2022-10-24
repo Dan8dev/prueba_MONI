@@ -1,0 +1,17 @@
+<?php 
+	function generar_pdf_constancia($plantilla, $nombre, $nombre_reconocimiento, $salida){
+		require('fpdf183/fpdf.php');
+        $pdf = new FPDF('L','cm','Letter');
+        $pdf->AddPage();
+        $img_type = explode('.',$plantilla);
+        $img_type = $img_type[sizeof($img_type)-1];
+        $pdf->Image($plantilla,0,0,28,0,strtoupper($img_type));
+        // Nombre y Apellido
+        $pdf->SetFont('helvetica','B',35);
+        $pdf->Text(6,10,$nombre);
+        
+        $nombre_reconocimiento = $nombre_reconocimiento.'.pdf';
+        $pdf->Output('F', $salida.$nombre_reconocimiento);
+        return $nombre_reconocimiento;
+	}
+?>

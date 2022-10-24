@@ -1,0 +1,136 @@
+function initPayPalButtonBasic() {
+          paypal.Buttons({
+            style: {
+              shape: 'pill',
+              color: 'blue',
+              layout: 'vertical',
+              label: 'pay',
+              
+            },
+            //description
+            //monto y tipo moneda
+            createOrder: function(data, actions) {
+              return actions.order.create({
+                purchase_units: [{"description":"Certificacion OTA ","amount":{"currency_code":"MXN","value":6000 }}]
+              });
+            },
+
+            onApprove: function(data, actions) {
+              return actions.order.capture().then(function(details) {
+                // if(details.status == "COMPLETED"){
+                //   detallePago = {
+                //     referencia : details.id
+                //   }
+                // }
+				RegistrarPago(JSON.stringify(details), 'UNICO');
+                //alert('Transaction completed by ' + details.payer.name.given_name + '!');
+              });
+            },
+
+            onError: function(err) {
+              console.log(err);
+            }
+          }).render('#paypal-button-container-unico');
+        }
+        function initPayPalButtonComplet() {
+          paypal.Buttons({
+            style: {
+              shape: 'pill',
+              color: 'blue',
+              layout: 'vertical',
+              label: 'pay',
+              
+            },
+
+            createOrder: function(data, actions) {
+              return actions.order.create({
+                purchase_units: [{"description":"Certificacion OTA ","amount":{"currency_code":"MXN","value":1500 }}]
+              });
+            },
+
+            onApprove: function(data, actions) {
+              return actions.order.capture().then(function(details) {
+                // idtransaction
+				RegistrarPago(JSON.stringify(details), 'ANTICIPO');
+                //alert('Transaction completed by ' + details.payer.name.given_name + '!');
+              });
+            },
+
+            onError: function(err) {
+              console.log(err);
+            }
+          }).render('#paypal-button-container-anticipo');
+        }
+        
+        /*function initPayPalButtonOnePesito() {
+          paypal.Buttons({
+            style: {
+              shape: 'pill',
+              color: 'blue',
+              layout: 'vertical',
+              label: 'pay',
+              
+            },
+
+            createOrder: function(data, actions) {
+              return actions.order.create({
+                purchase_units: [{"description":"Certificacion OTA ","amount":{"currency_code":"MXN","value":0.50 }}]
+              });
+            },
+
+            onApprove: function(data, actions) {
+              return actions.order.capture().then(function(details) {
+                // idtransaction
+                RegistrarPago(JSON.stringify(details), 'one_pesito');
+                alert('Transaction completed by ' + details.payer.name.given_name + '!');
+              });
+            },
+
+            onError: function(err) {
+              console.log(err);
+            }
+          }).render('#paypal-button-container-one_pesito');
+        }*/
+
+        initPayPalButtonBasic()
+        initPayPalButtonComplet()
+        //initPayPalButtonOnePesito();
+
+        function RegistrarPago(stringPago, plan){
+          fData = {
+            action: 'registrar_pago',
+            evento : usrInfo.idEvento,
+            persona : usrInfo.idAsistente,
+            detalle : stringPago,
+            plan_pago : plan,
+            talleres : ''
+          }
+          $.ajax({
+            url: "../data/CData/afiliadosControl.php",
+            type: "POST",
+            data: fData,
+            beforeSend : function(){
+              $(".outerDiv_S").css("display", "block")
+            },
+            success: function(data){
+              try{
+                respuesta = JSON.parse(data);
+                if(respuesta.estatus == 'ok'){
+                  alert('hemos recibido la información de su pago, nos pondremos en contacto con usted brevemente.')
+                }else{
+                  alert('ha ocurrido un error al intentar registrar su pago, contacte a soporte técnico')
+                }
+                console.log(respuesta)
+              }catch(e){
+                console.log(e);
+                console.log(data);
+              }
+            },
+            error: function(){
+            },
+            complete: function(){
+              $(".outerDiv_S").css("display", "none")
+            }
+          
+          })
+        }

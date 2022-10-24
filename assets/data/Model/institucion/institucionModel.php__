@@ -1,0 +1,32 @@
+<?php 
+date_default_timezone_set("America/Mexico_City");
+	class Institucion {
+
+		public function consultarTodoInstituciones($estat = 1){
+			$conexion = new Conexion(); 
+			$con = $conexion->conectar(); 
+			$response = [];
+
+			if($con["info"] == "ok"){ 
+				$con = $con["conexion"];
+				$sql = "SELECT * FROM `a_instituciones` WHERE estatus = :estat ORDER BY nombre;"; 
+
+				$statement = $con->prepare($sql); 
+				$statement->bindParam(':estat', $estat);			  
+				$statement->execute();			  
+					
+				if($statement->errorInfo()[0] == 0000){
+					$response = ["estatus"=>"ok", "data"=>$statement->fetchAll(PDO::FETCH_ASSOC)];
+				}else{
+					$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql];
+				}
+			}
+
+			$conexion = null;
+			$con = null;
+				#retornar el arreglo construido
+			return $response;
+		}
+
+	}
+?>

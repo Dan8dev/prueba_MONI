@@ -1,0 +1,575 @@
+{
+	"Resultado": "Exitoso",
+	"Encontrados": [
+		{
+			"IDAlumno": "14717",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/14717_1_Perfil_CC_C.JPG' width='150' title='ACEVES LEYVA JESUS ALONSO' />",
+			"NombreCompleto": "ACEVES LEYVA JESUS ALONSO",
+			"Correo": "jesusley007@gmail.com",
+			"Celular": "6672133679",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16921",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='ANGUIANO BARRERA RAMON' />",
+			"NombreCompleto": "ANGUIANO BARRERA RAMON",
+			"Correo": "rm0108467@gmail.com",
+			"Celular": "",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16150",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/16150_1_Perfil_Foto.jpg' width='150' title='AVILA DE SANTIAGO JOSE ALFREDO' />",
+			"NombreCompleto": "AVILA DE SANTIAGO JOSE ALFREDO",
+			"Correo": "nous777@gmail.com",
+			"Celular": "3338066815",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16203",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/16203_1_Perfil_Angel_Alfonso_Aviles_Anzures.png' width='150' title='AVILES ANZURES ANGEL ALFONSO' />",
+			"NombreCompleto": "AVILES ANZURES ANGEL ALFONSO",
+			"Correo": "ing_angel.aviles@hotmail.com",
+			"Celular": "3222549178",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16111",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='BERNAL HERNANDEZ JULIO CESAR' />",
+			"NombreCompleto": "BERNAL HERNANDEZ JULIO CESAR",
+			"Correo": "juliohbernal@hotmail.com",
+			"Celular": "3222621512",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16922",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='BERUMEN CARDENAS JESUS EDUARDO' />",
+			"NombreCompleto": "BERUMEN CARDENAS JESUS EDUARDO",
+			"Correo": "jesuseduardoberumen@gmail.com",
+			"Celular": "3310189185",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16924",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='BRISEÑO AVILA SERGIO' />",
+			"NombreCompleto": "BRISEÑO AVILA SERGIO",
+			"Correo": "comunidadterapeutica3@gmail.com",
+			"Celular": "3223217777",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16548",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='BRISEÑO LOPEZ ARMANDO' />",
+			"NombreCompleto": "BRISEÑO LOPEZ ARMANDO",
+			"Correo": "armandoconacon_reintegrate@hotmail.com",
+			"Celular": "5624266030",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16223",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='CALDERON CASTRO MAURICIO GIBRAN' />",
+			"NombreCompleto": "CALDERON CASTRO MAURICIO GIBRAN",
+			"Correo": "gibrancalderon1983@gmail.com",
+			"Celular": "3222167170",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16209",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='CASILLAS VILLA ADRIANA ELIZABETH' />",
+			"NombreCompleto": "CASILLAS VILLA ADRIANA ELIZABETH",
+			"Correo": "adicasillas200902@gmail.com",
+			"Celular": "3881068576",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16193",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='CURIEL JIMENEZ JESSICA DYCSAYARA' />",
+			"NombreCompleto": "CURIEL JIMENEZ JESSICA DYCSAYARA",
+			"Correo": "dycsa.curiel96@gmail.com",
+			"Celular": "6692399121",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16234",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='DELGADO LOPEZ KEVIN MARTIN' />",
+			"NombreCompleto": "DELGADO LOPEZ KEVIN MARTIN",
+			"Correo": "kevinconacon_reintegrate@hotmail.com",
+			"Celular": "5575473562",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16926",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='ESCOBEDO MARQUEZ LUIS ALEJANDRO' />",
+			"NombreCompleto": "ESCOBEDO MARQUEZ LUIS ALEJANDRO",
+			"Correo": "alex.marquez93@hotmail.com",
+			"Celular": "3332400442",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16247",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='FAJARDO PEREZ DAVID' />",
+			"NombreCompleto": "FAJARDO PEREZ DAVID",
+			"Correo": "faperez66@hotmail.com",
+			"Celular": "3411023968",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16339",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/16339_1_Perfil_FOTO_JOEL_GARCIA.jpg' width='150' title='GARCIA GARCIA JOEL' />",
+			"NombreCompleto": "GARCIA GARCIA JOEL",
+			"Correo": "joelconacon_reintegrate@hotmail.com",
+			"Celular": "8717352744",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16454",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/16454_1_Perfil_IMG-20210108-WA0090.jpg' width='150' title='GARCIA GUERRERO MARIA DEL CIELO' />",
+			"NombreCompleto": "GARCIA GUERRERO MARIA DEL CIELO",
+			"Correo": "gcielo686@gmail.com",
+			"Celular": "3310940675",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "CUARTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16274",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/16274_1_Perfil_IMG_20210105_152044.jpg' width='150' title='GARCIA MADERO JOSE OSCAR' />",
+			"NombreCompleto": "GARCIA MADERO JOSE OSCAR",
+			"Correo": "omadero143@gmail.com",
+			"Celular": "6461211135",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16191",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='GARCIA MENDOZA JUAN CARLOS' />",
+			"NombreCompleto": "GARCIA MENDOZA JUAN CARLOS",
+			"Correo": "jgarciamendoza986@gmail.com",
+			"Celular": "3221931083",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16604",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/16604_1_Perfil_20210216_131712.jpg' width='150' title='GAYTAN CALDERON FELIPE' />",
+			"NombreCompleto": "GAYTAN CALDERON FELIPE",
+			"Correo": "gaytancfelipe@gmail.com",
+			"Celular": "4433546926",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16201",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='GODINEZ NAVARRO MAGALI ELIZABETH' />",
+			"NombreCompleto": "GODINEZ NAVARRO MAGALI ELIZABETH",
+			"Correo": "magui_lujo@live.com.mx",
+			"Celular": "3221972501",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "15131",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/15131_1_Perfil_Polish_20210320_191859812.jpg' width='150' title='GOMEZ CASTELLANOS JOEL SINUE' />",
+			"NombreCompleto": "GOMEZ CASTELLANOS JOEL SINUE",
+			"Correo": "sinuegomez.cne@gmail.com",
+			"Celular": "3326169197",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16250",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='GOMEZ RABAGO CHRISTIAN ZABDIEL' />",
+			"NombreCompleto": "GOMEZ RABAGO CHRISTIAN ZABDIEL",
+			"Correo": "zabdielgrabago@gmail.com",
+			"Celular": "6681702648",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16972",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='GONZALEZ RAMOS ROSA EDITH' />",
+			"NombreCompleto": "GONZALEZ RAMOS ROSA EDITH",
+			"Correo": "princes28gonzalez@gmail.com",
+			"Celular": "3310189185",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16194",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='GONZALEZ URIBE MELISSA YADIRA' />",
+			"NombreCompleto": "GONZALEZ URIBE MELISSA YADIRA",
+			"Correo": "melissa.glezu@gmail.com",
+			"Celular": "3221051366",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16547",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='GRANADOS AVILA JOHANA VERONICA' />",
+			"NombreCompleto": "GRANADOS AVILA JOHANA VERONICA",
+			"Correo": "johanaconacon_reintegrate@hotmail.com",
+			"Celular": "8711616103",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16195",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='HERNANDEZ BRISEÑO CARLOS ARTURO' />",
+			"NombreCompleto": "HERNANDEZ BRISEÑO CARLOS ARTURO",
+			"Correo": "arturobri1994@gmail.com",
+			"Celular": "3222741076",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16238",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='HERNANDEZ ESCAREÑO LIZBETH JUDITH' />",
+			"NombreCompleto": "HERNANDEZ ESCAREÑO LIZBETH JUDITH",
+			"Correo": "judithescareno09@gmail.com",
+			"Celular": "3317490564",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16431",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='HERNANDEZ MUÑOZ ROBERTO MIGUEL' />",
+			"NombreCompleto": "HERNANDEZ MUÑOZ ROBERTO MIGUEL",
+			"Correo": "roberconacon_reintegrate@hotmail.com",
+			"Celular": "",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16235",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='HERNANDEZ OLVERA JOSE ANGEL' />",
+			"NombreCompleto": "HERNANDEZ OLVERA JOSE ANGEL",
+			"Correo": "angelconacon_reintegrate@hotmail.com",
+			"Celular": "5575473562",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16445",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='HERNANDEZ REYES LUGARDO ANDRES' />",
+			"NombreCompleto": "HERNANDEZ REYES LUGARDO ANDRES",
+			"Correo": "andresconacon_reintegrate@hotmail.com",
+			"Celular": "",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16429",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='HERNANDEZ UGALDE ROBERTO' />",
+			"NombreCompleto": "HERNANDEZ UGALDE ROBERTO",
+			"Correo": "robertoconacon_reintegrate@hotmail.com",
+			"Celular": "",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16212",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='HOYO HERRERA JOSE LEON WENCESLAO' />",
+			"NombreCompleto": "HOYO HERRERA JOSE LEON WENCESLAO",
+			"Correo": "jlwhh89@gmail.com",
+			"Celular": "3314898922",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16608",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='IGLECIAS DELGADILLO LUIS ALBERTO' />",
+			"NombreCompleto": "IGLECIAS DELGADILLO LUIS ALBERTO",
+			"Correo": "luis_igleciasd@outlook.com",
+			"Celular": "5578328059",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16263",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='JUAREZ MARQUEZ RODRIGO' />",
+			"NombreCompleto": "JUAREZ MARQUEZ RODRIGO",
+			"Correo": "juarez211089@gmail.com",
+			"Celular": "3222272621",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16923",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='LOPEZ GONZALEZ SANTIAGO' />",
+			"NombreCompleto": "LOPEZ GONZALEZ SANTIAGO",
+			"Correo": "sl371129@gmail.com",
+			"Celular": "3326236607",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16081",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='LOPEZ RAMIREZ ADRIANA' />",
+			"NombreCompleto": "LOPEZ RAMIREZ ADRIANA",
+			"Correo": "nanisbobesponjaa@gmail.com",
+			"Celular": "5562073324",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16237",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='MARQUEZ MARTINEZ ADAN' />",
+			"NombreCompleto": "MARQUEZ MARTINEZ ADAN",
+			"Correo": "adanmarquez_conde_reintegrate@hotmail.com",
+			"Celular": "3315640044",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16927",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='MARTINEZ VIRREY SALVADOR ISRAEL' />",
+			"NombreCompleto": "MARTINEZ VIRREY SALVADOR ISRAEL",
+			"Correo": "salvadormtz953@gmail.com",
+			"Celular": "3327679491",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16221",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='MONTES PEREZ VICTOR MANUEL' />",
+			"NombreCompleto": "MONTES PEREZ VICTOR MANUEL",
+			"Correo": "vicman_mp96@hotmail.com",
+			"Celular": "6688118452",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16333",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='MORALES TOBIAS IVAN DE JESUS' />",
+			"NombreCompleto": "MORALES TOBIAS IVAN DE JESUS",
+			"Correo": "ing.moralestobias@hotmail.com",
+			"Celular": "6461248077",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16430",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='MUÑOZ UVALLE JUANA' />",
+			"NombreCompleto": "MUÑOZ UVALLE JUANA",
+			"Correo": "juanaconacon_reintegrate@hotmail.com",
+			"Celular": "",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16432",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/16432_1_Perfil_DSC_1039[1].JPG' width='150' title='NAVARRO GARCIA TERESITA DE JESUS' />",
+			"NombreCompleto": "NAVARRO GARCIA TERESITA DE JESUS",
+			"Correo": "lcf.teresita@gmail.com",
+			"Celular": "3323972455",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16240",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/16240_1_Perfil_IMG_0498.jpg' width='150' title='OROZCO BOJORQUEZ CARLOS ANTONIO' />",
+			"NombreCompleto": "OROZCO BOJORQUEZ CARLOS ANTONIO",
+			"Correo": "carlosorozcoconacon_reintegrate@hotmail.com",
+			"Celular": "3332453146",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16197",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='PERALTA OROZCO CARLOS IVAN' />",
+			"NombreCompleto": "PERALTA OROZCO CARLOS IVAN",
+			"Correo": "zerocool67371@gmail.com",
+			"Celular": "3222653672",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16261",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='PEREZ OZUNA ENRIQUE' />",
+			"NombreCompleto": "PEREZ OZUNA ENRIQUE",
+			"Correo": "enrique.perez.mision.zoe@gmail.com",
+			"Celular": "6491192608",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16662",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='PUGA VIRGEN LUIS ENRIQUE' />",
+			"NombreCompleto": "PUGA VIRGEN LUIS ENRIQUE",
+			"Correo": "kiquepuga@hotmail.com",
+			"Celular": "3121007065",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16196",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='QUINTANA LIZARRAGA SEHIDY YENISEI' />",
+			"NombreCompleto": "QUINTANA LIZARRAGA SEHIDY YENISEI",
+			"Correo": "sehiidy.love15@hotmail.com",
+			"Celular": "6692399121",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16546",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='RAMIREZ AGUAYO MARIA DEL SOCORRO' />",
+			"NombreCompleto": "RAMIREZ AGUAYO MARIA DEL SOCORRO",
+			"Correo": "mariaconacon_reintegrate@hotmail.com",
+			"Celular": "",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16847",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='RAMIREZ CARDENAS MOISES' />",
+			"NombreCompleto": "RAMIREZ CARDENAS MOISES",
+			"Correo": "moyr1998@gmail.com",
+			"Celular": "3327958983",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16450",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='REYES GUEVARA SAMUEL EDUARDO' />",
+			"NombreCompleto": "REYES GUEVARA SAMUEL EDUARDO",
+			"Correo": "samuelconacon_reintegrate@hotmail.com",
+			"Celular": "5548368655",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "SEGUNDO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16582",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='ROBLES LEYVA JOSE RICARDO' />",
+			"NombreCompleto": "ROBLES LEYVA JOSE RICARDO",
+			"Correo": "ricardor.clinicamaya@gmail.com",
+			"Celular": "",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "CUARTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16337",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='SANCHEZ OLVERA DANIEL' />",
+			"NombreCompleto": "SANCHEZ OLVERA DANIEL",
+			"Correo": "danielconacon_reintegrate@hotmail.com",
+			"Celular": "",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16675",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='SEGURA VALENCIA FABIOLA ESMERALDA' />",
+			"NombreCompleto": "SEGURA VALENCIA FABIOLA ESMERALDA",
+			"Correo": "mujertanbella91mera@gmail.com",
+			"Celular": "3122560392",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16861",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='TRIANA ROMULO MICHELLE ASIRETT' />",
+			"NombreCompleto": "TRIANA ROMULO MICHELLE ASIRETT",
+			"Correo": "triana_asirett@hotmail.com",
+			"Celular": "5538821671",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16220",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='VALENZUELA DIAZ ANA MARIA' />",
+			"NombreCompleto": "VALENZUELA DIAZ ANA MARIA",
+			"Correo": "unidaddtxpuertoseguro@gmail.com",
+			"Celular": "6681680511",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16283",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='VENEGAS CESAR LUIS ALBERTO' />",
+			"NombreCompleto": "VENEGAS CESAR LUIS ALBERTO",
+			"Correo": "husania.vallarta@outlook.com",
+			"Celular": "3310662801",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		},
+		{
+			"IDAlumno": "16311",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/16311_4_Perfil_WIN_20210409_162740.JPG' width='150' title='ZAMORA GONZALEZ ELIZABETH' />",
+			"NombreCompleto": "ZAMORA GONZALEZ ELIZABETH",
+			"Correo": "elizabethzamora94@gmail.com",
+			"Celular": "3121940248",
+			"Carrera": "TÉCNICO SUPERIOR UNIVERSITARIO en CONSEJERÍA Y EDUCADOR EN ESTRATEGIAS DE PREVENCIÓN DE CONDUCTAS ANTISOCIALES",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "QUINTO CUATRIMESTRE"
+		}
+	]
+}

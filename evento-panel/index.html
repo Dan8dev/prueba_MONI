@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>MONI</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta content="Admin Dashboard" name="description" />
+	<meta content="ThemeDesign" name="author" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+
+	<link rel="shortcut icon" href="../assets/images/favicon.ico">
+
+	<!--Datatables-->
+	<link href="../assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+	<link href="../assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+	<link href="../assets/plugins/datatables/fixedHeader.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+	<link href="../assets/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+	<link href="../assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+	<link href="../assets/plugins/datatables/scroller.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+	<!-- CSS bootstrap -->
+	<link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<!-- iconos fontawesom -->
+	<link href="../assets/css/icons.css" rel="stylesheet" type="text/css">
+	<!-- CSS general -->
+	<link href="../assets/css/style.css" rel="stylesheet" type="text/css">
+	
+	<!-- Sweet Alert -->
+    <link href="../assets/plugins/sweetalert2/sweetalert2.css" rel="stylesheet" type="text/css">
+	
+	<!-- CSS alerts-->
+	<link href="../assets/css/alertas.css" rel="stylesheet" type="text/css">
+
+
+</head>
+
+
+<body>
+	<div class="header-bg">
+		<!-- Navigation Bar-->
+		<header id="topnav">
+			<div class="topbar-main">
+				<div class="container-fluid">
+					<!-- Logo-->
+					<div>
+						<a href="index.html" class="logo">
+							<img src="../assets/images/logo-light.png" class="logo-lg" alt="" height="26">
+							<img src="../assets/images/logo-sm.png" class="logo-sm" alt="" height="28">
+						</a>
+					</div>
+					<!-- End Logo-->
+					<div class="menu-extras topbar-custom navbar p-0">
+						<ul class="mb-0 nav navbar-right ml-auto list-inline">
+							<li class="list-inline-item notification-list d-none d-sm-inline-block">
+								<a href="#" id="btn-fullscreen"
+									class="waves-effect waves-light notification-icon-box"><i
+										class="fas fa-expand"></i></a>
+							</li>
+							<li class="dropdown">
+								<a href="" class="dropdown-toggle profile waves-effect waves-light"
+									data-toggle="dropdown" aria-expanded="true">
+									<span class="profile-username">
+										Nombre Usuario <span class="mdi mdi-chevron-down font-15"></span>
+									</span>
+								</a>
+								<ul class="dropdown-menu">
+									<li class="dropdown-divider"></li>
+									<li><a href="../log-out.php" class="dropdown-item"> Salir</a></li>
+								</ul>
+							</li>
+							<li class="menu-item dropdown notification-list list-inline-item">
+								<!-- Mobile menu toggle-->
+								<a class="navbar-toggle nav-link">
+									<div class="lines">
+										<span></span>
+										<span></span>
+										<span></span>
+									</div>
+								</a>
+								<!-- End mobile menu toggle-->
+							</li>
+						</ul>
+					</div>
+					<!-- end menu-extras -->
+					<div class="clearfix"></div>
+				</div>
+				<!-- end container -->
+			</div>
+			<!-- end topbar-main -->
+
+			<!-- MENU Start -->
+			<div class="navbar-custom">
+				<div class="container-fluid">
+					<div id="navigation">
+						<!-- Navigation Menu-->
+						<ul class="navigation-menu">
+							<li class="has-submenu">
+								<a href="#"><i class="ti-home"></i> Inicio</a>
+							</li>
+						</ul>
+						<!-- End navigation menu -->
+					</div>
+					<!-- end #navigation -->
+				</div>
+				<!-- end container -->
+			</div>
+			<!-- end navbar-custom -->
+		</header>
+		<!-- End Navigation Bar-->
+	</div>
+	<!-- header-bg -->
+
+	<div class="wrapper">
+		<div class="container-fluid justify-content-center">
+			<!-- Page-Title -->
+			<div class="row">
+				<div class="col-sm-8 col-md-8">
+					<div class="page-title-box">
+						<div class="row align-items-center">
+							<div class="col-md-8">
+								<h4 class="page-title m-0">Evento</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" id="nuevo-tab" data-toggle="tab" href="#nuevo" role="tab" aria-controls="nuevo" aria-selected="true">
+						<span class="d-block d-sm-none"><i class="ion ion-md-add"></i></span>
+						<span class="d-none d-sm-block">Crear Nuevo</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="eventos-tab" data-toggle="tab" data-target="#eventos" href="#eventos" role="tab" aria-controls="eventos" aria-selected="false">
+						<span class="d-block d-sm-none"><i class="mdi mdi-view-comfy"></i></span>
+						<span class="d-none d-sm-block">Ver Eventos</span>
+					</a>
+				</li>
+			</ul>
+			
+			<div class="tab-content bg-light">
+				<div class="row tab-pane show active" id="nuevo" role="tabpanel" aria-labelledby="nuevo-tab">
+					<div class="container col-sm-8 col-lg-8">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="m-t-0 pb-40">Registrar</h4>
+								<!--<br>-->
+								<form id="formularioRegistrar">
+								<div class="form-group row">
+									<label for="imagen" class="col-sm-3 control-label">Imagen</label>
+									<div class="col-sm-9">
+										<input type="file" class="form-control" name="imagen" id="imagen" required>
+										<div class="clave alert alert-info">Las imagenes deben de tener una resolución de 1170 x 520</div>
+										<img src="" id="vImagen" class="img-fluid" alt="Responsive image" style="display: none;">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="imgFondo" class="col-sm-3 control-label">Fondo</label>
+									<div class="col-sm-9">
+										<input type="file" class="form-control" name="imgFondo" id="imgFondo" required>
+										<div class="clave alert alert-info">Las imagenes deben de tener una resolución de 1920 x 895</div>
+										<img src="" id="vFondo" class="img-fluid" alt="Responsive image" style="display: none;">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="tipo" class="col-sm-3 control-label">Tipo evento</label>
+									<div class="col-sm-9">
+										<select class="form-control" name="tipo" required>
+											<option selected="true" disabled="disabled">Seleccione</option>
+											<option value="CONGRESO">CONGRESO</option>
+											<option value="AFILIACION">AFILIACIÓN</option>
+											<!--<option>Tipo n</option>-->
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="titulo" class="col-sm-3 control-label">Título del evento</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="titulo" name="titulo" placeholder="Nombre del evento" required>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="nombreClave" class="col-sm-3 control-label">Nombre Clave</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="nombreClave" name="nombreClave" placeholder="Definirá URL" onkeypress="return check(event)" required>
+										<div class="clave alert alert-danger" style="display: none">Cambiar nombre clave</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="fechaE" class="col-sm-3 control-label">Fecha evento</label>
+									<div class="col-sm-9">
+										<input type="date" class="form-control" name="fechaE" id="fechaE" required>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="fechaDisponible" class="col-sm-3 control-label">Fecha disponibilidad</label>
+									<div class="col-sm-9">
+										<input type="date" class="form-control" name="fechaDisponible" id="fechaDisponible" required>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="fechaLimite" class="col-sm-3 control-label">Fecha caducidad</label>
+									<div class="col-sm-9">
+										<input type="date" class="form-control" id="fechaLimite" name="fechaLimite" required>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="limiteProspectos" class="col-sm-3 control-label">Número Asistentes</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="limiteProspectos" name="limiteProspectos" placeholder="Número máximo de asistentes" required>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="duracion" class="col-sm-3 control-label">Duración</label>
+									<div class="col-sm-4">
+										<input type="number" class="form-control" id="duracion" name="duracion" placeholder="Numérico" required>
+									</div>
+									<div class="col-sm-4">
+										<select class="form-control" name="tipoDuracion" required>
+											<option selected="true" disabled="disabled">Seleccione</option>
+											<option value="h">Hora</option>
+											<option value="d">Día</option>
+											<option value="s">Semana</option>
+											<option value="m">Mes</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="pais" class="col-sm-3 control-label">País</label>
+									<div class="col-sm-9">
+										<select class="form-control" name="pais" id="pais" required>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="estado" class="col-sm-3 control-label">Estado</label>
+									<div class="col-sm-9">
+										<select class="form-control" name="estado" id="estado" required>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="direccion" class="col-sm-3 control-label">Dirección</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección del evento" required>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="modalidadEvento" class="col-sm-3 control-label">Modalidad</label>
+									<div class="col-sm-9">
+										<select class="form-control" name="modalidadEvento" required>
+											<option selected="true" disabled="disabled">Seleccione</option>
+											<option value="Presencial">Presencial</option>
+											<option value="Online">Online</option>
+											<option value="Mixta">Mixta</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="idInstitucion" class="col-sm-3 control-label">Institución</label>
+									<div class="col-sm-9">
+										<select class="form-control" name="idInstitucion" id="idInstitucion" required>
+											<!--<option selected="true" disabled="disabled">Seleccione</option>-->
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="codigoPromocional" class="col-sm-3 control-label">Código Promocional</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="codigoPromocional" name="codigoPromocional" required>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="plantilla_bienvenida" class="col-sm-3 control-label">Plantilla</label>
+									<div class="col-sm-9">
+										<select class="form-control" name="plantilla_bienvenida" id="plantilla_bienvenida" required>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<div>
+										<button type="submit" class="btn btn-primary waves-effect waves-light" id="Enviar">
+											Registrar
+										</button>
+										<button type="reset" id="reiniciar" class="btn btn-secondary waves-effect m-l-5">
+											Cancelar
+										</button>
+									</div>
+								</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div> 
+
+				<div class="row tab-pane fade" id="eventos" role="tabpanel" aria-labelledby="eventos-tab">
+					<!--col-lg-12-->
+					<div class="container col-sm-8 col-lg-8">		
+						<div class="card">
+							<div class="card-body">
+								<div class="table-responsive">
+									<h4 class="m-b-30 m-t-0">Lista de eventos</h4>
+									<table id="datatable-eventos" class="table table-striped table-bordered nowrap" style="border-collapse: collapse; width: 100%;">
+										<thead>
+											<tr>
+												<th>ID Evento</th>
+												<th>Tipo</th>
+												<th>Título</th>
+												<th>Link Evento</th>
+												<th>Fecha Evento</th>
+												<th>Fecha Disponibilidad</th>
+												<th>Fecha Caducidad</th>
+												<th>Número Asistentes</th>
+												<th>Duración</th>
+												<th>Tipo De Duración</th>
+												<th>Dirección</th>
+												<th>Estado</th>
+												<th>País</th>
+												<th>Código Promocional</th>
+												<th>Estatus</th>
+												<th>Modalidad</th>
+												<th>Institución</th>
+												<th>Imagen</th>
+												<th>Fondo</th>
+												<th>Plantilla</th>
+												<th>         </th>
+												<th>         </th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>	
+				</div>
+			</div>
+		
+
+			<div class="modal fade bs-example-modal-lg" id="modalModify" tabindex="-1" role="dialog" aria-labelledy="myLargeModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title m-0" id="myLargeModalLabel">Formulario Modificar</h4>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+						</div>
+						<div class="modal-body">
+							<form id="formularioModificar">
+								<div class="form-group row">
+									<label for="newImagen" class="col-sm-3 control-label">Imagen</label>
+									<div class="col-sm-9">
+										<input type="file" class="form-control" name="newImagen" id="newImagen">
+										<br>
+										<img src="" id="devImagen" class="img-fluid" alt="Responsive image">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="newFondo" class="col-sm-3 control-label">Fondo</label>
+									<div class="col-sm-9">
+										<input type="file" class="form-control" name="newFondo" id="newFondo">
+										<br>
+										<img src="" id="devFondo" class="img-fluid" alt="Responsive image">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="devTipo" class="col-sm-3 control-label">Tipo evento</label>
+									<div class="col-sm-9">
+										<select class="form-control" name="devTipo" id="devTipo" required>
+											<option selected="true" disabled="disabled">Seleccione</option>
+											<option value="CONGRESO">CONGRESO</option>
+											<option value="AFILIACION">AFILIACIÓN</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="devTitulo" class="col-sm-3 control-label">Título del evento</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" name="devTitulo" id="devTitulo" placeholder="Nombre del evento" required>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="nomClave" class="col-sm-3 control-label">Nombre Clave</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" name="devClave" id="devClave" placeholder="Definirá URL" onkeypress="return check(event)" required>
+										<div class="devMessC alert alert-danger" style="display: none">Cambiar nombre clave</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="devFE" class="col-sm-3 control-label">Fecha evento</label>
+									<div class="col-sm-9">
+										<input type="date" class="form-control" name="devFE" id="devFE" required>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="devFD" class="col-sm-3 control-label">Fecha disponibilidad</label>
+									<div class="col-sm-9">
+										<input type="date" class="form-control" name="devFD" id="devFD" required>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="devFL" class="col-sm-3 control-label">Fecha caducidad</label>
+									<div class="col-sm-9">
+										<input type="date" class="form-control" name="devFL"  id="devFL" required>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="devLimite" class="col-sm-3 control-label">Número Asistentes</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" name="devLimite" id="devLimite" placeholder="Número máximo de asistentes" required>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="devDuracion" class="col-sm-3 control-label">Duración</label>
+									<div class="col-sm-4">
+										<input type="number" class="form-control" name="devDuracion" id="devDuracion" placeholder="Numérico" required>
+									</div>
+									<div class="col-sm-4">
+										<select class="form-control" name="devTipoD" id="devTipoD" required>
+											<option selected="true" disabled="disabled">Seleccione</option>
+											<option value="h">Hora</option>
+											<option value="d">Día</option>
+											<option value="s">Semana</option>
+											<option value="m">Mes</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="devPais" class="col-sm-3 control-label">País</label>
+									<div class="col-sm-9">
+										<select class="form-control" name="devPais" id="devPais" required>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="devEstado" class="col-sm-3 control-label">Estado</label>
+									<div class="col-sm-9">
+										<select class="form-control" name="devEstado" id="devEstado" required>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="devDireccion" class="col-sm-3 control-label">Dirección</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" name="devDireccion" id="devDireccion" placeholder="Dirección del evento" required>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="devModalidad" class="col-sm-3 control-label">Modalidad</label>
+									<div class="col-sm-9">
+										<select class="form-control" name="devModalidad" id="devModalidad" required>
+											<option selected="true" disabled="disabled">Seleccione</option>
+											<option value="Presencial">Presencial</option>
+											<option value="Online">Online</option>
+											<option value="Mixta">Mixta</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="devIDInst" class="col-sm-3 control-label">Institución</label>
+									<div class="col-sm-9">
+										<select class="form-control" name="devIDInst" id="devIDInst" required>
+											<option selected="true" disabled="disabled">Seleccione</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="devPromocion" class="col-sm-3 control-label">Código Promocional</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" name="devPromocion" id="devPromocion" required>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="newPlantilla" class="col-sm-3 control-label">Plantilla</label>
+									<div class="col-sm-9">
+										<select class="form-control" name="newPlantilla" id="newPlantilla" required>
+											<option selected="true" disabled="disabled">Seleccione</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<div>
+										<input type="hidden" name="idModify" id="idModify">
+										<button type="submit" name="btnModificar" id="btnModificar" class="btn btn-primary waves-effect waves-light" aria-hidden="true">
+											Modificar
+										</button>
+										<button type="button" id="ocultar" class="btn btn-secondary waves-effect m-l-5" data-dismiss="modal" aria-hidden="true">
+											Cancelar
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div><!-- end container-fluid -->	
+	</div>
+	<!-- end wrapper -->
+
+	<!-- Footer -->
+	<footer class="footer">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+					© 2021 UDC-IESM-TSU-CONACON-TI
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- End Footer -->
+
+	<!-- jQuery  -->
+	<script src="../assets/js/template/jquery.min.js"></script>
+	<script src="../assets/js/template/bootstrap.bundle.min.js"></script>
+	<script src="../assets/js/template/modernizr.min.js"></script>
+	<script src="../assets/js/template/detect.js"></script>
+	<script src="../assets/js/template/fastclick.js"></script>
+	<script src="../assets/js/template/jquery.slimscroll.js"></script>
+	<script src="../assets/js/template/jquery.blockUI.js"></script>
+	<script src="../assets/js/template/waves.js"></script>
+	<script src="../assets/js/template/wow.min.js"></script>
+	<script src="../assets/js/template/jquery.nicescroll.js"></script>
+	<script src="../assets/js/template/jquery.scrollTo.min.js"></script>
+	
+	<script src="../assets/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+	<script src="../assets/plugins/sweetalert2/sweetalert2.min.js"></script>
+
+	<!--Required datatables js-->
+	<script src="../assets/plugins/datatables/jquery.dataTables.min.js"></script>
+	<!--error<script src="../assets/plugins/datatables/jquery.dataTables.js"></script>-->
+	<script src="../assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+
+	<!--Buttons examples-->
+	<script src="../assets/plugins/datatables/dataTables.buttons.min.js"></script>
+	<script src="../assets/plugins/datatables/buttons.bootstrap4.min.js"></script>
+
+	<script src="../assets/plugins/datatables/jszip.min.js"></script>
+	<script src="../assets/plugins/datatables/pdfmake.min.js"></script>
+	<script src="../assets/plugins/datatables/vfs_fonts.js"></script>
+	<script src="../assets/plugins/datatables/buttons.html5.min.js"></script>
+	<script src="../assets/plugins/datatables/buttons.print.min.js"></script>
+	<!--<script src="../assets/plugins/datatables/dataTables.fixedColumns.min.js"></script>-->
+	<script src="../assets/plugins/datatables/dataTables.fixedHeader.min.js"></script>
+	<script src="../assets/plugins/datatables/dataTables.keyTable.min.js"></script>
+	<script src="../assets/plugins/datatables/dataTables.scroller.min.js"></script>
+
+	<script src="../assets/js/template/sweetalert.min.js"></script>
+	<script src="../assets/js/eventos/eventosJs.js"></script>
+
+	<script src="../assets/pages/sweet-alert.init.js"></script>
+
+	<!--Responsive examples-->
+	<script src="../assets/plugins/datatables/dataTables.responsive.min.js"></script>
+	<!--error<script src="../assets/plugins/datatables/dataTables.responsive.js"></script>-->
+	<script src="../assets/plugins/datatables/responsive.bootstrap.min.js"></script>
+
+	<!--Datatable init js-->
+	<script src="../assets/pages/datatables.init.js"></script>
+	<!--<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>-->
+
+	<script src="../assets/js/template/app.js"></script>
+
+</body>
+
+</html>

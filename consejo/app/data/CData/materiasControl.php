@@ -1,0 +1,78 @@
+<?php 
+session_start();
+if (isset($_POST["action"]) && isset($_SESSION["alumno"])){
+    date_default_timezone_set("America/Mexico_City");
+
+require "../Model/materiasModel.php";
+$idusuario=$_SESSION['alumno']['id_afiliado'];
+$idprospecto=$_SESSION['alumno']['id_prospecto'];
+
+$materiaM = new Materia();
+
+switch ($_POST['action']) {
+    case 'cargar_clases':
+        $resp = [];
+        if(isset($_POST['curso'])){
+            $inscrito = $materiaM->pago_cursos($idprospecto);
+            if(sizeof($inscrito['data']) > 0){
+                $clases = $materiaM->cursoClases($_POST['curso']);
+                for ($i=0; $i < sizeof($clases['data']); $i++) { 
+                    $clases['data'][$i]['tareas'] = $materiaM->tareasClase($clases['data'][$i]['idClase'])['data'];
+                    for ($j=0; $j < sizeof($clases['data'][$i]['tareas']); $j++) { 
+                        // print_r($clases['data'][$i]['tareas'][$j])."\n";
+                        $clases['data'][$i]['tareas'][$j]['entregas'] = $materiaM->obtener_info_tarea_entrega($clases['data'][$i]['tareas'][$j]['idTareas'], $idusuario)['data'];
+                    }
+                }
+                $resp = ['estatus'=>'ok', 'data'=>$clases['data']];
+            }else{
+                $resp = ['estatus'=>'error','info'=>'sin_inscripcion', $inscrito];
+            }
+        }else{
+            $resp = ['estatus'=>'error','info'=>'materia_no_valida'];
+        }
+
+        echo json_encode($resp);
+        break;
+    case 'pago_cursos':
+
+        echo json_encode($materiaM->pago_cursos($idprospecto));
+        break;
+    case 'enviar_tarea':
+        $resp = [];
+        if((isset($_POST['tarea_entrega']) && intval($_POST['tarea_entrega']) > 0) && (isset($_FILES['inp_adjunto_tarea']) && $_FILES['inp_adjunto_tarea']['error'] == 0)){
+            $tmp_name = $_FILES["inp_adjunto_tarea"]["tmp_name"];
+            $uploads_dir = "../../documents/tareas/clase_".$_POST['clase_tarea'];
+            if(!is_dir($uploads_dir)){
+                mkdir($uploads_dir, 0777, true);
+            }
+
+            $name = basename($_FILES["inp_adjunto_tarea"]["name"]);
+            $fileT = explode(".", $_FILES["inp_adjunto_tarea"]["name"])[1];
+            $nName = 'A'.$idusuario.'_C'.$_POST['clase_tarea'].'_T'.$_POST['tarea_entrega'].'_'.date("Y-m-d_H-i-s").".".$fileT;
+            $statFile = move_uploaded_file($tmp_name, "$uploads_dir/$nName");
+
+            // despues de haber movido el archivo se actualiza el nombre del archivo para que sea ruta complenta http
+            if($_SERVER['SERVER_NAME'] == 'localhost'){
+                $nName = 'http://'.$_SERVER['SERVER_NAME']."/moni/siscon/app/documents/tareas/clase_".$_POST['clase_tarea'].'/'.$nName;
+            }else{
+                $nName = 'https://'.$_SERVER['SERVER_NAME']."/moni/siscon/app/documents/tareas/clase_".$_POST['clase_tarea'].'/'.$nName;
+            }
+            if($statFile){
+                $datos = ['tarea'=> $_POST['tarea_entrega'],'alumno'=> $idusuario,'archivo'=> $nName,'comentario'=> $_POST['inp_comentario_tarea']];
+                $insert = $materiaM->entregar_tareas($datos);
+                $resp = $insert;
+            }else{
+                $resp = ['estatus'=>'error', 'info'=>'error_al_adjuntar_tarea'];
+                unlink("$uploads_dir/$nName");
+            }
+        }
+        echo json_encode($resp);
+        break;
+    default:
+        # code...
+        break;
+    }
+
+}else{
+    header("Location: ../../index.php");
+}

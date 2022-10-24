@@ -1,0 +1,1 @@
+SELECT ea.`idAsistente` FROM a_prospectos ea WHERE ea.`idAsistente` NOT IN (SELECT mk_a.prospecto FROM a_marketing_atencion mk_a WHERE tipo_atencion = 'carrera') AND ea.idEvento IS NULL;

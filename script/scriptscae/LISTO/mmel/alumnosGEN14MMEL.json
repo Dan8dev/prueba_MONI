@@ -1,0 +1,965 @@
+{
+	"Resultado": "Exitoso",
+	"Encontrados": [
+		{
+			"IDAlumno": "20228",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/20228_1_Perfil_Aguilar_Vergara_Maria_del_Carmen.png' width='150' title='AGUILAR VERGARA MARIA DEL CARMEN' />",
+			"NombreCompleto": "AGUILAR VERGARA MARIA DEL CARMEN",
+			"Correo": "carmenvergara08@hotmail.com",
+			"Celular": "2225781783",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "18341",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/18341_1_Perfil_Aguirre_Cruz_Uriel.png' width='150' title='AGUIRRE CRUZ URIEL' />",
+			"NombreCompleto": "AGUIRRE CRUZ URIEL",
+			"Correo": "uragui1108@hotmail.com",
+			"Celular": "5544908904",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "15552",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/15552_3_Perfil_Aispuro_Landeros_Ethel_Berenice.png' width='150' title='AISPURO LANDEROS ETHEL BERENICE' />",
+			"NombreCompleto": "AISPURO LANDEROS ETHEL BERENICE",
+			"Correo": "ethel.aispuro@hotmail.com",
+			"Celular": "6672310779",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "17479",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/17479_1_Perfil_Alarcon_Zaragoza_Isis_Lizeth.png' width='150' title='ALARCON ZARAGOZA ISIS LIZETH' />",
+			"NombreCompleto": "ALARCON ZARAGOZA ISIS LIZETH",
+			"Correo": "isisdoc@hotmail.com",
+			"Celular": "2281344742",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "10549",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/10549_1_Perfil_Arellano_Jacinto_Jusmi_Mariel.png' width='150' title='ARELLANO JACINTO JUSIM MARIEL' />",
+			"NombreCompleto": "ARELLANO JACINTO JUSIM MARIEL",
+			"Correo": "jusim_111290@hotmail.com",
+			"Celular": "2381274645",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "13883",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/13883_1_Perfil_Bahena_Olivares_Alison_Ileana.png' width='150' title='BAHENA OLIVARES ALISON ILEANA' />",
+			"NombreCompleto": "BAHENA OLIVARES ALISON ILEANA",
+			"Correo": "alison.bahena@gmail.com",
+			"Celular": "7771205680",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "9782",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/9782_1_Perfil_Barrera_Morales_Carlos_Alberto.png' width='150' title='BARRERA MORALES CARLOS ALBERTO' />",
+			"NombreCompleto": "BARRERA MORALES CARLOS ALBERTO",
+			"Correo": "alquimista33333@hotmail.com",
+			"Celular": "6862211578",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19767",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19767_1_Perfil_BERNAL_ESCAMILLA_FATIMA_LOURDES.png' width='150' title='BERNAL ESCAMILLA FATIMA LOURDES' />",
+			"NombreCompleto": "BERNAL ESCAMILLA FATIMA LOURDES",
+			"Correo": "fatima.bernale@gmail.com",
+			"Celular": "2225318860",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "12090",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/12090_1_Perfil_Calderon_Chavez_Tania.png' width='150' title='CALDERON CHAVEZ TANIA' />",
+			"NombreCompleto": "CALDERON CHAVEZ TANIA",
+			"Correo": "taniacalderon93@hotmail.com",
+			"Celular": "9932181467",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "9397",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/9397_1_Perfil_Calderon_Rivera_Eduardo.png' width='150' title='CALDERON RIVERA EDUARDO' />",
+			"NombreCompleto": "CALDERON RIVERA EDUARDO",
+			"Correo": "eduardocalderon623@gmail.com",
+			"Celular": "7821663202",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "15986",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/15986_2_Perfil_Campa_Quijada_Kimberly_Maria_Elena.png' width='150' title='CAMPA QUIJADA KIMBERLY MARIA ELENA' />",
+			"NombreCompleto": "CAMPA QUIJADA KIMBERLY MARIA ELENA",
+			"Correo": "kimberlycampa23@hotmail.com",
+			"Celular": "6621025634",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "15694",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/15694_2_Perfil_Campos_Mucinno_Perla_del_Rocio.png' width='150' title='CAMPOS MUCIÑO PERLA DE ROCIO' />",
+			"NombreCompleto": "CAMPOS MUCIÑO PERLA DE ROCIO",
+			"Correo": "per-plus@hotmail.com",
+			"Celular": "5539989643",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "18254",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/18254_1_Perfil_Cardenas_Pedraza_Vianey.png' width='150' title='CARDENAS PEDRAZA VIANEY' />",
+			"NombreCompleto": "CARDENAS PEDRAZA VIANEY",
+			"Correo": "tigger8824@hotmail.com",
+			"Celular": "7351000447",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "16850",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/16850_1_Perfil_Carrasco_rodriguez_Arturo_Efren.png' width='150' title='CARRASCO RODRIGUEZ ARTURO EFREN' />",
+			"NombreCompleto": "CARRASCO RODRIGUEZ ARTURO EFREN",
+			"Correo": "carrascodoc@yahoo.com.mx",
+			"Celular": "4425618334",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19979",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19979_1_Perfil_Carrenno_Sandoval_Celia_Adriana.png' width='150' title='CARREÑO SANDOVAL CELIA ADRIANA' />",
+			"NombreCompleto": "CARREÑO SANDOVAL CELIA ADRIANA",
+			"Correo": "celiam_v@hotmail.com",
+			"Celular": "5523024295",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19380",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19380_1_Perfil_Carillo_Sanchez_Janeth.png' width='150' title='CARRILLO SANCHEZ JANETH' />",
+			"NombreCompleto": "CARRILLO SANCHEZ JANETH",
+			"Correo": "jancs8376@gmail.com",
+			"Celular": "5518134019",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "13759",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/13759_1_Perfil_Cepeda_Jordan_Maria.png' width='150' title='CEPEDA JORDAN MARIA' />",
+			"NombreCompleto": "CEPEDA JORDAN MARIA",
+			"Correo": "mari_cpda@hotmail.com",
+			"Celular": "8444609233",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19505",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19505_1_Perfil_WhatsApp_Image_2021-11-27_at_2.25.40_PM.jpeg' width='150' title='CORTES FLORES MICHEL' />",
+			"NombreCompleto": "CORTES FLORES MICHEL",
+			"Correo": "michelcortesf@gmail.com",
+			"Celular": "2282331024",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "4383",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='CRUZ LUSTRE ALMA ROSA' />",
+			"NombreCompleto": "CRUZ LUSTRE ALMA ROSA",
+			"Correo": "almacruzlustre@hotmail.com",
+			"Celular": "9515730163",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "18832",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/18832_2_Perfil_Davila_Alvarado_Brenda_Elizabeth.png' width='150' title='DAVILA ALVARADO BRENDA ELIZABETH' />",
+			"NombreCompleto": "DAVILA ALVARADO BRENDA ELIZABETH",
+			"Correo": "brendavila_@hotmail.com",
+			"Celular": "8441986328",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19351",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19351_1_Perfil_Davila_Arenas_Francisco_Javier.png' width='150' title='DAVILA ARENAS FRANCISCO JAVIER' />",
+			"NombreCompleto": "DAVILA ARENAS FRANCISCO JAVIER",
+			"Correo": "pacos_123xti@hotmail.com",
+			"Celular": "8443506406",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19621",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19621_1_Perfil_ARMANDO_DAVILA.jpg' width='150' title='DAVILA CARDENAS ARMANDO' />",
+			"NombreCompleto": "DAVILA CARDENAS ARMANDO",
+			"Correo": "armandodavilac@gmail.com",
+			"Celular": "8681259321",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "17040",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/17040_1_Perfil_Dehesa_Ramirez_Navil_Alejandra.png' width='150' title='DEHESA RAMIREZ NAVIL ALEJANDRA' />",
+			"NombreCompleto": "DEHESA RAMIREZ NAVIL ALEJANDRA",
+			"Correo": "navil_dehesa@hotmail.com",
+			"Celular": "5561489557",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "15461",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/15461_1_Perfil_Delgado_Arriaga_Julio_Emanuel.jpg' width='150' title='DELGADO ARRIAGA JULIO EMMANUEL' />",
+			"NombreCompleto": "DELGADO ARRIAGA JULIO EMMANUEL",
+			"Correo": "jjdelgado891110@gmail.com",
+			"Celular": "6563119203",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "9614",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/9614_1_Perfil_Diaz_Gonzalez_Ana_Patricia.png' width='150' title='DIAZ GONZALEZ ANA PATRICIA' />",
+			"NombreCompleto": "DIAZ GONZALEZ ANA PATRICIA",
+			"Correo": "tollipo82@hotmail.com",
+			"Celular": "5540289167",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "20299",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/20299_2_Perfil_DOMINGUEZ_MARTINEZ_NORA_LUCI.png' width='150' title='DOMINGUEZ MARTINEZ NORA LUCIA' />",
+			"NombreCompleto": "DOMINGUEZ MARTINEZ NORA LUCIA",
+			"Correo": "noralumx@hotmail.com",
+			"Celular": "2711079232",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "16682",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/16682_2_Perfil_Dominguez_Sanchez_Leticia.png' width='150' title='DOMÍNGUEZ SÁNCHEZ LETICIA' />",
+			"NombreCompleto": "DOMÍNGUEZ SÁNCHEZ LETICIA",
+			"Correo": "draletydominguez@gmail.com",
+			"Celular": "4428696104",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "16158",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/16158_1_Perfil_Escalante_Sanchez_Sergio_Damian.jpg' width='150' title='ESCALANTE SÁNCHEZ SERGIO DAMIAN' />",
+			"NombreCompleto": "ESCALANTE SÁNCHEZ SERGIO DAMIAN",
+			"Correo": "dr.sergioescalante@gmail.com",
+			"Celular": "9818290862",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19344",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19344_1_Perfil_Esquivel_Sanchez_Fabio_Manuel.png' width='150' title='ESQUIVEL SANCHEZ FABIO MANUEL' />",
+			"NombreCompleto": "ESQUIVEL SANCHEZ FABIO MANUEL",
+			"Correo": "drfabioesquivel@gmail.com",
+			"Celular": "9992798284",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "20216",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/20216_1_Perfil_Fernandez_Andrade_Karla.png' width='150' title='FERNANDEZ ANDRADE KARLA JIMENA' />",
+			"NombreCompleto": "FERNANDEZ ANDRADE KARLA JIMENA",
+			"Correo": "k.jimena_12@hotmail.com",
+			"Celular": "6865999984",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "16805",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/16805_1_Perfil_Figueroa_Martinez_Candelaria.png' width='150' title='FIGUEROA MARTÍNEZ CANDELARIA' />",
+			"NombreCompleto": "FIGUEROA MARTÍNEZ CANDELARIA",
+			"Correo": "candefima@gmail.com",
+			"Celular": "9512314462",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19785",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19785_1_Perfil_Flores_Moreno_Elizabeth.png' width='150' title='FLORES MORENO ELIZABETH' />",
+			"NombreCompleto": "FLORES MORENO ELIZABETH",
+			"Correo": "elirainclouds@icloud.com",
+			"Celular": "4431618871",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "18339",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/18339_1_Perfil_Flores_Rocha_Madahi.png' width='150' title='FLORES ROCHA MADAHI' />",
+			"NombreCompleto": "FLORES ROCHA MADAHI",
+			"Correo": "mfdegzz@hotmail.com",
+			"Celular": "8787910635",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "17379",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/17379_1_Perfil_ERICK_FLORES.jpg' width='150' title='FLORES URIAS ERIK FABIAN' />",
+			"NombreCompleto": "FLORES URIAS ERIK FABIAN",
+			"Correo": "cowy_dj@hotmail.com",
+			"Celular": "6251189103",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "2603",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/2603_1_Perfil_Fragoso_Sanchez_Jorge.png' width='150' title='FRAGOSO SANCHEZ JORGE LUIS' />",
+			"NombreCompleto": "FRAGOSO SANCHEZ JORGE LUIS",
+			"Correo": "jorgefrasan@hotmail.com",
+			"Celular": "5519488743",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19008",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19008_1_Perfil_Gandara_Figueroa_Natalie.png' width='150' title='GANDARA FIGUEROA NATHALIE' />",
+			"NombreCompleto": "GANDARA FIGUEROA NATHALIE",
+			"Correo": "n.gandara@live.com",
+			"Celular": "6331132802",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "13977",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/13977_3_Perfil_Garcia_Cabrera_Valeria.png' width='150' title='GARCÍA CABRERA VALERIA' />",
+			"NombreCompleto": "GARCÍA CABRERA VALERIA",
+			"Correo": "dra.valeriagarciacabrera@hotmail.com",
+			"Celular": "4492551369",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "16592",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/16592_1_Perfil_Garcia_Mendez_Dulce_Danahi.png' width='150' title='GARCIA MENDEZ DULCE DANAHI' />",
+			"NombreCompleto": "GARCIA MENDEZ DULCE DANAHI",
+			"Correo": "danahi_1990@hotmail.com",
+			"Celular": "9981000920",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "20517",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/20517_2_Perfil_Garcia_Nava_Ruben.jpg' width='150' title='GARCIA NAVA RUBEN' />",
+			"NombreCompleto": "GARCIA NAVA RUBEN",
+			"Correo": "rugn9@hotmail.com",
+			"Celular": "3481190294",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "18187",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/18187_1_Perfil_Garcia_Peralta_Oscar_Eduardo.png' width='150' title='GARCIA PERALTA OSCAR EDUARDO' />",
+			"NombreCompleto": "GARCIA PERALTA OSCAR EDUARDO",
+			"Correo": "oegarciaperalta@gmail.com",
+			"Celular": "2288354092",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19901",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19901_1_Perfil_ERICK_GARCIA.jpg' width='150' title='GARCIA RANGEL ERIK' />",
+			"NombreCompleto": "GARCIA RANGEL ERIK",
+			"Correo": "drerikrangel@outlook.com",
+			"Celular": "5567021929",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19440",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19440_1_Perfil_Garrido_Hernandez_Antonio.png' width='150' title='GARRIDO HERNANDEZ ANTONIO' />",
+			"NombreCompleto": "GARRIDO HERNANDEZ ANTONIO",
+			"Correo": "a329996@uabc.edu.mx",
+			"Celular": "6462266486",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "18547",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/18547_1_Perfil_Gomez_Galindo_Marely.png' width='150' title='GOMEZ GALINDO MARELY EUGENIA' />",
+			"NombreCompleto": "GOMEZ GALINDO MARELY EUGENIA",
+			"Correo": "marely.eugenia@gmail.com",
+			"Celular": "8181878594",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19687",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19687_1_Perfil_Gomez_Navarro_Martha_Gisel.png' width='150' title='GÓMEZ NAVARRO MARTHA GISEL' />",
+			"NombreCompleto": "GÓMEZ NAVARRO MARTHA GISEL",
+			"Correo": "may_7th_gishel@hotmail.com",
+			"Celular": "6462572808",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19748",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19748_1_Perfil_Goribar_Tenopala_Claudia.png' width='150' title='GORIBAR TENOPALA CLAUDIA VANESSA' />",
+			"NombreCompleto": "GORIBAR TENOPALA CLAUDIA VANESSA",
+			"Correo": "gorik.tenopala@gmail.com",
+			"Celular": "6567425086",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "18428",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/18428_2_Perfil_WhatsApp_Image_2021-11-23_at_12.03.28_PM.jpeg' width='150' title='GUEVARA SOLIS YOHALI ITZEL' />",
+			"NombreCompleto": "GUEVARA SOLIS YOHALI ITZEL",
+			"Correo": "yohaligsolis@gmail.com",
+			"Celular": "5611134858",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "18336",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/18336_2_Perfil_Edgar_Martin_Hernandez_Jimenez.jpg' width='150' title='HERNÁNDEZ JIMÉNEZ EDGAR MARTÍN' />",
+			"NombreCompleto": "HERNÁNDEZ JIMÉNEZ EDGAR MARTÍN",
+			"Correo": "md.martinhernandez@gmail.com",
+			"Celular": "3221803950",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "16768",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/16768_1_Perfil_Hernandez_Pinna_Paola.png' width='150' title='HERNANDEZ PIÑA PAOLA' />",
+			"NombreCompleto": "HERNANDEZ PIÑA PAOLA",
+			"Correo": "tomichina@hotmail.com",
+			"Celular": "5513329321",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "18449",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/18449_1_Perfil_Hernandez_Ponce_Milagros.png' width='150' title='HERNÁNDEZ PONCE MILAGROS DE JESÚS' />",
+			"NombreCompleto": "HERNÁNDEZ PONCE MILAGROS DE JESÚS",
+			"Correo": "milahp.med@gmail.com",
+			"Celular": "7721163409",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "13424",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/13424_1_Perfil_Hernandez_Sibaja_Christian_Monserrat.png' width='150' title='HERNANDEZ SIBAJA CHRISTIAN MONTSERRAT' />",
+			"NombreCompleto": "HERNANDEZ SIBAJA CHRISTIAN MONTSERRAT",
+			"Correo": "montse920309@outlook.com",
+			"Celular": "9512047062",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "13774",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/13774_1_Perfil_Inzunza_Apodaca_Christian_Daniel.png' width='150' title='INZUNZA APODACA CHRISTIAN DANIEL' />",
+			"NombreCompleto": "INZUNZA APODACA CHRISTIAN DANIEL",
+			"Correo": "kriztian_apodaca@live.com.mx",
+			"Celular": "6878572021",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19911",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19911_1_Perfil_Jaime_Perez_Jorge_Alberto.jpg' width='150' title='JAIME PEREZ JORGE ALBERTO' />",
+			"NombreCompleto": "JAIME PEREZ JORGE ALBERTO",
+			"Correo": "medicojorgejaime@gmail.com",
+			"Celular": "7292933424",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "16869",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/16869_1_Perfil_Lara_Larios_Zuleika_Noralma.png' width='150' title='LARA LARIOS ZULEIKA NORALMA' />",
+			"NombreCompleto": "LARA LARIOS ZULEIKA NORALMA",
+			"Correo": "zuly_lara@yahoo.com.mx",
+			"Celular": "55 2559 2526",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19643",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19643_1_Perfil_Leon_Munnoz_Guadalupe.png' width='150' title='LEON MUÑOZ GUADALUPE ELIZABETH' />",
+			"NombreCompleto": "LEON MUÑOZ GUADALUPE ELIZABETH",
+			"Correo": "lupitaleon4037@gmail.com",
+			"Celular": "2461289557",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "18621",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/18621_1_Perfil_Lopez_Lara_Jesus_Alejandro.png' width='150' title='LOPEZ LARA JESUS ALEJANDRO' />",
+			"NombreCompleto": "LOPEZ LARA JESUS ALEJANDRO",
+			"Correo": "lexneg@hotmail.com",
+			"Celular": "5535731785",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "15696",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/15696_1_Perfil_Lopez_Ramirez_Silvia.png' width='150' title='LÓPEZ RAMÍREZ SYLVIA KRYSTAL' />",
+			"NombreCompleto": "LÓPEZ RAMÍREZ SYLVIA KRYSTAL",
+			"Correo": "drasylvialopez@gmail.com",
+			"Celular": "8341663513",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "18761",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/18761_1_Perfil_Lopez_Trejo_Laura_Andrea.png' width='150' title='LOPEZ TREJO LAURA ANDREA' />",
+			"NombreCompleto": "LOPEZ TREJO LAURA ANDREA",
+			"Correo": "dra.andrealopezt@hotmail.com",
+			"Celular": "4432466588",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19739",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19739_1_Perfil_Luna_Garcia_Olga_Estefania.png' width='150' title='LUNA GARCIA OLGA ESTEFANIA' />",
+			"NombreCompleto": "LUNA GARCIA OLGA ESTEFANIA",
+			"Correo": "dra.estefania.luna@outlook.es",
+			"Celular": "2221002162",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "14412",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='MACEDONIO SANTIVAÑEZ NAYCEL' />",
+			"NombreCompleto": "MACEDONIO SANTIVAÑEZ NAYCEL",
+			"Correo": "chispita.luna@outlook.com",
+			"Celular": "4435049295",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "14658",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/14658_1_Perfil_Manjarrez_Bernal_Frida_Amaranta.png' width='150' title='MANJARREZ BERNAL FRIDA AMARANTA' />",
+			"NombreCompleto": "MANJARREZ BERNAL FRIDA AMARANTA",
+			"Correo": "dra.fmb@gmail.com",
+			"Celular": "7224920091",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "18963",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/18963_1_Perfil_Marin_Paniagua_Aldo_efrain.png' width='150' title='MARIN PANIAGUA ALDO EFRAIN' />",
+			"NombreCompleto": "MARIN PANIAGUA ALDO EFRAIN",
+			"Correo": "aldmap87@hotmail.com",
+			"Celular": "4422263437",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "18885",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/18885_2_Perfil_ALMA_ARACELI_MARTINEZ_GUZMAN.jpg' width='150' title='MARTINEZ GUZMAN ALMA ARACELI' />",
+			"NombreCompleto": "MARTINEZ GUZMAN ALMA ARACELI",
+			"Correo": "almitamg2@gmail.com",
+			"Celular": "4446580586",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "4348",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/4348_1_Perfil_Maya_Sanchez_Erik_David.png' width='150' title='MAYA SANCHEZ ERIK DAVID' />",
+			"NombreCompleto": "MAYA SANCHEZ ERIK DAVID",
+			"Correo": "mayalongoria@hotmail.com",
+			"Celular": "5563175258",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "11327",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/11327_1_Perfil_Medina_Gama_Juan.png' width='150' title='MEDINA GAMA JUAN CARLOS ARTURO' />",
+			"NombreCompleto": "MEDINA GAMA JUAN CARLOS ARTURO",
+			"Correo": "krlosgama90@gmail.com",
+			"Celular": "3333904654",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "20078",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/20078_2_Perfil_Medina_Tadeo_Zeferino.jpg' width='150' title='MEDINA TADEO ZEFERINO' />",
+			"NombreCompleto": "MEDINA TADEO ZEFERINO",
+			"Correo": "medinazef006@gmail.com",
+			"Celular": "2212060960",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "17316",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/17316_2_Perfil_Mendiola_Mata_Delia_Karina.png' width='150' title='MENDIOLA MATA DELIA KARINA' />",
+			"NombreCompleto": "MENDIOLA MATA DELIA KARINA",
+			"Correo": "karina.mendiolam@gmail.com",
+			"Celular": "8331880911",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "18535",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/18535_1_Perfil_Meneses_Zamora_Paola.png' width='150' title='MENESES ZAMORA PAOLA' />",
+			"NombreCompleto": "MENESES ZAMORA PAOLA",
+			"Correo": "paaoola_mz94@hotmail.es",
+			"Celular": "2224142267",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19435",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19435_2_Perfil_WhatsApp_Image_2021-11-23_at_12.07.21_PM.jpeg' width='150' title='MIRAMON RODRIGUEZ JHOCELYN' />",
+			"NombreCompleto": "MIRAMON RODRIGUEZ JHOCELYN",
+			"Correo": "jhocelinda@hotmail.com",
+			"Celular": "7221404321",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "2602",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/2602_1_Perfil_Monsalvo_del_rio_Adriana.png' width='150' title='MONSALVO DEL RIO ADRIANA' />",
+			"NombreCompleto": "MONSALVO DEL RIO ADRIANA",
+			"Correo": "capriadri@hotmail.com",
+			"Celular": "0445585333050",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "18585",
+			"Imagen": "<img src='Imagenes/Perfil.png' width='150' title='MORALES ANTONIO JUAN PABLO' />",
+			"NombreCompleto": "MORALES ANTONIO JUAN PABLO",
+			"Correo": "morales_antonio342@hotmail.com",
+			"Celular": "7228033234",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19319",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19319_1_Perfil_Moran_Galicia_Omar.png' width='150' title='MORAN GALICIA OMAR' />",
+			"NombreCompleto": "MORAN GALICIA OMAR",
+			"Correo": "yo0zhito@gmail.com",
+			"Celular": "5566766834",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "15947",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/15947_1_Perfil_Nava_Rodriguez_Adriana.png' width='150' title='NAVA RODRIGUEZ ADRIANA MICHELLE' />",
+			"NombreCompleto": "NAVA RODRIGUEZ ADRIANA MICHELLE",
+			"Correo": "michellenavar94@gmail.com",
+			"Celular": "8111053334",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "17036",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/17036_1_Perfil_Navarro_Aguirre_Veronica_Alexandra.png' width='150' title='NAVARRO AGUIRRE VERONICA ALEXANDRA' />",
+			"NombreCompleto": "NAVARRO AGUIRRE VERONICA ALEXANDRA",
+			"Correo": "dra.vero.navarro@gmail.com",
+			"Celular": "8115647961",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "15438",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/15438_1_Perfil_Sandra_Ocampo_Rivera.png' width='150' title='OCAMPO RIVERA SANDRA GUADALUPE' />",
+			"NombreCompleto": "OCAMPO RIVERA SANDRA GUADALUPE",
+			"Correo": "drsandra_oc@hotmail.com",
+			"Celular": "5554944189",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19368",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19368_1_Perfil_Olvera_Gomez_Julieta.png' width='150' title='OLVERA GOMEZ JULIETA BERENICE' />",
+			"NombreCompleto": "OLVERA GOMEZ JULIETA BERENICE",
+			"Correo": "julieta.og7@gmail.com",
+			"Celular": "4423599322",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "18257",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/18257_1_Perfil_Portilla_Gomez_Pedro_Francisco.png' width='150' title='PORTILLA GOMEZ PEDRO FRANCISCO' />",
+			"NombreCompleto": "PORTILLA GOMEZ PEDRO FRANCISCO",
+			"Correo": "pedro_portilla@hotmail.com",
+			"Celular": "8110596234",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "18763",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/18763_1_Perfil_Ramirez_Arias_Sandy_Yuly.png' width='150' title='RAMIREZ ARIAS SANDY YULY' />",
+			"NombreCompleto": "RAMIREZ ARIAS SANDY YULY",
+			"Correo": "sandyyuly@gmail.com",
+			"Celular": "2299132305",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "16804",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/16804_1_Perfil_Reyna_Barajas_Cynthia.png' width='150' title='REYNA BARAJAS CYNTHIA' />",
+			"NombreCompleto": "REYNA BARAJAS CYNTHIA",
+			"Correo": "cynthiareynabarajas@hotmail.com",
+			"Celular": "7711427403",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "14561",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/14561_1_Perfil_Rivera_Diaz_Elida.png' width='150' title='RIVERA DIAZ ELIDA' />",
+			"NombreCompleto": "RIVERA DIAZ ELIDA",
+			"Correo": "elida_153@hotmail.com",
+			"Celular": "3321545040",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "6195",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/6195_1_Perfil_Riveroll_Velasquez_Rafael_Marcelo.png' width='150' title='RIVEROLL VELASQUEZ RAFAEL MARCELO' />",
+			"NombreCompleto": "RIVEROLL VELASQUEZ RAFAEL MARCELO",
+			"Correo": "leafar.rv3@gmail.com",
+			"Celular": "5016065324",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19730",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19730_1_Perfil_Rodelo_Pennuelas_Paola.png' width='150' title='RODELO PEÑUELAS PAOLA' />",
+			"NombreCompleto": "RODELO PEÑUELAS PAOLA",
+			"Correo": "rodelo54@gmail.com",
+			"Celular": "6731182439",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "20388",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/20388_1_Perfil_Rodriguez_Delgado_Alejandra.png' width='150' title='RODRIGUEZ DELGADO ALEJANDRA' />",
+			"NombreCompleto": "RODRIGUEZ DELGADO ALEJANDRA",
+			"Correo": "ale.rdz251@gmail.com",
+			"Celular": "8448692749",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "20060",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/20060_1_Perfil_Rodriguez_Santos_Maria_Antonieta.png' width='150' title='RODRIGUEZ SANTOS MARIA ANTONIETA' />",
+			"NombreCompleto": "RODRIGUEZ SANTOS MARIA ANTONIETA",
+			"Correo": "tony_rdz_82@outlook.com",
+			"Celular": "4441570424",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "2517",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/2517_1_Perfil_Roman_Linares_Julyana.png' width='150' title='ROMAN LINARES YULIANA' />",
+			"NombreCompleto": "ROMAN LINARES YULIANA",
+			"Correo": "yuli_44_44@hotmail.com",
+			"Celular": "5545464172",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "13032",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/13032_1_Perfil_Romano_Sanchez_Tania_Elizabeth.png' width='150' title='ROMANO SANCHEZ TANIA ELIZABETH' />",
+			"NombreCompleto": "ROMANO SANCHEZ TANIA ELIZABETH",
+			"Correo": "tania_romano@hotmail.com",
+			"Celular": "3314198161",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "5765",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/5765_1_Perfil_Sanchez_Gutierrez_Cristopher.png' width='150' title='SÁNCHEZ GUTIÉRREZ CRISTOPHER' />",
+			"NombreCompleto": "SÁNCHEZ GUTIÉRREZ CRISTOPHER",
+			"Correo": "sanchezgc79@gmail.com",
+			"Celular": "6623539615",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19678",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19678_1_Perfil_Santamaria_Garcia_Franco.png' width='150' title='SANTAMARIA GARCIA FRANCO DE JESUS' />",
+			"NombreCompleto": "SANTAMARIA GARCIA FRANCO DE JESUS",
+			"Correo": "franco_med93@hotmail.com",
+			"Celular": "",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "10393",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/10393_1_Perfil_Solano_Hernandez_Dulce_Maria_Berenice.png' width='150' title='SOLANO HERNANDEZ DULCE MARIA BERENICE' />",
+			"NombreCompleto": "SOLANO HERNANDEZ DULCE MARIA BERENICE",
+			"Correo": "dmbsh@hotmail.com",
+			"Celular": "5554323044",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "18573",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/18573_1_Perfil_Tejeda_Hernandez_Anahi.png' width='150' title='TEJEDA HERNANDEZ ANAHI' />",
+			"NombreCompleto": "TEJEDA HERNANDEZ ANAHI",
+			"Correo": "anahith0114@gmail.com",
+			"Celular": "2281775791",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "1933",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/1933_1_Perfil_Tellez_Meza_Enrique.png' width='150' title='TELLEZ MEZA ENRIQUE' />",
+			"NombreCompleto": "TELLEZ MEZA ENRIQUE",
+			"Correo": "kike764@hotmail.com",
+			"Celular": "2461110422",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "17526",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/17526_2_Perfil_VALLEJO_ECHEVARRIA_JORGE_ARTURO.jpg' width='150' title='VALLEJO ECHEVARRIA JORGE ARTURO' />",
+			"NombreCompleto": "VALLEJO ECHEVARRIA JORGE ARTURO",
+			"Correo": "jovaechdoc@gmail.com",
+			"Celular": "4433553729",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "4899",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/4899_1_Perfil_Vasquez_Jacuinde_Guadalupe_Paulina.png' width='150' title='VAZQUEZ JACUINDE GUADALUPE PAULINA' />",
+			"NombreCompleto": "VAZQUEZ JACUINDE GUADALUPE PAULINA",
+			"Correo": "dra.vjacuinde@hotmail.com",
+			"Celular": "4431694503",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "16647",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/16647_1_Perfil_Vazquez_Serrano_Claudia.png' width='150' title='VAZQUEZ SERRANO CLAUDIA VERONICA' />",
+			"NombreCompleto": "VAZQUEZ SERRANO CLAUDIA VERONICA",
+			"Correo": "claudia.vazquez30@hotmail.com",
+			"Celular": "3317395700",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "7071",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/7071_1_Perfil_Villagomez_Ruiz_Grecia.png' width='150' title='VILLAGOMEZ RUIZ GRECIA' />",
+			"NombreCompleto": "VILLAGOMEZ RUIZ GRECIA",
+			"Correo": "dra.villagomez.r@gmail.com",
+			"Celular": "3314955142",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "15843",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/15843_1_Perfil_Villanueva_Picasso_Carolina.png' width='150' title='VILLANUEVA PICASSO CAROLINA' />",
+			"NombreCompleto": "VILLANUEVA PICASSO CAROLINA",
+			"Correo": "carolinavillanuevapicasso@gmail.com",
+			"Celular": "9511115606",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		},
+		{
+			"IDAlumno": "19769",
+			"Imagen": "<img src='../Alumnos/MisDatos/MiPerfil/MiImagen/19769_1_Perfil_dra._ZERPA_EUKARIS_ALBANY.png' width='150' title='ZERPA  EUKARIS ALBANY' />",
+			"NombreCompleto": "ZERPA  EUKARIS ALBANY",
+			"Correo": "draeukariszerpa@gmail.com",
+			"Celular": "584242077323",
+			"Carrera": "MAESTRÍA en MEDICINA ESTÉTICA Y LONGEVIDAD",
+			"Generacion": "14&ordm; Generaci&oacute;n",
+			"Ciclo": "TERCER SEMESTRE"
+		}
+	]
+}

@@ -1,0 +1,175 @@
+body {
+  font-family: "Lato", sans-serif;
+  color: gray;
+}
+
+.titulo1{
+  color: #be1616;
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.titulo2{
+  color: #be1616;
+  font-size: x-large;
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+.sidepanel  {
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #acacac;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidepanel a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 17px;
+  background-color: #5a5a5a;
+  color: #ffffff;
+  display: block;
+  transition: 0.3s;
+  margin-bottom: 10px;
+}
+
+.sidepanel a:hover {
+  color: white;
+}
+
+.sidepanel .closebtn {
+  position: absolute;
+  top: 0;
+  right: 2px;
+  font-size: 36px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #be1616;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color:#5a5a5a;
+}
+
+.avatar {
+  vertical-align: middle;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+.card{
+  background-color: whitesmoke;
+  border-radius: 25px;
+  box-shadow: 5px 10px 10px gainsboro;
+  margin-top: 50px;
+  width: 80%;
+  display: block;
+  padding: 5px;
+}
+
+.year{
+  color: whitesmoke;
+  margin-left: 70%;
+  background-color: #be1616;
+  text-align: center;
+  border-radius: 10px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.yearsub{
+  color: whitesmoke;
+  margin-left: 70%;
+  background-color: #5a5a5a;
+  text-align: center;
+  border-radius: 10px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=submit] {
+  background-color: #be1616;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #be1616;
+}
+
+.containerX {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  box-shadow: 5px 10px 10px gainsboro;
+  margin: 20px;
+}
+
+.card3 {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  box-shadow: 5px 10px 10px gainsboro;
+  margin: 20px;
+}
+
+.footer{
+  background-color: #be1616;
+  color: white;
+  font-size: larger;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+  width: 100%;
+}
+
+.footer_t{
+  width: 200%;
+  margin-right: 40%;
+}
+
+.footer_panel {
+  width: 100%; 
+  background-color: #5a5a5a; 
+  margin-top: 50%;
+  padding: 5%;
+}
+
+.divisor{
+  background-color: #cccccc;
+  width: 100%;
+  height: 2px;
+  margin-bottom: 20px;
+}
+
+.lpanel{
+  cursor: pointer;
+}

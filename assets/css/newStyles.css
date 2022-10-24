@@ -1,0 +1,282 @@
+.tab_active{
+    color: #aa262c;
+    border-bottom: solid #aa262c 2px;
+  }
+  .page-title > span {
+    cursor: pointer;
+  }
+  .form-control{
+    border: 1px solid #c8c8c8;
+  }
+  .myCustomClass-info .swal2-icon.swal2-info{
+  border-color: #AA262C;
+  color: #AA262C;
+  }
+  .main-blo{
+    background: #e4e9ed;
+    border-radius: 5px;
+  }
+  .multiselect {
+  width: 100%;
+  }
+
+  .selectBox {
+  position: relative;
+  }
+
+  .selectBox select {
+  width: 100%;
+  font-weight: bold;
+  }
+
+  .overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  }
+
+  .checkboxes {
+  display: none;
+  border: 1px #dadada solid;
+  }
+
+  .checkboxes label {
+  display: block;
+  }
+
+  .checkboxes label:hover {
+  background-color: #eeeeee;
+  }
+  
+  .swal-wide{
+    width:950px !important;
+    
+  }
+  .img-carr{
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      width: 100%;
+      height: 50px;
+      max-width: 90px;
+      margin-bottom: 5px;
+      cursor: pointer;
+  }
+  .generation .first{
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 5px;
+      margin-bottom: 10px;
+      cursor: pointer;
+  }
+  .generation a.first{
+      color: #777;
+  }
+  .generation button{
+      border: none;
+      background: transparent;
+  }
+  .drop{
+      float: right;
+      color: #999;	
+      font-size: 25px;
+      cursor: pointer;
+  }
+  .toast-success {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  top: 160px;
+  font-size: 17px;
+  }
+
+  .toast-success.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+
+  @-webkit-keyframes fadein {
+  from {top: 0; opacity: 0;} 
+  to {top: 160px; opacity: 1;}
+  }
+
+  @keyframes fadein {
+  from {top: 0; opacity: 0;}
+  to {top: 160px; opacity: 1;}
+  }
+
+  @-webkit-keyframes fadeout {
+  from {top: 160px; opacity: 1;} 
+  to {top: 0; opacity: 0;}
+  }
+
+  @keyframes fadeout {
+  from {top: 160px; opacity: 1;}
+  to {top: 0; opacity: 0;}
+  }
+
+  #return{
+      font-size: 18px;
+      color: #aa262c;
+      text-decoration: none;
+  }
+  .imgpreviewModal,.imgpreviewC{
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      width: 100%;
+      height: 200px;
+  }
+  .divSearch{
+      position: relative;
+  }
+  .divSearch .fa-search{
+      position: absolute;
+      top: 11px;
+      left: 10px;
+  }
+  .divSearch input{
+      padding-left: 28px;
+  }
+  .a-color-black{
+      color: #000!important;
+      text-decoration: none;
+      top: 6px;
+      right: 0;
+      z-index: 11;
+  }
+  .first.mats{
+      position: relative;
+  }
+  .first.mats .a-color-black, .bloq .a-color-black{
+      right: 60px;
+  }
+  .a-color-black:hover{
+      color: #000;
+      text-decoration: none;			
+  }
+  .editb{
+      margin-right: 10px;
+  }
+
+  .sscl a .fa-grip-lines{
+    float: right;
+    margin-top: 3px;
+    margin-right: 3px;
+  }
+  .fa-grip-lines{
+    color: #000;
+  }
+.swal-modal .swal-text {
+    text-align: center;
+}
+.first.mats  .trash{
+    right: 90px;
+}
+.close.closed-links{
+    margin: -26px!important;
+}
+.miniaturas{
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
+    position: relative;
+}
+.delete_file{
+    border: none;
+    background: transparent;
+    color: #aa262c;
+    text-align: center;
+    font-weight: bold;
+    position: absolute;
+    right: 5px;
+    top: 0;
+    bottom: 0;
+}
+.miniaturas img{
+    width: 3%;
+}
+.custom-input-file {
+    background-color: #941B80;
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 auto 0;
+    min-height: 15px;
+    overflow: hidden;
+    padding: 10px;
+    position: relative;
+    text-align: center;
+    width: 400px;
+  }
+  
+  .custom-input-file .input-file {
+   border: 10000px solid transparent;
+   cursor: pointer;
+   font-size: 10000px;
+   margin: 0;
+   opacity: 0;
+   outline: 0 none;
+   padding: 0;
+   position: absolute;
+   right: -1000px;
+   top: -1000px;
+  }
+  .btn-files{
+    background-color: #aa262c;
+    color: #fff;
+    border: none;
+    padding: 10px;
+  }
+  .wrapper{
+    margin-top: 190px!important;
+  }
+  .style-textarea{
+    resize: none;
+  }
+  #tableProcedimientos th, #tableProcedimientos td{
+    text-align: center;
+  }
+  .btnsProto,.btnCarrer{
+    position: fixed;
+    background: #dee2e6;
+    padding: 15px;
+    border-radius: 10px;
+    z-index: 999;
+    left: 0;
+    right: 0;
+    max-width: 250px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  #listCarrer{
+    margin-top: 20px;
+    text-align: left;
+  }
+  .seleCarrer{
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+  }
+  .btn.disabled, .btn:disabled{
+    cursor: not-allowed;
+  }
+  #previewBl{
+    float: right;
+    background: none;
+    border: none;
+    font-size: 18px;
+}

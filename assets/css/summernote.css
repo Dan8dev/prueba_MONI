@@ -1,0 +1,126 @@
+/* ############### 4.18 Summernote ############### */
+/* ----------------------------------------------- */
+.hidden{
+    display: none!important;
+}
+.btn-vine{
+    background-color: #AA262C!important;
+    border: none!important;
+    float: right;
+}
+.btn-vine:hover{
+    background-color: #AA262C!important;
+    border: none!important;
+}
+.note-editor.note-frame {
+    border: 1px solid #ced4da;
+  }
+  .note-editor.note-frame .note-editing-area .note-editable {
+    padding: 10px;
+  }
+  .note-editor.note-frame .note-statusbar {
+    border-top: 1px solid #ced4da;
+  }
+  
+  .note-toolbar {
+    position: relative;
+  }
+  
+  .card-header.note-toolbar {
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+  .card-header.note-toolbar > .btn-group {
+    margin: 0 10px 10px 0;
+  }
+  .card-header.note-toolbar > .btn-group.note-insert, .card-header.note-toolbar > .btn-group.note-view {
+    margin-bottom: 0;
+  }
+  @media (min-width: 480px) {
+    .card-header.note-toolbar > .btn-group.note-para, .card-header.note-toolbar > .btn-group.note-table {
+      margin-bottom: 0;
+    }
+  }
+  @media (min-width: 768px) {
+    .card-header.note-toolbar > .btn-group.note-para, .card-header.note-toolbar > .btn-group.note-table, .card-header.note-toolbar > .btn-group.note-insert {
+      margin-bottom: 10px;
+    }
+  }
+  @media (min-width: 992px) {
+    .card-header.note-toolbar > .btn-group.note-insert {
+      margin-bottom: 0;
+    }
+  }
+  @media (min-width: 1200px) {
+    .card-header.note-toolbar > .btn-group, .card-header.note-toolbar > .btn-group.note-para, .card-header.note-toolbar > .btn-group.note-table {
+      margin-bottom: 0;
+    }
+  }
+  .card-header.note-toolbar > .btn-group .btn, .card-header.note-toolbar > .btn-group .sp-container button, .sp-container .card-header.note-toolbar > .btn-group button {
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    padding: 8px 10px;
+    color: #495057;
+    font-size: 12px;
+    border-radius: 2px;
+  }
+  .card-header.note-toolbar > .btn-group .btn:hover, .card-header.note-toolbar > .btn-group .sp-container button:hover, .sp-container .card-header.note-toolbar > .btn-group button:hover, .card-header.note-toolbar > .btn-group .btn:focus, .card-header.note-toolbar > .btn-group .sp-container button:focus, .sp-container .card-header.note-toolbar > .btn-group button:focus, .card-header.note-toolbar > .btn-group .btn:active, .card-header.note-toolbar > .btn-group .sp-container button:active, .sp-container .card-header.note-toolbar > .btn-group button:active, .card-header.note-toolbar > .btn-group .btn.active, .card-header.note-toolbar > .btn-group .sp-container button.active, .sp-container .card-header.note-toolbar > .btn-group button.active {
+    border-color: #adb5bd;
+    background-color: #e9ecef;
+  }
+  .card-header.note-toolbar > .btn-group .dropdown-item {
+    padding: 7px 15px;
+  }
+  .card-header.note-toolbar > .btn-group .dropdown-item:hover, .card-header.note-toolbar > .btn-group .dropdown-item:focus {
+    background-color: #e9ecef;
+  }
+  .card-header.note-toolbar > .btn-group .dropdown-item p,
+  .card-header.note-toolbar > .btn-group .dropdown-item blockquote,
+  .card-header.note-toolbar > .btn-group .dropdown-item pre {
+    margin-bottom: 0;
+    font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+    font-size: 13px;
+  }
+  .card-header.note-toolbar > .btn-group .dropdown-item h1, .card-header.note-toolbar > .btn-group .dropdown-item h2, .card-header.note-toolbar > .btn-group .dropdown-item h3, .card-header.note-toolbar > .btn-group .dropdown-item h4, .card-header.note-toolbar > .btn-group .dropdown-item h5, .card-header.note-toolbar > .btn-group .dropdown-item h6 {
+    font-size: 13px;
+    font-weight: 400;
+  }
+  .card-header.note-toolbar > .btn-group .dropdown-toggle::after {
+    margin-left: 8px;
+  }
+  .card-header.note-toolbar > .btn-group.note-color .dropdown-toggle::after {
+    margin-left: -3px;
+  }
+  .card-header.note-toolbar > .btn-group .dropdown-fontname .dropdown-item {
+    padding-left: 5px;
+  }
+  .card-header.note-toolbar > .btn-group .dropdown-fontname .dropdown-item span {
+    font-family: "Roboto", "Helvetica Neue", Arial, sans-serif !important;
+    font-size: 12px;
+  }
+
+
+.dropdown-menu li{
+    padding-left: 10px;
+    height: 20px;
+  }
+.dropdown-menu a{
+    padding: 0!important;
+}
+.dropdown-menu a:hover{
+}
+.dropdown-menu h2{
+    font-size: 15px;
+    line-height: 10px;
+}
+.dropdown-menu p{
+    color: #212529!important;
+    margin-bottom: 0;
+    font-size: 15px;
+}
+.note-btn:focus{
+    outline: none;
+    box-shadow: none;
+}

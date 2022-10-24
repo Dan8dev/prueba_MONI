@@ -1,0 +1,1 @@
+SELECT D.Cantidad, FP.FormaPago, D.FechaPago FROM Depositos D JOIN FormasPago FP ON D.IDFormaPago=FP.IDFormaPago WHERE D.IDPlanPagoAlumno="130574" AND D.Estatus='1' ORDER BY D.FechaPago ASC

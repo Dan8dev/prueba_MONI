@@ -1,0 +1,1 @@
+{"id_prospecto":"1936","nombre":"RESREFERIDO","aPaterno":"REFPAT","aMaterno":"REFMAT","correo":"tresreferido@mail.com","telefono":"1351245848","curp":"DFS1F84RE1G238","estatus":"1"}

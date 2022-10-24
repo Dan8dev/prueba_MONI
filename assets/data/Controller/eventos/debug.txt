@@ -1,0 +1,3 @@
+SELECT ma.*, tr.* FROM a_marketing_atencion ma 
+				INNER JOIN ev_asistentes tr ON ma.prospecto = tr.idAsistente
+				WHERE ma.idMk_persona = :personaMK AND tr.idEvento = :id_interes ORDER BY ma.etapa ASC;["ev_asistentes","idEvento","idAsistente"]

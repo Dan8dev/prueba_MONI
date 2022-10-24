@@ -1,0 +1,1 @@
+{"monto_por_pagar":1500,"fecha_limite_pago":"2022-05-28 00:00:00","monto_retardo":0,"numero_de_pago":1,"monto_promocion":1500,"porcentaje_promocion":50,"monto_total_concepto":1500,"id_promocion":"288"}

@@ -1,0 +1,94 @@
+body{
+    background-color: #f8f9fa!important;
+}
+.no-scroll{
+    overflow: hidden;
+}
+th { white-space: nowrap; }
+.hidden{
+    display: none!important;
+}
+#globals{
+    opacity: .5;
+}
+.container.master{
+    max-width: 100%!important;
+}
+.btn-gin{
+    padding: 15px;
+    cursor: pointer;
+}
+.btn_name{
+    border: none;
+    background-color: transparent;
+}
+.btn-gin.active{
+    color: #fff;
+    background-color: #AA262C;
+}
+
+.btn-plus,.btn-success{
+    background-color: #AA262C;
+    color: #fff;
+    border: 2px solid #fff;
+    box-shadow: 0 0 3px #444;
+}
+.btn-success{
+    background-color: #198754;
+}
+.ths li{
+    display: inline-block;
+}
+.nav-bar{
+    background: #181F3B;
+    padding: 30px;
+}
+.approved .card-header{
+    background: #fff;
+}
+.modal.active{
+    background-color: #0000004a;
+    display: flex;
+    align-items: center; 
+    overflow: hidden;
+}
+.modal.active .card{
+    margin: 0 auto;
+}
+.modal .card .card-body{
+    overflow: auto;
+    max-height: 780px;
+}
+/*#previewsFact .card-body{
+    max-height: 700px;
+}*/
+#reasonTyping{
+    resize: none;
+    height: 172px;
+    width: 100%;
+}
+.card.example_const{
+    overflow: auto;
+    height: 910px;
+}
+#logout{
+    color: #fff;
+    float: right;
+    cursor: pointer;
+    text-decoration: none;
+}
+#logout:hover,#logout:focus{
+    color: #fff;
+    text-decoration: none;
+    outline: none;
+}
+.btn-download{
+    background-color: #AA262C!important;
+    color: #fff!important;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+}
+input[type=number] { -moz-appearance:textfield; }
+

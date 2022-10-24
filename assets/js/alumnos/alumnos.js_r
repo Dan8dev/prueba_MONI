@@ -1,0 +1,1056 @@
+$(document).ready(function() {
+    init_d();
+});
+
+function init_d(){
+    cargar_pagos_alumnos();
+    cargar_pagos_reportados();
+    CarrerasGen();
+    cargar_pagos_rechazados();
+}
+
+function cargar_pagos_alumnos() {
+    $.ajax({
+        url: '../assets/data/Controller/planpagos/alumnosPagosControl.php',
+        type: "POST",
+        data: {action:'cargar_pagos_alumnos'},
+        beforeSend : function(){
+            $("#loader").css("display", "block")
+        },
+        success: function(data){
+            try{
+                resp = JSON.parse(data);
+                var monto_pagos = 0;
+                $("#table-alumnos-pagos").DataTable().clear();
+                if(resp.estatus == 'ok'){
+                    for(var i = 0; i < resp.data.length; i++){
+                        monto_pagos += parseFloat(resp.data[i].montopagado) + parseFloat(resp.data[i].cargo_retardo);
+                        info_p = JSON.parse(resp.data[i].detalle_pago);
+                        var total_pagado = parseFloat(resp.data[i].montopagado);
+                        if(resp.data[i].cargo_retardo !== null){
+                            total_pagado+=parseFloat(resp.data[i].cargo_retardo);
+                        }
+
+                        var detalle_p = '';
+                        if(resp.data[i].referencia != null && resp.data[i].referencia != ''){
+                            detalle_p += '<b>Referencia:</b> ' + resp.data[i].referencia + '<br>';
+                        }
+                        if(resp.data[i].codigo_de_autorizacion != null && resp.data[i].codigo_de_autorizacion != ''){
+                            detalle_p += '<b>Autorización:</b> ' + resp.data[i].codigo_de_autorizacion + '<br>';
+                        }
+                        string_concepto = resp.data[i].concepto;
+                        if(resp.data[i].categoria == 'Mensualidad' && resp.data[i].numero_de_pago > 0){
+                            string_concepto = resp.data[i].concepto.slice(0,11)+` [N° ${resp.data[i].numero_de_pago}]`+resp.data[i].concepto.slice(11)
+                        }
+                        $("#table-alumnos-pagos").DataTable().row.add([
+                            resp.data[i].nombre_alumno,
+                            string_concepto,
+                            info_p.id+' '+((resp.data[i].comprobante != '') ? `<a href="../assets/files/comprobantes_pago/${resp.data[i].comprobante}" target="_blank"><i class="fas fa-file"></i></a>` : ''),
+                            detalle_p,
+                            resp.data[i].fecha_limite_pago,
+                            resp.data[i].moneda,
+                            moneyFormat.format(parseFloat(resp.data[i].costototal) + parseFloat(resp.data[i].saldo) + parseFloat(resp.data[i].cargo_retardo)),
+                            resp.data[i].fechapago.substr(0, 10),
+                            moneyFormat.format( total_pagado ),
+                            moneyFormat.format( parseFloat(resp.data[i].saldo) + parseFloat(resp.data[i].restante) ),
+                            resp.data[i].metodo_de_pago,
+                            resp.data[i].banco_de_deposito,
+                            //`<button class="btn btn-primary" data-toggle="modal" data-target=".modal-modificar-fechapago" onclick="modificarfecha_pago('${resp.data[i].id_pago}','${resp.data[i].como_realizo_pago}','${resp.data[i].metodo_de_pago}','${moneyFormat.format( total_pagado )}','${resp.data[i].fechapago.substr(0, 10)}','${resp.data[i].banco_de_deposito}','${string_concepto}')">Modificar</button>` + 
+                            ` <button class="btn btn-primary" data-toggle="modal" data-target=".modal-consultar-historial" onclick="consultar_historial_pago_id('${resp.data[i].id_prospecto}')">Estado de cuenta</button>`
+                        ])
+                    }
+                }
+                $("#foot_total_pagos").html(`Total de pagos: <span class="float-right alert-link">${moneyFormat.format(monto_pagos)}<span>`);
+                $("#table-alumnos-pagos").DataTable().draw();
+                setTimeout(function(){
+                    $("#table-alumnos-pagos").DataTable().columns.adjust();
+                }, 1000);
+            }catch(e){
+                console.log(e);
+                console.log(data);
+            }
+        },
+        error: function(){
+        },
+        complete: function(){
+            $("#loader").css("display", "none")
+        }
+    });
+}
+
+function cargar_pagos_reportados() {
+    $.ajax({
+        url: '../assets/data/Controller/planpagos/alumnosPagosControl.php',
+        type: "POST",
+        data: {action:'cargar_pagos_reportados'},
+        beforeSend : function(){
+            $("#loader").css("display", "block")
+        },
+        success: function(data){
+            try{
+                resp_rep = JSON.parse(data);
+                var monto_pagos = 0;
+                $("#table-pagos-notificados").DataTable().clear();
+                if(resp_rep.estatus == 'ok'){
+                    for(var i = 0; i < resp_rep.data.length; i++){
+                        monto_pagos += parseFloat(resp_rep.data[i].montopagado);
+                        select_status = '';
+                        var info_p = JSON.parse(resp_rep.data[i].detalle_pago);
+                        if(resp_rep.data[i].estatus == 'pendiente'){
+                            select_status = `<div>
+                                <select class="form-control" id="select-pago-${resp_rep.data[i].id_pago}" onchange="cambiar_estatus_pago(${resp_rep.data[i].id_pago}, this, '${resp_rep.data[i].nombre_alumno}', '${resp_rep.data[i].concepto}',${resp_rep.data[i].id_prospecto},${resp_rep.data[i].id_generacion})">
+                                    <option value="pendiente" selected>Pendiente</option>
+                                    <option value="verificado">Verificado</option>
+                                    <option value="rechazado" >Rechazado</option>
+                                </select>
+                            </div>`
+                        }else{
+                            select_status = resp_rep.data[i].estatus;
+                        }
+                        var total_pagado = parseFloat(resp_rep.data[i].montopagado);
+                        if(resp_rep.data[i].cargo_retardo !== null){
+                            total_pagado += parseFloat(resp_rep.data[i].cargo_retardo);
+                        }
+                        string_concepto = resp_rep.data[i].concepto;
+                        if(resp_rep.data[i].categoria == 'Mensualidad' && resp_rep.data[i].numero_de_pago > 0){
+                            string_concepto = resp_rep.data[i].concepto.slice(0,11)+` [N° ${resp_rep.data[i].numero_de_pago}]`+resp_rep.data[i].concepto.slice(11)
+                        }
+                        $("#table-pagos-notificados").DataTable().row.add([
+                            resp_rep.data[i].nombre_alumno,
+                            string_concepto,
+                            info_p.id,
+                            resp_rep.data[i].fecha_limite_pago,
+                            resp_rep.data[i].moneda,
+                            moneyFormat.format(parseFloat(resp_rep.data[i].costototal) + parseFloat(resp_rep.data[i].saldo) + parseFloat(resp_rep.data[i].cargo_retardo)),
+                            resp_rep.data[i].fechapago.substr(0,10),
+                            moneyFormat.format(total_pagado),
+                            moneyFormat.format( parseFloat(resp_rep.data[i].saldo) + parseFloat(resp_rep.data[i].restante) ),
+                           `<a href="${resp_rep.data[i].comprobante}" target="_blank">Ver comprobante <i class="fas fa-file"></i></a>`,
+                            select_status,
+                            resp_rep.data[i].metodo_de_pago,
+                            resp_rep.data[i].banco_de_deposito,
+                            //`<button class="btn btn-primary" data-toggle="modal" data-target=".modal-modificar-fechapago" onclick="modificarfecha_pago('${resp_rep.data[i].id_pago}','${resp_rep.data[i].como_realizo_pago}','${resp_rep.data[i].metodo_de_pago}','${moneyFormat.format( total_pagado )}','${resp_rep.data[i].fechapago.substr(0, 10)}','${resp_rep.data[i].banco_de_deposito}','${resp_rep.data[i].concepto}')">Modificar</button>` +
+                            ` <button class="btn btn-primary" data-toggle="modal" data-target=".modal-consultar-historial" onclick="consultar_historial_pago_id('${resp_rep.data[i].id_prospecto}')">Estado de cuenta</button>`
+                        ])
+                    }
+                }
+
+                $("#foot_total_reportados").html(`Total de pagos: <span class="float-right alert-link">${moneyFormat.format(monto_pagos)}<span>`);
+                $("#table-pagos-notificados").DataTable().draw();
+                $("#table-pagos-notificados").DataTable().columns.adjust();
+            }catch(e){
+                console.log(e);
+                console.log(data);
+            }
+        },
+        error: function(){
+        },
+        complete: function(){
+            $("#loader").css("display", "none")
+        }
+    });
+}
+
+function cargar_pagos_rechazados() {
+    $.ajax({
+        url: '../assets/data/Controller/planpagos/alumnosPagosControl.php',
+        type: "POST",
+        data: {action:'cargar_pagos_rechazados'},
+        beforeSend : function(){
+            $("#loader").css("display", "block")
+        },
+        success: function(data){
+            try{
+                resp = JSON.parse(data);
+                var monto_pagos = 0;
+                $("#table-pagos-rechazados").DataTable().clear();
+                if(resp.estatus == 'ok'){
+                    for(var i = 0; i < resp.data.length; i++){
+                        var info_p = JSON.parse(resp.data[i].detalle_pago);
+
+                        var total_pagado = parseFloat(resp.data[i].montopagado);
+                        if(resp.data[i].cargo_retardo !== null){
+                            total_pagado += parseFloat(resp.data[i].cargo_retardo);
+                        }
+                        string_concepto = resp.data[i].concepto;
+                        if(resp.data[i].categoria == 'Mensualidad' && resp.data[i].numero_de_pago > 0){
+                            string_concepto = resp.data[i].concepto.slice(0,11)+` [N° ${resp.data[i].numero_de_pago}]`+resp.data[i].concepto.slice(11)
+                        }
+                        $("#table-pagos-rechazados").DataTable().row.add([
+                            resp.data[i].nombre_alumno,
+                            string_concepto,
+                            info_p.id,
+                            resp.data[i].fechapago.substr(0,10),
+                            resp.data[i].moneda,
+                            moneyFormat.format(total_pagado),
+                            (resp.data[i].comprobante != '') ? `<a href="../assets/files/comprobantes_pago/${resp.data[i].comprobante}" target="_blank">Ver comprobante <i class="fas fa-file"></i></a>` : '',
+                            resp.data[i].comentario
+                        ])
+                    }
+                }
+
+                $("#table-pagos-rechazados").DataTable().draw();
+                $("#table-pagos-rechazados").DataTable().columns.adjust();
+            }catch(e){
+                console.log(e);
+                console.log(data);
+            }
+        },
+        error: function(){
+        },
+        complete: function(){
+            $("#loader").css("display", "none")
+        }
+    });
+}
+function cancelar_rechazo(nodo){
+    $(`#${nodo}`).val('pendiente');
+    $(".inp_dinamico").remove();
+}
+
+function rechazar_pago(pago, alumno, concepto){
+    var motivo = $(`#motivo_rechazo_${pago}`).val().trim();
+    $.ajax({
+        url: '../assets/data/Controller/planpagos/alumnosPagosControl.php',
+        type: "POST",
+        data: {action:'cambiar_estatus_pago', id_pago:pago, estatus:'rechazado', motivo:motivo},
+        success: function(data){
+            try{
+                var resp_estat = JSON.parse(data);
+                if(resp_estat.estatus == 'error'){
+                    swal(resp_estat.mensaje,'info');
+                }
+                init_d();
+            }catch(e){
+                console.log(e);
+                console.log(data);
+            }
+        }
+    });  
+}
+
+function cambiar_estatus_pago(pago, nodo, alumno, concepto, idProspecto, idGeneracion) {
+    if(nodo.value != 'pendiente'){
+        if(nodo.value == 'rechazado'){
+            console.log(nodo)
+            $(nodo).parent().append(`
+            <input type="text" class="form-control mt-2 inp_dinamico" id="motivo_rechazo_${pago}" placeholder="Motivo del rechazo" required>
+                <button class="btn btn-primary mt-2 inp_dinamico" onclick="rechazar_pago(${pago}, '${alumno}', '${concepto}')">Confirmar</button>
+                <button class="btn btn-secondary mt-2 inp_dinamico" onclick="cancelar_rechazo('${nodo.id}')">Cancelar</button>
+            `);
+        }else{
+            swal({
+                title: `Cambiar estatus a ${nodo.value}?`,
+                text: "Pago de " + alumno + " por \"" + concepto + "\".",
+                icon: "info",
+                buttons: ["Cancelar", "Aceptar"],
+            }).then(function(isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        url: '../assets/data/Controller/planpagos/alumnosPagosControl.php',
+                        type: "POST",
+                        data: {action:'cambiar_estatus_pago', id_pago:pago, estatus:nodo.value},
+                        success: function(data){
+                            try{
+                                var resp_estat = JSON.parse(data);
+                                if(resp_estat.estatus == 'error'){
+                                    swal(resp_estat.mensaje,'info');
+                                }
+                                asignar_generacion_alumno_nuevo(idProspecto, idGeneracion);
+                                init_d();
+                            }catch(e){
+                                console.log(e);
+                                console.log(data);
+                            }
+                            init_d();
+                        }
+                    });
+                }else{
+                    nodo.value = 'pendiente';
+                }
+			
+            });
+        }
+    }
+}
+
+function asignar_generacion_alumno_nuevo(idProspecto, idGeneracion) {
+    $.ajax({
+        url: '../assets/data/Controller/planpagos/pagosControl.php',
+        type: "POST",
+        data: {action:'asignar_generacion', alumno_generacion:idProspecto, select_alumno_gen:idGeneracion},
+        success: function(data){
+            try{
+                var resp_estat = JSON.parse(data);
+                console.log(resp_estat);
+            }catch(e){
+                console.log(e);
+                console.log(data);
+            }
+        }
+    });
+}
+
+$(".nav-tabs").find('.nav-link').on('click', function(){
+	var elm = $(this)
+	setTimeout(function(){
+		$(elm.attr('data-target')).find('table').DataTable().columns.adjust()
+	}, 200)
+})
+
+function CarrerasGen(){
+    var Data = {
+       action: "obtenerCarrerasGen"
+    }
+    $.ajax({
+        url: '../assets/data/Controller/planpagos/alumnosPagosControl.php',
+        type: 'POST',
+        data: Data,
+        dataType: 'JSON',
+        success : function(data){
+            $("#list-carrera-gen").html('<option value="" disabled="disabled">Seleccione la Carrera</option>');
+            $.each(data, function(key,registro){
+                $("#list-carrera-gen").append('<option value='+registro.idCarrera+'>'+registro.nombre+'</option>');
+            });
+        },
+        error: function(xhr){
+            if(xhr.responseText == 'no_session'){
+                swal({
+                    title: "Vuelve a iniciar sesión!",
+                    text: "La informacion no se actualizó",
+                    icon: "info",
+                });
+                setTimeout(function(){
+                    window.location.replace("index.php");
+                }, 2000);
+            }
+        }
+    });
+}
+
+$("#list-carrera-gen").on('change', function(){
+    $("#list-generacion-gen").empty();
+    idCarrera = $("#list-carrera-gen").val();
+    $.ajax({
+        url: '../assets/data/Controller/planpagos/alumnosPagosControl.php',
+        type: 'POST',
+        data: {
+                action: "buscarGeneraciones", 
+                idCarrera: idCarrera
+            },
+        dataType: 'JSON',
+        success : function(data){
+            $("#list-generacion-gen").html('<option selected="true" disabled="disabled">Seleccione la Generación</option>');
+            $.each(data, function(key,registro){
+                $("#list-generacion-gen").append('<option value ='+registro.idGeneracion+'>'+registro.nombre+'</option>');
+            });
+        },
+        complete : function (){
+            $("#mostrarselectgeneraciones").show();
+        }
+    });
+})
+
+$("#list-generacion-gen").on('change', function(){
+    idGeneracion = $("#list-generacion-gen").val();
+    obteneralumnosgeneracionreporte(idGeneracion);
+})
+
+
+function obteneralumnosgeneracionreporte(idGeneracion){
+
+    $.ajax({
+        url: '../assets/data/Controller/planpagos/alumnosPagosControl.php',
+        type: 'POST',
+        data: {
+                action: "totalalumnosgeneracion", 
+                idGeneracion: idGeneracion
+            },
+
+        success : function(data){
+            $('#totalalumnosgeneracion').html(data);
+            console.log(data);
+        },
+        complete : function (){
+            $("#mostrarselectgeneraciones").show();
+        }
+    });
+
+    tAlumnoGeneracion = $("#table-alumnos-generacion").DataTable({
+        responsive: true,
+        Processing: true,
+        ServerSide: true,
+        "dom" :'Bfrtip',
+        buttons:[{
+            /*extend:"copy",
+            className: "btn-success"
+        },{
+            extend: "csv"
+        }, {*/
+            extend: "excel",
+            className: "btn-primary"
+        /*}, {
+            extend: "pdf"
+        }, {
+            extend: "print"*/
+        }],
+        "ajax": {
+            url: '../assets/data/Controller/planpagos/alumnosPagosControl.php',
+            type: 'POST',
+            data: {action: 'obteneralumnosgeneracionreporte',
+                    idGeneracion: idGeneracion},
+            dataType: "JSON",
+            error: function(e){
+                console.log(e.responseText);
+                if(e.responseText == 'no_session'){
+                    swal({
+                        title: "Vuelve a iniciar sesión!",
+                        text: "La informacion no se actualizó",
+                        icon: "info",
+                    });
+                    setTimeout(function(){
+                        window.location.replace("index.php");
+                    }, 2000);
+                }	
+            }
+        },
+        'language':{
+            'sLengthMenu': 'Mostrar _MENU_ registros',
+            'sInfo': 'Mostrando registro del _START_ al _END_ de un total de _TOTAL_ registros',
+            'sInfoEmpty': 'Mostrando registros del 0 al 0 de un total de 0 registros',
+            'sInfoFiltered': '(filtrado de un total de _MAX_ registros)',
+            'sSearch': 'Buscar:',
+            'sLoadingRecords': 'Cargando',
+            'oPaginate':{
+                'sFirst': 'Primero',
+                'sLast': 'Último',
+                'sNext': 'Siguiente',
+                'sPrevious': 'Anterior'
+            },
+            buttons: {
+                copyTitle: 'Tabla Copiada de manera exitósa',
+                copySuccess: {
+                    _: 'Se copio %d filas',
+                    1: 'Se copio1 fila'
+                }
+            }
+        },
+        'bDestroy': true,
+        'iDisplayLength': 10,
+        'order':[
+            [0,'asc']
+        ]
+    });
+    
+}
+
+function listar_prorrogas(){
+
+    tListarprorrogas = $("#table-alumnos-prorrogas").DataTable({
+        responsive: true,
+        Processing: true,
+        ServerSide: true,
+        "dom" :'Bfrtip',
+        buttons:[{
+            /*extend:"copy",
+            className: "btn-success"
+        },{
+            extend: "csv"
+        }, {*/
+            extend: "excel",
+            className: "btn-primary"
+        /*}, {
+            extend: "pdf"
+        }, {
+            extend: "print"*/
+        }],
+        "ajax": {
+            url: '../assets/data/Controller/planpagos/prorrogasControl.php',
+            type: 'POST',
+            data: {action: 'listar_prorrogas'},
+            dataType: "JSON",
+            error: function(e){
+                console.log(e.responseText);	
+            }
+        },
+        'language':{
+            'sLengthMenu': 'Mostrar _MENU_ registros',
+            'sInfo': 'Mostrando registro del _START_ al _END_ de un total de _TOTAL_ registros',
+            'sInfoEmpty': 'Mostrando registros del 0 al 0 de un total de 0 registros',
+            'sInfoFiltered': '(filtrado de un total de _MAX_ registros)',
+            'sSearch': 'Buscar:',
+            'sLoadingRecords': 'Cargando',
+            'oPaginate':{
+                'sFirst': 'Primero',
+                'sLast': 'Último',
+                'sNext': 'Siguiente',
+                'sPrevious': 'Anterior'
+            },
+            buttons: {
+                copyTitle: 'Tabla Copiada de manera exitósa',
+                copySuccess: {
+                    _: 'Se copio %d filas',
+                    1: 'Se copio1 fila'
+                }
+            }
+        },
+        'bDestroy': true,
+        'iDisplayLength': 10,
+        'order':[
+            [0,'asc']
+        ]
+    });
+    
+}
+
+
+$( "#tab_tabla_prorrogas" ).click(function() {
+    listar_prorrogas()
+  });
+
+  function obtener_informacion_prorroga(id_prorroga){
+    $('#letrero_aceptada_rechazada').hide();
+    $('#mostrar_opciones_prorroga').hide();
+    $.ajax({
+        url: '../assets/data/Controller/planpagos/prorrogasControl.php',
+        type: 'POST',
+        data: {
+                action: "obtener_informacion_prorroga", 
+                id_prorroga: id_prorroga
+            },
+        dataType: 'JSON',
+        success : function(data){
+            if (data.estatus_prorroga!='pendiente') {
+                $('#letrero_aceptada_rechazada').show();
+                if (data.estatus_prorroga=='rechazado') {
+                    $('#letrero_aceptada_rechazada').html('<span class="badge badge-danger"> La prorroga no fue aprobada</span>');
+                }
+                if (data.estatus_prorroga=='aprobado') {
+                    $('#letrero_aceptada_rechazada').html('<span class="badge badge-success"> La prorroga se aprobó</span>');
+                }
+            } else {
+                $('#mostrar_opciones_prorroga').show();
+            }
+            $('#nombre_solicitante_alumno').html(data.nombre_alumno);
+            $('#descripcion_prorroga_solicitante').html(data.descripcion);
+            $('#nueva_fecha_pago_alumno').html(data.nuevafechalimitedepago);
+            $('#idprorrogasolicitante').val(data.idProrroga);
+            $('#idAsistente_solocitudprorroga').val(data.idAsistente);
+            myArray = data.nombre_concepto.split("-");
+            $('#concepto_prorroga_solicitante').html(myArray[0]+' '+data.numero_de_pago);
+            $('#fecha_limite_pago_prorroga').html(data.fechalimitepago);
+        },
+        complete : function (){
+            $("#modal-prorroga").modal('show');
+        }
+    });
+}
+
+$( "#rechazar_prorroga" ).click(function() {
+    $( "#rechazar_prorroga" ).attr("disabled", true);
+    $.ajax({
+        url: '../assets/data/Controller/planpagos/prorrogasControl.php',
+        type: 'POST',
+        data: {
+                action: "rechazar_prorroga", 
+                id_prorroga: $('#idprorrogasolicitante').val(),
+                idAsistente: $('#idAsistente_solocitudprorroga').val(),
+                nuevafechalimitedepago: $('#nueva_fecha_pago_alumno').text()
+            },
+        dataType: 'JSON',
+        success : function(data){
+            if (data==1) {
+                swal({
+                    title: "Prorroga rechazada",
+                    icon: "success"
+                });
+                $("#modal_ver_prorroga").modal('hide');
+            }
+        },
+        complete : function (){
+            tListarprorrogas.ajax.reload();
+            $( "#rechazar_prorroga" ).attr("disabled", false);
+        }
+    });
+  });
+
+  $( "#aceptar_prorroga" ).click(function() {
+    $( "#aceptar_prorroga" ).attr("disabled", true);
+    $.ajax({
+        url: '../assets/data/Controller/planpagos/prorrogasControl.php',
+        type: 'POST',
+        data: {
+                action: "aprobar_prorroga", 
+                id_prorroga: $('#idprorrogasolicitante').val(),
+                idAsistente: $('#idAsistente_solocitudprorroga').val(),
+                nuevafechalimitedepago: $('#nueva_fecha_pago_alumno').text()
+            },
+        dataType: 'JSON',
+        success : function(data){
+            if (data==1) {
+                swal({
+                    title: "Prorroga aprobada",
+                    icon: "success"
+                });
+                $("#modal_ver_prorroga").modal('hide');
+            }
+        },
+        complete : function (){
+            tListarprorrogas.ajax.reload();
+            $( "#aceptar_prorroga" ).attr("disabled", false);
+        }
+    });
+  });
+
+  $( "#subirpagos-tab" ).click(function() {
+    var Data = {
+        action: "obtenerCarrerasGen"
+     }
+     $.ajax({
+         url: '../assets/data/Controller/planpagos/alumnosPagosControl.php',
+         type: 'POST',
+         data: Data,
+         dataType: 'JSON',
+         success : function(data){
+             $("#seleccionacarrerasubirpago").html('<option value="" disabled="disabled">Seleccione la Carrera</option>');
+             $.each(data, function(key,registro){
+                 $("#seleccionacarrerasubirpago").append('<option value='+registro.idCarrera+'>'+registro.nombre+'</option>');
+             });
+         },
+         error: function(xhr){
+             if(xhr.responseText == 'no_session'){
+                 swal({
+                     title: "Vuelve a iniciar sesión!",
+                     text: "La informacion no se actualizó",
+                     icon: "info",
+                 });
+                 setTimeout(function(){
+                     window.location.replace("index.php");
+                 }, 2000);
+             }
+         }
+     });
+  });
+
+  $("#seleccionacarrerasubirpago").on('change', function(){
+    $("#listar-generacion-subirpago").empty();
+    idCarrera = $("#seleccionacarrerasubirpago").val();
+    $.ajax({
+        url: '../assets/data/Controller/planpagos/alumnosPagosControl.php',
+        type: 'POST',
+        data: {
+                action: "buscarGeneraciones", 
+                idCarrera: idCarrera
+            },
+        dataType: 'JSON',
+        success : function(data){
+            $("#listar-generacion-subirpago").html('<option selected="true" disabled="disabled">Seleccione la Generación</option>');
+            $.each(data, function(key,registro){
+                $("#listar-generacion-subirpago").append('<option value ='+registro.idGeneracion+'>'+registro.nombre+'</option>');
+            });
+        },
+        complete : function (){
+            $("#listar-generacion-subirpago").show();
+        }
+    });
+})
+
+$("#listar-generacion-subirpago").on('change', function(){
+    idGeneracion = $("#listar-generacion-subirpago").val();
+    obteneralumnosgeneracionnotificarpago(idGeneracion);
+})
+
+
+function obteneralumnosgeneracionnotificarpago(idGeneracion){
+
+    tAlumnoGeneracion = $("#table-pagos-subirpagos").DataTable({
+        responsive: true,
+        Processing: true,
+        ServerSide: true,
+        "dom" :'Bfrtip',
+        buttons:[{
+            /*extend:"copy",
+            className: "btn-success"
+        },{
+            extend: "csv"
+        }, {*/
+            extend: "excel",
+            className: "btn-primary"
+        /*}, {
+            extend: "pdf"
+        }, {
+            extend: "print"*/
+        }],
+        "ajax": {
+            url: '../assets/data/Controller/planpagos/alumnosPagosControl.php',
+            type: 'POST',
+            data: {action: 'obteneralumnosgeneracionnotificarpago',
+                    idGeneracion: idGeneracion},
+            dataType: "JSON",
+            error: function(e){
+                console.log(e.responseText);
+                if(e.responseText == 'no_session'){
+                    swal({
+                        title: "Vuelve a iniciar sesión!",
+                        text: "La informacion no se actualizó",
+                        icon: "info",
+                    });
+                    setTimeout(function(){
+                        window.location.replace("index.php");
+                    }, 2000);
+                }	
+            }
+        },
+        'language':{
+            'sLengthMenu': 'Mostrar _MENU_ registros',
+            'sInfo': 'Mostrando registro del _START_ al _END_ de un total de _TOTAL_ registros',
+            'sInfoEmpty': 'Mostrando registros del 0 al 0 de un total de 0 registros',
+            'sInfoFiltered': '(filtrado de un total de _MAX_ registros)',
+            'sSearch': 'Buscar:',
+            'sLoadingRecords': 'Cargando',
+            'oPaginate':{
+                'sFirst': 'Primero',
+                'sLast': 'Último',
+                'sNext': 'Siguiente',
+                'sPrevious': 'Anterior'
+            },
+            buttons: {
+                copyTitle: 'Tabla Copiada de manera exitósa',
+                copySuccess: {
+                    _: 'Se copio %d filas',
+                    1: 'Se copio1 fila'
+                }
+            }
+        },
+        'bDestroy': true,
+        'iDisplayLength': 10,
+        'order':[
+            [0,'asc']
+        ]
+    });
+    
+}
+$("#inp_busca_alumno").on('keypress', function(e){
+    patron = /[A-Za-z]/;
+    special = [13, 32];
+    if(!patron.test(String.fromCharCode(e.which)) && !special.includes(e.which)){
+        e.preventDefault(); 
+    }
+    if(e.which == 13 && $("#inp_busca_alumno").val().trim().length > 2){
+        buscar_alumno($("#inp_busca_alumno").val().trim())
+    }
+})
+
+$("#button-addon1").on('click', function(){
+    if($("#inp_busca_alumno").val().trim().length > 2){
+        buscar_alumno($("#inp_busca_alumno").val().trim())
+    }
+})
+
+function buscar_alumno(nombre){
+    $.ajax({
+        url: '../assets/data/Controller/planpagos/alumnosPagosControl.php',
+        type: "POST",
+        data: {action: 'buscar_alumno_generacion', nombre: nombre},
+        dataType: "JSON",
+        success: function(rdata){
+            try{
+                var respuestas = rdata.aaData;
+                $("#table-pagos-subirpagos").DataTable().clear();
+                for(i in respuestas){
+                    $("#table-pagos-subirpagos").DataTable().row.add(respuestas[i]);
+                }
+                $("#table-pagos-subirpagos").DataTable().draw();
+                $("#table-pagos-subirpagos").DataTable().columns.adjust()
+            }catch(e){
+                console.log(e);
+                console.log(rdata);
+            }
+        }
+    });
+}
+
+function modificarfecha_pago(id_pago,como_realizo_pago,metododepago,totalpagado,fechapago,bancodedeposito,concepto){
+    $('#id_pago_modificar').val(id_pago)
+    $('#totalpagado').html(totalpagado)
+    $('#nuevafechadepago').val(fechapago)
+    $('#modificarbancopago').val(bancodedeposito)
+    $('#enviarconcepto').val(concepto)
+
+    switch (como_realizo_pago) {
+		case '1':
+            $('#metododepago1modificar').val(como_realizo_pago);
+            $('#modificarmedotodepago').val(metododepago);
+			$('#pagoenefectivo').show();
+			$('#chechenominativo').show();
+			break;
+		case '2':
+            $('#metododepago1modificar').val(como_realizo_pago);
+            $('#modificarmedotodepago').val(metododepago);
+			$('#pagoenefectivo').show();
+			$('#chechenominativo').show();
+			break;
+		case '3':
+            $('#metododepago1modificar').val(como_realizo_pago);
+            $('#modificarmedotodepago').val(metododepago);
+			$('#pagoenefectivo').show();
+			$('#tarjetadecredito').show();
+			$('#tarjetadedebito').show();
+			break;
+		case '4':
+            $('#metododepago1modificar').val(como_realizo_pago);
+            $('#modificarmedotodepago').val(metododepago);
+			$('#pagoenefectivo').show();
+			$('#chechenominativo').show();
+			break;
+		case '5':
+            $('#metododepago1modificar').val(como_realizo_pago);
+            $('#modificarmedotodepago').val(metododepago);
+			$('#pagoenefectivo').show();
+			$('#tarjetadecredito').show();
+			$('#tarjetadedebito').show();
+			break;
+		case '6':
+			$('#transferenciaelectronica').show();
+			$('#metododepago1modificar').val(como_realizo_pago);
+            $('#modificarmedotodepago').val(metododepago);
+			break;
+		case '7':
+			$('#paypal').show();
+			$('#metododepago1modificar').val(como_realizo_pago);
+            $('#modificarmedotodepago').val(metododepago);
+			break;
+		default:
+			break;
+	}
+}
+
+$( "#metododepago1modificar" ).change(function() {
+
+	$('#pagoenefectivo').hide();
+	$('#chechenominativo').hide();
+	$('#tarjetadecredito').hide();
+	$('#tarjetadedebito').hide();
+	$('#transferenciaelectronica').hide();
+	$('#paypal').hide();
+
+	$('#noselect').prop( "selected", true )
+
+
+	var metododepago = $( "#metododepago1modificar" ).val();
+	switch (metododepago) {
+		case '1':
+			$('#pagoenefectivo').show();
+			$('#chechenominativo').show();
+			break;
+		case '2':
+			$('#pagoenefectivo').show();
+			$('#chechenominativo').show();
+			break;
+		case '3':
+			$('#pagoenefectivo').show();
+			$('#tarjetadecredito').show();
+			$('#tarjetadedebito').show();
+			break;
+		case '4':
+			$('#pagoenefectivo').show();
+			$('#chechenominativo').show();
+			break;
+		case '5':
+			$('#pagoenefectivo').show();
+			$('#tarjetadecredito').show();
+			$('#tarjetadedebito').show();
+			break;
+		case '6':
+			$('#transferenciaelectronica').show();
+			$('#modificarmedotodepago').val('Transferencia eletrónica');
+			break;
+		case '7':
+			$('#paypal').show();
+			$('#modificarmedotodepago').val('Paypal');
+			break;
+		default:
+			break;
+	}
+
+  });
+
+$("#form-modificar-fecha-pago").on('submit', function(e){
+    e.preventDefault();
+    fdata = new FormData(this)
+    fdata.append('action', 'modificar_pago');
+    const str = $('#totalpagado').text();
+    const montopagado = str.slice(1, -1)
+    fdata.append('montopagado', montopagado);
+    $.ajax({
+        url: '../assets/data/Controller/planpagos/alumnosPagosControl.php',
+        type: "POST",
+        data: fdata,
+        contentType:false,
+        processData:false,
+        success: function(data){
+            try{
+                pr = JSON.parse(data)
+                if (pr.estatus == 'ok'){
+                    swal({
+                        title: 'Pago actualizado',
+                        icon: 'success',
+                        text: 'Espere un momento...',
+                        button: false,
+                        timer: 2500,
+                    }).then((result)=>{
+                        location.reload();
+                    })
+                }
+            }catch(e){
+
+                console.log(e);
+                console.log(data);
+            }
+        },
+        complete: function(){
+            location.reload();
+            $("#totalfechacorte").prop('disabled',true);
+            $("#btnCrearconceptosfechascorte").prop('disabled',false);
+        }
+    });
+})
+
+function consultar_historial_pago_id(idAsistente){
+	$.ajax({
+		url: '../assets/data/Controller/planpagos/pagosControl.php',
+		type: "POST",
+		data: {action:'consultar_historial_pago_id', idAsistente:idAsistente},
+		success: function(data){
+			try{
+				var aplicados = JSON.parse(data);
+				$("#span_saldo").html(``);
+				$("#table_pagos_apli").DataTable().clear();
+				for (i = 0; i < aplicados.length; i++) {
+					if(aplicados[i].estatus == 'verificado'){
+						if(aplicados[i].hasOwnProperty('saldo_favor')){
+							if(aplicados[i].saldo_favor > 0){
+								$("#span_saldo").html(`<div class="alert alert-info" role="alert">
+								Usted cuenta con un saldo a favor por <strong class="d-block d-sm-inline-block-force">${moneyFormat.format(aplicados[i].saldo_favor)}</strong> pesos.
+							  </div>`);
+							}else{
+								$("#span_saldo").html(``);
+							}
+						}else{
+							var col_monto_pagar = 0;
+							if(aplicados[i].idPromocion != null){
+								// monto por pagar menos promocion
+								col_monto_pagar = parseFloat(aplicados[i].precio_orig) - (parseFloat(aplicados[i].precio_orig) * (parseFloat(aplicados[i].promocion_info.porcentaje) / 100));
+								// // monto por pagar menos aplicados
+							}else{
+								col_monto_pagar = parseFloat(aplicados[i].precio_orig)
+								if(parseInt(aplicados[i].concepto_parcialidades) == 1){
+									col_monto_pagar = Math.abs(parseFloat(aplicados[i].costototal) - (parseFloat(aplicados[i].costototal) + parseFloat(aplicados[i].restante) + parseFloat(aplicados[i].montopagado)));
+								}
+							}
+							if(aplicados[i].cargo_retardo > 0){
+								col_monto_pagar = col_monto_pagar + parseFloat(aplicados[i].cargo_retardo);
+							}
+							$("#table_pagos_apli").DataTable().row.add([
+								`<span title="${aplicados[i].fechapago}">${aplicados[i].fechapago.substr(0,10)}</span>`,
+								(aplicados[i].hasOwnProperty('numero_pago_actual') ? `<span title="Pago correspondiente a la mensualidad numero ${parseInt(aplicados[i].numero_pago_actual)+1}">[ <b> ${parseInt(aplicados[i].numero_pago_actual)+1} Pago de ${parseInt(aplicados[i].concepto_numero_pagos)}</b>] `:'')+aplicados[i].concepto_nombre,
+								aplicados[i].detalle_pago.id,
+								moneyFormat.format(aplicados[i].precio_orig)+ aplicados[i].tipomoneda,
+								(aplicados[i].idPromocion != null) ? `<span class="text-success">- ${parseFloat(aplicados[i].promocion_info.porcentaje).toFixed(2)} %</span>` : "-",
+								(aplicados[i].cargo_retardo == null || aplicados[i].cargo_retardo == 0)? '$ 0,00': `<span class="text-danger">${moneyFormat.format(aplicados[i].cargo_retardo)}</span>`,
+								moneyFormat.format(col_monto_pagar) + aplicados[i].tipomoneda,
+								`<span class="d-block text-info">${moneyFormat.format(aplicados[i].montopagado)} ${aplicados[i].tipomoneda}</span>`,
+								(aplicados[i].restante !== null) ? moneyFormat.format(aplicados[i].restante) +aplicados[i].tipomoneda: '$ 0,00',
+								aplicados[i].saldo
+								
+							]);
+						}
+					}else if(aplicados[i].estatus == 'rechazado'){
+						$("#table_pagos_apli").DataTable().row.add([
+							`<span title="${aplicados[i].fechapago}" class="text-danger">${aplicados[i].fechapago.substr(0,10)}</span>`,
+							'<span class="text-danger"><b>PAGO RECHAZADO</b> '+(aplicados[i].hasOwnProperty('numero_pago_actual') ? `<span title="Pago correspondiente a la mensualidad numero ${parseInt(aplicados[i].numero_pago_actual)+1}">[${parseInt(aplicados[i].numero_pago_actual)+1}] `:'')+aplicados[i].concepto_nombre+` <br><b>Comentario: <i>${(aplicados[i].comentario != null) ? aplicados[i].comentario : ''}</i></b></span>`,
+							`<span class="text-danger">${aplicados[i].detalle_pago.id}</div>`,
+							`<span class="text-danger">${moneyFormat.format(aplicados[i].precio_orig)} ${aplicados[i].tipomoneda}</div>`,
+							"-",
+							"-",
+							`<span class="text-danger">-</div>`,
+							`-`,
+							'-',
+							'-'
+						]);
+					}
+				}
+				$("#table_pagos_apli").DataTable().draw();
+			}catch(e){
+				console.log(e);
+				console.log(data)
+			}
+
+		}
+	});
+
+    tGeneraciones = $("#table_pagos_total_carreras").DataTable({
+        responsive: true,
+        Processing: true,
+        ServerSide: true,
+        "dom" :'Bfrtip',
+        buttons:[{
+            /*extend:"copy",
+            className: "btn-success"
+        },{
+            extend: "csv"
+        }, {*/
+            extend: "excel",
+            className: "btn-primary"
+        /*}, {
+            extend: "pdf"
+        }, {
+            extend: "print"*/
+        }],
+        "ajax": {
+            url: '../assets/data/Controller/planpagos/pagosControl.php',
+            type: 'POST',
+            data: {action: 'obtener_totales_carrera_id', idAsistente: idAsistente},
+            dataType: "JSON",
+            error: function(e){
+                console.log(e.responseText);	
+                if(e.responseText == 'no_session'){
+                    swal({
+                        title: "Vuelve a iniciar sesión!",
+                        text: "La informacion no se actualizó",
+                        icon: "info",
+                    });
+                    setTimeout(function(){
+                        window.location.replace("index.php");
+                    }, 2000);
+                }
+            }
+        },
+        'language':{
+            'sLengthMenu': 'Mostrar _MENU_ registros',
+            'sInfo': 'Mostrando registro del _START_ al _END_ de un total de _TOTAL_ registros',
+            'sInfoEmpty': 'Mostrando registros del 0 al 0 de un total de 0 registros',
+            'sInfoFiltered': '(filtrado de un total de _MAX_ registros)',
+            'sLoadingRecords': 'Cargando',
+            'oPaginate':{
+                'sFirst': 'Primero',
+                'sLast': 'Último',
+                'sNext': 'Siguiente',
+                'sPrevious': 'Anterior'
+            },
+            buttons: {
+                copyTitle: 'Tabla Copiada de manera exitósa',
+                copySuccess: {
+                    _: 'Se copio %d filas',
+                    1: 'Se copio1 fila'
+                }
+            }
+        },
+        'bDestroy': true,
+        'iDisplayLength': 10,
+        'order':[
+            [0,'asc']
+        ]
+    });
+    
+}

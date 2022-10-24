@@ -1,0 +1,444 @@
+$('#tabfechascorte').click(function (e) {
+    tGeneraciones = $("#table-fechascorte").DataTable({
+        responsive: true,
+        Processing: true,
+        ServerSide: true,
+        "dom" :'Bfrtip',
+        buttons:[{
+            /*extend:"copy",
+            className: "btn-success"
+        },{
+            extend: "csv"
+        }, {*/
+            extend: "excel",
+            className: "btn-primary"
+        /*}, {
+            extend: "pdf"
+        }, {
+            extend: "print"*/
+        }],
+        "ajax": {
+            url: '../assets/data/Controller/planpagos/fechascorteControl.php',
+            type: 'POST',
+            data: {action: 'obtenerGeneraciones'},
+            dataType: "JSON",
+            error: function(e){
+                console.log(e.responseText);	
+                if(e.responseText == 'no_session'){
+                    swal({
+                        title: "Vuelve a iniciar sesión!",
+                        text: "La informacion no se actualizó",
+                        icon: "info",
+                    });
+                    setTimeout(function(){
+                        window.location.replace("index.php");
+                    }, 2000);
+                }
+            }
+        },
+        'language':{
+            'sLengthMenu': 'Mostrar _MENU_ registros',
+            'sInfo': 'Mostrando registro del _START_ al _END_ de un total de _TOTAL_ registros',
+            'sInfoEmpty': 'Mostrando registros del 0 al 0 de un total de 0 registros',
+            'sInfoFiltered': '(filtrado de un total de _MAX_ registros)',
+            'sSearch': 'Buscar:',
+            'sLoadingRecords': 'Cargando',
+            'oPaginate':{
+                'sFirst': 'Primero',
+                'sLast': 'Último',
+                'sNext': 'Siguiente',
+                'sPrevious': 'Anterior'
+            },
+            buttons: {
+                copyTitle: 'Tabla Copiada de manera exitósa',
+                copySuccess: {
+                    _: 'Se copio %d filas',
+                    1: 'Se copio1 fila'
+                }
+            }
+        },
+        'bDestroy': true,
+        'iDisplayLength': 10,
+        'order':[
+            [0,'asc']
+        ]
+    });
+    
+});
+
+$('#tabfechascorteporalumno').click(function (e) {
+    tFechascorteporalumnos = $("#table-fechascorteporalumno").DataTable({
+        responsive: true,
+        Processing: true,
+        ServerSide: true,
+        "dom" :'Bfrtip',
+        buttons:[{
+            /*extend:"copy",
+            className: "btn-success"
+        },{
+            extend: "csv"
+        }, {*/
+            extend: "excel",
+            className: "btn-primary"
+        /*}, {
+            extend: "pdf"
+        }, {
+            extend: "print"*/
+        }],
+        "ajax": {
+            url: '../assets/data/Controller/planpagos/fechascorteControl.php',
+            type: 'POST',
+            data: {action: 'obteneralumnos'},
+            dataType: "JSON",
+            error: function(e){
+                console.log(e.responseText);	
+                if(e.responseText == 'no_session'){
+                    swal({
+                        title: "Vuelve a iniciar sesión!",
+                        text: "La informacion no se actualizó",
+                        icon: "info",
+                    });
+                    setTimeout(function(){
+                        window.location.replace("index.php");
+                    }, 2000);
+                }
+            }
+        },
+        'language':{
+            'sLengthMenu': 'Mostrar _MENU_ registros',
+            'sInfo': 'Mostrando registro del _START_ al _END_ de un total de _TOTAL_ registros',
+            'sInfoEmpty': 'Mostrando registros del 0 al 0 de un total de 0 registros',
+            'sInfoFiltered': '(filtrado de un total de _MAX_ registros)',
+            'sSearch': 'Buscar:',
+            'sLoadingRecords': 'Cargando',
+            'oPaginate':{
+                'sFirst': 'Primero',
+                'sLast': 'Último',
+                'sNext': 'Siguiente',
+                'sPrevious': 'Anterior'
+            },
+            buttons: {
+                copyTitle: 'Tabla Copiada de manera exitósa',
+                copySuccess: {
+                    _: 'Se copio %d filas',
+                    1: 'Se copio1 fila'
+                }
+            }
+        },
+        'bDestroy': true,
+        'iDisplayLength': 10,
+        'order':[
+            [0,'asc']
+        ]
+    });
+    
+});
+
+function buscarGeneracionfechacorte(idgeneracion) {
+    $('#diasdecortefechacortemod').numeric();
+    var Data = {
+        action: "buscarGeneracionfechacorte",
+        idgeneracion: idgeneracion
+     }
+     $.ajax({
+        url: '../assets/data/Controller/planpagos/fechascorteControl.php',
+        type: 'POST',
+        data: Data,
+        dataType: 'JSON',
+        success : function(data){
+            try {
+                
+                $('#idgenfechacortemod').val(idgeneracion);
+                console.log(Object.keys(data).length)
+                console.log(data)
+                if(Object.keys(data).length > 0){//si la generacion tiene fechas de corte personalizadas mostrar
+                    $('#nombregenfechacorte').html(data[0].nombregeneracion);
+                    $('#nombrecarrerafechacorte').html(data[0].nombrecarrera);
+                    $('#costoInscripcionfechacortegenmod').val(data[0].precio);
+                    var fechalimitepago1 = data[0].fechalimitepago.split(' ');
+                    $('#fechalimitepagoinsfechacortemod').val(fechalimitepago1[0]);
+                    $('#idconceptoinsfechacorte').val(data[0].id_concepto);
+
+                    if (Object.keys(data).length==4) {//mostrar si tiene conceptos de ins mens tit y resins personalizados
+                        $('#divMensualidadfechacortemod').show();
+                        $('#divReinscripcionfechacortemod').show();
+                        $('#divcostotitulacionfechacortemod').show();
+
+                        $('#nMensualidadesfechacortemod').val(data[1].numero_pagos);
+                        $('#costoMensualidadfechacortemod').val(data[1].precio);
+                        $('#diasdecortefechacortemod').val(data[1].fechalimitepago.substr(-11,2));
+                        $('#idconceptomensfechacorte').val(data[1].id_concepto);
+
+                        $('#nReinscripcionfechacortemod').val(data[2].numero_pagos);
+                        $('#costoReinscripcionfechacortemod').val(data[2].precio);
+                        $('#idconceptoreinsfechacorte').val(data[2].id_concepto);
+
+                        $('#costotitulacionfechacortemod').val(data[3].precio);
+                        var fechalimitepagotitfechacorte1 = data[3].fechalimitepago.split(' ');
+                        $('#fechalimitepagotitfechacortemod').val(fechalimitepagotitfechacorte1[0]);
+                        $('#idconceptotitfechacorte').val(data[3].id_concepto);
+
+                        $('#certificacionoenevtofechas').val('no');
+
+                        var costoins=data[0].precio;
+                        var costomens = data[1].precio*data[1].numero_pagos;
+                        var costoreins =data[2].precio*data[2].numero_pagos;
+                        var costotit = data[3].precio;
+
+                        var total = parseInt(costoins)+parseInt(costomens)+parseInt(costoreins)+parseInt(costotit);
+
+                        $('#totalfechacorte').val(total); //suma de todos los conceptos
+                    }
+                    if (Object.keys(data).length==1) {// conceptos de certificaciones y eventos que ya estan personalizados
+                        $('#divMensualidadfechacortemod').hide();
+                        $('#divReinscripcionfechacortemod').hide();
+                        $('#divcostotitulacionfechacortemod').hide();
+
+                        $('#certificacionoenevtofechas').val('si');
+
+                        $('#totalfechacorte').val(data[0].precio);
+
+                        $("#nMensualidadesfechacortemod").removeAttr('required');
+                        $("#costoMensualidadfechacortemod").removeAttr('required');
+                        $("#diasdecortefechacortemod").removeAttr('required');
+                        $("#nReinscripcionfechacortemod").removeAttr('required');
+                        $("#costoReinscripcionfechacortemod").removeAttr('required');
+                    }
+
+                }
+                else{// si la generacion no tiene fechas personalizadas mostrar conceptos y fechas de corte del plan de pagos original de la carrera
+                    var Data = {
+                        action: "obtenerconceptosoriginales",
+                        idgeneracion: idgeneracion
+                     }
+                    $.ajax({
+                        type: "POST",
+                        url: "../assets/data/Controller/planpagos/fechascorteControl.php",
+                        data: Data,
+                        dataType: "JSON",
+                        success: function (response) {
+                            console.log(response)
+                            $('#nombregenfechacorte').html(response[0].nombregeneracion);
+                            $('#nombrecarrerafechacorte').html(response[0].nombrecarrera);
+                            $('#costoInscripcionfechacortegenmod').val(response[0].precio);
+                            var fechalimitepago = response[0].fechalimitepago.split(' ');
+                            $('#fechalimitepagoinsfechacortemod').val(fechalimitepago[0]);
+
+                            if (Object.keys(response).length==4) {//mostrar si tiene conceptos de ins mens tit y resins
+                                $('#divMensualidadfechacortemod').show();
+                                $('#divReinscripcionfechacortemod').show();
+                                $('#divcostotitulacionfechacortemod').show();
+
+                                $('#nMensualidadesfechacortemod').val(response[1].numero_pagos);
+                                $('#costoMensualidadfechacortemod').val(response[1].precio);
+                                $('#diasdecortefechacortemod').val(response[1].fechalimitepago.substr(-11,2));
+
+                                $('#nReinscripcionfechacortemod').val(response[2].numero_pagos);
+                                $('#costoReinscripcionfechacortemod').val(response[2].precio);
+
+                                $('#costotitulacionfechacortemod').val(response[3].precio);
+                                var fechalimitepagotitfechacorte = response[3].fechalimitepago.split(' ');
+                                $('#fechalimitepagotitfechacortemod').val(fechalimitepagotitfechacorte[0]);
+                                $('#certificacionoenevtofechas').val('no');
+                            }
+                            if (Object.keys(response).length==1) {
+                                $('#divMensualidadfechacortemod').hide();
+                                $('#divReinscripcionfechacortemod').hide();
+                                $('#divcostotitulacionfechacortemod').hide();
+
+                                $("#nMensualidadesfechacortemod").removeAttr('required');
+                                $("#costoMensualidadfechacortemod").removeAttr('required');
+                                $("#diasdecortefechacortemod").removeAttr('required');
+                                $("#nReinscripcionfechacortemod").removeAttr('required');
+                                $("#costoReinscripcionfechacortemod").removeAttr('required');
+
+                                $('#certificacionoenevtofechas').val('si');
+                            }
+                            $('#totalfechacorte').val(response[0].costototal); //suma de todos los conceptos
+
+                            $('#nombregenfechacorteg').val(response[0].nombregeneracion);
+                        }
+                    });
+                    
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        error: function(xhr){
+            if(xhr.responseText == 'no_session'){
+                swal({
+                    title: "Vuelve a iniciar sesión!",
+                    text: "La informacion no se actualizó",
+                    icon: "info",
+                });
+                setTimeout(function(){
+                    window.location.replace("index.php");
+                }, 2000);
+            }
+        }
+    });
+}
+
+function buscaralumnofechacorte(idAsistente, idGeneracion) {
+    var Data = {
+        action: "buscaralumnofechacorte",
+        idGeneracion: idGeneracion,
+        idAsistente: idAsistente
+     }
+     $.ajax({
+        url: '../assets/data/Controller/planpagos/fechascorteControl.php',
+        type: 'POST',
+        data: Data,
+        dataType: 'JSON',
+        success : function(data){
+            try {
+                $('#idAsistentefechacortealumno').val(idAsistente);
+                $('#idGeneracionfechacortealumno').val(idGeneracion);
+                $('#fechaprimercolegiaturamod').val(data.fecha_primer_colegiatura);
+                console.log(data)
+                
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        error: function(xhr){
+            if(xhr.responseText == 'no_session'){
+                swal({
+                    title: "Vuelve a iniciar sesión!",
+                    text: "La informacion no se actualizó",
+                    icon: "info",
+                });
+                setTimeout(function(){
+                    window.location.replace("index.php");
+                }, 2000);
+            }
+        }
+    });
+}
+
+$("#formactualizarfechasdecorteporalumno").on('submit', function(e){
+    e.preventDefault();
+    fdata = new FormData(this)
+    fdata.append('action', 'formactualizarfechasdecorteporalumno');
+    $.ajax({
+        url: '../assets/data/Controller/planpagos/fechascorteControl.php',
+        type: "POST",
+        data: fdata,
+        contentType:false,
+        processData:false,
+        success: function(data){
+            try{
+                pr = JSON.parse(data)
+                if (pr.estatus == 'ok'){
+                    swal({
+                        title: 'Fecha actualizada',
+                        icon: 'success',
+                        text: 'Espere un momento...',
+                        button: false,
+                        timer: 2500,
+                    }).then((result)=>{
+                        tFechascorteporalumnos.ajax.reload();
+                    })
+                }
+            }catch(e){
+                console.log(e);
+                console.log(data);
+            }
+        },
+        complete: function(){
+            $("#totalfechacorte").prop('disabled',true);
+            $("#btnCrearconceptosfechascorte").prop('disabled',false);
+        }
+    });
+})
+
+function obtenerTotalfechacorteMod(){
+    if($("#costoMensualidadfechacortemod").val().trim() != '' && $("#nMensualidadesfechacortemod").val().trim() != '' && $("#costoInscripcionfechacortegenmod").val().trim() != '' && $("#nReinscripcionfechacortemod").val().trim() != '' && $("#costoReinscripcionfechacortemod").val().trim() != ''){
+        var cM = parseInt($("#costoMensualidadfechacortemod").val());
+        var nM = parseInt($("#nMensualidadesfechacortemod").val());
+        var cI = parseInt($("#costoInscripcionfechacortegenmod").val());
+        var nR = parseInt($("#nReinscripcionfechacortemod").val());
+        var cR = parseInt($("#costoReinscripcionfechacortemod").val());
+        var nuevotit = parseInt($("#costotitulacionfechacortemod").val());
+        mulM = cM * nM;
+        mulR = cR * nR;
+        $("#totalfechacorte").val(cI + mulM + mulR + nuevotit);
+    }
+}
+
+$("#costoMensualidadfechacortemod").keyup(function(){
+    obtenerTotalfechacorteMod();
+});
+
+$("#nMensualidadesfechacortemod").keyup(function(){
+    obtenerTotalfechacorteMod();
+});
+
+$("#costoInscripcionfechacortegenmod").keyup(function(){
+    obtenerTotalfechacorteMod();
+});
+
+$("#nReinscripcionfechacortemod").keyup(function(){
+    obtenerTotalfechacorteMod();
+})
+
+$("#costoReinscripcionfechacortemod").keyup(function(){
+    obtenerTotalfechacorteMod();
+})
+
+$("#costotitulacionfechacortemod").keyup(function(){
+    obtenerTotalfechacorteMod();
+})
+
+$("#formcrearnuevosconceptosgeneracion").on('submit', function(e){
+    e.preventDefault();
+    $("#totalfechacorte").prop('disabled',false);
+    $("#btnCrearconceptosfechascorte").prop('disabled',true);
+    fdata = new FormData(this)
+    fdata.append('action', 'crearconceptosfechascortegen');
+    fdata.append('actualizado_por', usrInfo.idAcceso);
+    fdata.append('creado_por', usrInfo.idAcceso);
+    $.ajax({
+        url: '../assets/data/Controller/planpagos/fechascorteControl.php',
+        type: "POST",
+        data: fdata,
+        contentType:false,
+        processData:false,
+        success: function(data){
+            if(data == 'no_session'){
+                swal({
+                    title: "Vuelve a iniciar sesión!",
+                    text: "La informacion no se actualizó",
+                    icon: "info",
+                });
+                setTimeout(function(){
+                    window.location.replace("index.php");
+                }, 2000);
+            }
+            try{
+                pr = JSON.parse(data)
+                if (pr.estatus == 'ok'){
+                    swal({
+                        title: 'Conceptos de pago actualizados con éxito',
+                        icon: 'success',
+                        text: 'Espere un momento...',
+                        button: false,
+                        timer: 2500,
+                    }).then((result)=>{
+                        $("#formcrearnuevosconceptosgeneracion")[0].reset();
+                        $("#modalfechacortegeneracion").modal("hide");
+                        tGeneracionesfechascorte.ajax.reload();
+                    })
+                }
+            }catch(e){
+                console.log(e);
+                console.log(data);
+            }
+        },
+        complete: function(){
+            $("#totalfechacorte").prop('disabled',true);
+            $("#btnCrearconceptosfechascorte").prop('disabled',false);
+        }
+    });
+})

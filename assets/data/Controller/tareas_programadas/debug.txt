@@ -1,0 +1,1 @@
+{"sql":"SELECT * FROM tmp_depositos WHERE id_alumno = :alumno AND (DATE(fecha_deposito) >= :fecha_i AND DATE(fecha_deposito) <= :fecha_f) AND `corte` = 0;","data":{"alumno":"19645","fecha_i":"2021-07-05","fecha_f":"2021-08-05"}}

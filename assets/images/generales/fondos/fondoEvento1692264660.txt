@@ -1,0 +1,43 @@
+---------------------------------------------------
+Agregar estados (por pais)
+------------------------------------------
+Anguila
+Antigua y Barbuda
+Aruba
+Bahamas
+Barbados
+Bermudas
+Bonaire, San Eustaquio y Saba
+Canadá
+Curazao
+Dominica
+El Salvador
+Granada
+Groenlandia
+Guadalupe
+Guayana Francesa
+Guyana
+Islas Caimán
+Islas Falkland (Malvinas)
+Islas Turcas y caicos
+Islas virgenes Britanicas
+Islas virgenes de los Estados Unidos
+Jamaica
+Martinica
+Montserrat
+Paraguay
+San Bartolomé
+San Cristobal y Nieves
+San Martin (Parte Francesa)
+San Pedro y Miquelón
+san Vicente y las Granandinas
+Santa Lucia
+Sint Maarten (Parte Neerlandesa)
+Surinam
+Trinidad y Tobago
+Uruguay
+Rusia
+Hungría
+Panamá
+Medellin
+San Antonio de Guerra

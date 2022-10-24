@@ -1,0 +1,96 @@
+.overlay-evento{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    /*background-color: #4479ABC4;*/
+}
+.overlay-evento-content {
+    color: white;
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 46%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    /* text-align: center; */
+    width: 100%;
+}
+.overlay-evento:hover{
+  opacity: 1;
+}
+
+.ul-two-cols {
+  columns: 2;
+  -webkit-columns: 2;
+  -moz-columns: 2;
+}
+
+/*// Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+  .modal-lg{
+    width: 95%;
+  }
+}
+
+/*// Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+  .modal-lg{
+    width: 80%;
+  }
+}
+
+/*// X-Large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+  .modal-lg{
+    width: 60%;
+  }
+}
+.align-bottom {
+    vertical-align: bottom !important;
+}
+.custom-file-control:lang(en):empty::after {
+  content: "Elegir archivo...";
+}
+      .custom-file-control:lang(en)::before {
+  content: "Buscar";
+}
+ .my-class a {
+		background:#3A658F !important;
+	  }
+	  .my-class-event a {
+		background:#8F8E3A !important;
+	  }
+.sk-circle .sk-child:before {
+background-color: #4479AC;
+}
+#listar .shadow-base{
+margin-bottom: 10px;
+}
+#listar .card-header{
+border-radius: 3px 3px 0 0;
+}
+#grades{
+flex-wrap: nowrap;
+overflow: auto;
+margin-bottom: 20px;
+}
+#grades::-webkit-scrollbar{
+    width: 3px;
+    background: #ccc;
+}
+#grades::-webkit-scrollbar-thumb {
+    background: #007bb3;
+    border-radius: 3px;
+    width: 3px;
+
+}
+.br-logo{
+justify-content: center;
+}

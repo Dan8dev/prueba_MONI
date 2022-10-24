@@ -1,0 +1,124 @@
+<?php
+    session_start();
+    date_default_timezone_set('America/Mexico_City');
+    if(isset($_SESSION["alumno"]))
+    {
+        $idusuario=$_SESSION['alumno']['id_afiliado'];
+        require_once '../data/Model/AfiliadosModel.php';
+        require_once '../data/Model/WebexModel.php';
+        $porospM = new Afiliados();
+        $webex = new Webex();
+        $usuario = $porospM->obtenerusuario($idusuario);
+        $idsesion= 2;
+        $sesion_webex=$webex->obtener_sesion_webexlogo($idsesion);
+        $idevento=30;
+        $nombre_evento='Precongreso Logoterapia 2021';
+        $modalidad='EN LINEA';
+        $fecha=date('Y-m-d H:i:s');
+
+        $fechaenviocertificado=date('Y-m-d');
+
+        $fechahoy=date('Y-m-d');
+        $fechainicial=$fechahoy.' 00:00:00';
+        $fechafinal=$fechahoy.' 23:59:59';
+
+        $folio=$usuario['data']['idAsistente'].$idevento;
+
+        $yatieneregistrohoy=$webex->ya_tieneregistro_hoy($usuario['data']['idAsistente'],$fechainicial,$fechafinal);
+
+        if ($yatieneregistrohoy['data']==0) {
+
+            $sesion_webex=$webex->registrarAsistencia($usuario['data']['idAsistente'], $idevento, $modalidad,$fecha,$folio);
+
+        }
+        if ($fechaenviocertificado=='2021-11-11') {
+
+            $nombreasistente=$usuario['data']['nombre'].' '.$usuario['data']['apaterno'].' '. $usuario['data']['amaterno'];
+            $nombre=$nombreasistente;
+            $nombre_reconocimiento=$nombre_evento . "_" .$nombre.'_'.$usuario['data']['idAsistente'].' '.$idevento;
+
+            if ($yatieneregistrohoy['data']==1||$yatieneregistrohoy['data']==0) {
+
+                $sesion_webex=$webex->registrarAsistenciayreconocimiento($usuario['data']['idAsistente'], $idevento,$nombre_reconocimiento, $modalidad,$fecha,$folio);
+    
+            }
+
+            require('../../../assets/data/functions/fpdf183/fpdf.php');
+            $pdf = new FPDF('L','cm','Letter');
+            $pdf->AddPage();
+            if ($idevento==30) {
+                $pdf->Image('plantilla_reconocimiento/precongreso.jpg',0,0,28,0,'JPG');
+            }
+            if ($idevento==2) {
+                $pdf->Image('plantilla_reconocimiento/reconocimientogeneral.jpg',0,0,28,0,'JPG');
+            }
+
+            // Nombre y Apellido
+            $nombre1=$nombre;
+
+            $nombre1 = str_replace('ñ', 'Ñ', $nombre1);
+            $nombre1 = str_replace('á', 'Á', $nombre1);
+            $nombre1 = str_replace('é', 'É', $nombre1);
+            $nombre1 = str_replace('í', 'Í', $nombre1);
+            $nombre1 = str_replace('ó', 'Ó', $nombre1);
+            $nombre1 = str_replace('ú', 'Ú', $nombre1);
+
+            $nom = strtoupper(utf8_decode($nombre1));
+
+            $f_size = 35;
+            $pdf->SetFont('helvetica','B',$f_size);
+           
+            $width_plantilla = $pdf->GetPageWidth();
+            $max_w_nombre = $width_plantilla - ($width_plantilla * 0.2);
+            $current_width_text = $pdf->GetStringWidth($nom);
+            if($current_width_text > $max_w_nombre){
+                while ($current_width_text > $max_w_nombre) {
+                    $f_size--;
+                    $pdf->SetFont('helvetica','B',$f_size);
+                    $current_width_text = $pdf->GetStringWidth($nom);
+                }
+            }
+            $start_t = ($width_plantilla - $current_width_text) / 2;
+            $pdf->Text($start_t,10,$nom);
+            $pdf->Output('F', '../../../assets/images/constancias/'.$nombre_reconocimiento.'.pdf');
+
+            require("../../../assets/data/functions/mailer1.php");
+            //--CORREO--//
+				$HTML =
+                    "
+		            <div style=\"padding: 5%; background-color: #F8F8F8;\">
+		                <div style=\"padding: 3%; background-color: #FFFFFF; border: 1px solid #625B55; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;\">
+		                    <div style=\"padding: 3%;\">
+		                        <p><img src=\"https://conacon.org/moni/assets/plantillas/img/icon_384.png\" width=\"250px\"/></p>
+		                        <p style=\"font-family: Verdana; font-size: 26px; color: #625B55;\">Estimado(a):<br/> <b>".$nombre."</b></p>
+		                        <p style=\"font-family: Verdana; font-size: 16px; color: #625B55; text-align: justify;\">Queremos agradecerle por formar parte de nuestro evento <b>".$nombre_evento."</b>, por lo tanto su <b>Constancia de Asistencia</b> ha sido generada, es por esa raz&oacute;n que adjuntamos el archivo para su descarga.</p>
+		                        <p style=\"font-family: Verdana; font-size: 16px; color: #625B55; text-align: center;\">A T E N T A M E N T E</p>
+		                        <p style=\"font-family: Verdana; font-size: 20px; color: #625B55; text-align: center;\"><b>Comit&eacute; Organizador</b></p>
+		                        <p style=\"font-family: Verdana; font-size: 10px; text-align: justify;\">
+		                            <b>Alerta de confidencialidad:</b> Este correo electr&oacute;nico contiene informaci&oacute;n que es para uso exclusivo de la persona o entidad 
+		                            cuyo nombre aparece al rubro. Si usted no es el destinatario pretendido de esta comunicaci&oacute;n, est&aacute; formalmente notificado de que 
+		                            cualquier uso no autorizado, difusi&oacute;n o copiado de esta nota electr&oacute;nica, as&iacute; como de su contenido textual o adjunto(s), queda 
+		                            estrictamente prohibido. Si por equivocaci&oacute;n ha recibido esta comunicaci&oacute;n, b&oacute;rrela y avise inmediatamente por correo electr&oacute;nico 
+		                            a la persona arriba mencionada. Gracias por su atenci&oacute;n.
+		                        </p>
+		                 	</div>
+		                </div>
+		            </div>
+					";
+            $email=$usuario['data']['correo'];
+            $destinatarios = [[$email,"Sistemas"]];
+            $asunto = "Constancia_".$nombre_evento;
+            $message = "greats";
+            $adjunto='../../../assets/images/constancias/'.$nombre_reconocimiento.'.pdf';
+            $result=sendEmailOwn($destinatarios, $asunto, $HTML, $adjunto);
+            $nombre_reconocimiento=utf8_encode($nombre_reconocimiento);
+        }
+        //--LO MANDO A REGISTRAR A CISCO WEBEX--//
+        //redireccionar a otra pagina
+        header('Location: ../vimeo.php');
+    }
+    else {
+
+        echo 'sin session';
+    }
+?>

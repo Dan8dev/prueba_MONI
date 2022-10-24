@@ -1,0 +1,33 @@
+// function slideExm(num,_this){
+//     $('.exms').addClass('d-none');
+//     $('.sscl').addClass('d-none');
+
+//     if($(_this).hasClass('fa-angle-down')){
+//         $('.drop').addClass('fa-angle-down');
+//         $('.drop').removeClass('fa-angle-up');
+
+//         if(num != null){
+//             $('.foldex'+num).addClass('fa-folder-open');
+//             $('.foldex'+num).removeClass('fa-folder');
+//             $(_this).addClass('fa-angle-up');
+//             $(_this).removeClass('fa-angle-down');
+//             $exm = getExm(num);
+//             $('.exm'+num).removeClass('d-none');
+//             $('.exm'+num).html($exm);
+
+//         }else{
+//             $('.foldex'+num).addClass('fa-folder');
+//             $('.foldex'+num).removeClass('fa-folder-open');
+//             $('.toast-success').html('Sin contenido que mostrar');
+//             $('.toast-success').addClass('show');
+//             setTimeout(()=>{
+//                 $('.toast-success').removeClass('show');
+//             },3000);
+//         }
+//     }else{
+//         $('.foldex'+num).addClass('fa-folder');
+//         $('.foldex'+num).removeClass('fa-folder-open');
+//         $(_this).addClass('fa-angle-down');
+//             $(_this).removeClass('fa-angle-up');
+//     }
+// }

@@ -1,0 +1,131 @@
+<?php 
+date_default_timezone_set("America/Mexico_City");
+	class Institucion {
+
+		public function consultarTodoInstituciones($estat = 1){
+			$conexion = new Conexion(); 
+			$con = $conexion->conectar(); 
+			$response = [];
+
+			if($con["info"] == "ok"){ 
+				$con = $con["conexion"];
+				$sql = "SELECT * FROM `a_instituciones` WHERE estatus = :estat ORDER BY nombre;"; 
+
+				$statement = $con->prepare($sql); 
+				$statement->bindParam(':estat', $estat);			  
+				$statement->execute();			  
+					
+				if($statement->errorInfo()[0] == 0000){
+					$response = ["estatus"=>"ok", "data"=>$statement->fetchAll(PDO::FETCH_ASSOC)];
+				}else{
+					$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql];
+				}
+			}
+
+			$conexion = null;
+			$con = null;
+				#retornar el arreglo construido
+			return $response;
+		}
+
+
+		public function insertInst($post){
+			$conexion = new Conexion(); 
+			$con = $conexion->conectar(); 
+			$response = [];
+
+			if($con["info"] == "ok"){ 
+				$con = $con["conexion"];
+
+				$data = [
+					'namecl'=> $post['name_clinica_cl'],
+					'panelurl'=>'',
+					'colorn1'=>'',
+					'colorn2'=>'',
+					'fechaR'=>date('Y-m-d'),
+					'statusR'=> 1,
+					'fundac'=> 1
+				];
+				 
+				$sql1 = "INSERT INTO `a_instituciones`(`nombre`, `panel_url`, `color_n1`, `color_n2`, `fecha_registro`, `estatus`, `fundacion`) 
+				VALUES (:namecl,:panelurl,:colorn1,:colorn2,:fechaR,:statusR,:fundac)";
+
+				$statement = $con->prepare($sql1); 			  
+				$statement->execute($data);			  
+					
+				if($statement->errorInfo()[0] == 0000){
+					$idIns = $con->lastInsertId();
+
+					unset($post['name_clinica_cl']);
+					$post['idInst'] = $idIns;
+					
+					$sql = "INSERT INTO `instituciones_datos` (`id_institucion`, `responsable_nom`, `responsable_paterno`, `responsable_materno`, `email_contacto`, `telefono_contacto`, `direccion`, `ciudad`, `tipo_atencion`, `evento`, `capacidad_atencion`, `cant_last_year`, `porc_pac`, `cant_pac_last_month`, `reciben_pac`, `otro_tipo`, `hab_indiv`, `cant_hab_indv`, `hab_compart`, `cant_hab_compr`, `promedio_hab_comp`, `are_descanso`, `cant_arera_desc`, `sesion_terape_group`, `sesion_terap_single`, `medico_gral`, `hora_semana_med`, `servicios_psiq`, `hora_semana_psiq`, `serv_psic`, `hora_semana_psic`, `serv_enferm`, `hora_semana_enferm`, `duracion_indiv_person`, `tiempo_estancia`, `periodo_min_de_trata`, `min_tiempo_tratam_meses`, `maximo_tratam`, `max_tiempo_tratam_meses`, `apartados_ext`, `meses_apartados_extt`, `visita_familiar`, `actividad_imp_sent`, `tipo_activ_imp_sent`, `modelos_rol`, `act_caract`, `eje_acti`, `gestion_diaria`, `repertorio`, `cual_repertorio`, `comun_denominador`, `cual_es_comun_denom`, `interv_terap`, `como_interv_terap`, `durante_inter_terap`, `como_durante_inter`, `relacion_program`) 
+						VALUES (:idInst,:name_cl,:paterno_cl,:materno_cl,:email_cl,:telefono_cl,:direccion_cl,:ciudad_cl,:flexRadioDefault,:nombre_clave_destino,:capacidad_cl,:pacientes12_cl,:pacientes12_porc,:pacientesMes_cl,:flexRadioDefaultPacientes,:otroTipo,:flexRadioDefaultIndividuales,:numeroHabitacionesIndividuales,:flexRadioDefaultCompartidas,:numeroHabitacionesCompartidas,:promedioPersonasHabitacion,:flexRadioDefaultAreasDescanso,:numeroareasDescanso,:flexRadioDefaultTerapiasGrupo,:flexRadioDefaultTerapiasIndividuales,:flexRadioDefaultMedicina,:numerosemanaMedicina,:flexRadioDefaultPsiquiatria,
+						:numerosemanaPsiq,:flexRadioDefaultPsicologia,:numerosemanaPsicologia,:flexRadioDefaultEnfermeria,:horasemanaEnfe,:flexRadioDefaultTratamiento,
+						:promedioInternados,:flexRadioDefaultPeriodoMin,:tiempoduraMin,:flexRadioDefaultPeriodoMax,:tiempoduraMax,:flexRadioDefaultExt,:cantmeses,:flexRadioDefaultVisit,
+						:flexRadioDefaultSentido,:tipoAct,:flexRadioDefaultWait,:flexRadioDefaultCarac,:example,:flexRadioDefaultGestion,:flexRadioDefaultRepertorio,:cualrep,
+						:flexRadioDefaultComun,:denominadorSesion,:flexRadioDefaultIntervencion,:whointerv,:flexRadioDefaultTerap,:whotera,:flexRadioDefaultVision)"; 
+
+					$statement = $con->prepare($sql); 
+					$statement->execute($post);			  
+						
+					if($statement->errorInfo()[0] == 0000){
+						$response = ["estatus"=>"ok", "data"=>$con->lastInsertId()];
+					}else{
+						$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql];
+					}
+
+
+				}else{
+					$response = ["estatus"=>"error", "info"=>$statement->errorInfo(), "sql"=>$sql1];
+				}
+
+				
+			}
+
+			$conexion = null;
+			$con = null;
+				#retornar el arreglo construido
+			return $response;
+		}
+
+		function insertar_institucion_fundacion($data){
+			$conexion = new Conexion(); 
+			$con = $conexion->conectar(); 
+			$response = [];
+			$con = $con["conexion"];
+			$sql_ini = "INSERT INTO `a_instituciones`(`nombre`, `fecha_registro`, `estatus`, `fundacion`) VALUES 
+				(:name_clinica_cl,NOW(),1 , 1)";
+			$statement_i = $con->prepare($sql_ini);
+			$statement_i->bindParam(':name_clinica_cl', $data["name_clinica_cl"]);
+			$statement_i->execute();
+			$institucion_id = $con->lastInsertId();
+			if($institucion_id > 0){
+				$data['id_institucion'] = $institucion_id;
+				unset($data['name_clinica_cl']);
+				#$required = ["name_cl", "paterno_cl", "materno_cl", "name_clinica_cl", "email_cl", "telefono_cl", "dirección_cl", "flexRadioDefault"];
+				$sql_datos = "INSERT INTO `instituciones_datos`(`id_institucion`, `responsable_nom`, `responsable_paterno`, `responsable_materno`, `email_contacto`, `telefono_contacto`, `direccion`, `tipo_atencion`, `evento`, `capacidad_atencion`) VALUES 
+								(:id_institucion, :name_cl, :paterno_cl, :materno_cl, :email_cl, :telefono_cl, :direccion_cl, :flexRadioDefault, :nombre_clave_destino, :capacidad_cl)";
+				$statement_d = $con->prepare($sql_datos);
+				$statement_d->execute($data);
+				$instit_datos_insert = $con->lastInsertId();
+			}
+			return $institucion_id;
+		}
+
+		function consultar_institucion_existente($correo){
+			$conexion = new Conexion(); 
+			$con = $conexion->conectar(); 
+			$response = [];
+			$con = $con["conexion"];
+			$sql = "SELECT * FROM a_instituciones inst 
+				JOIN `instituciones_datos` info ON inst.id_institucion = info.id_institucion
+				WHERE info.email_contacto = :correo";
+			$statement = $con->prepare($sql);
+			$statement->bindParam(':correo', $correo);
+			$statement->execute();
+			return $statement->fetch(PDO::FETCH_ASSOC);
+		}
+
+	}
+?>

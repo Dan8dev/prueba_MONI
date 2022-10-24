@@ -1,0 +1,572 @@
+
+$(document).ready(()=>{
+    getPaises();
+    getInstituciones();
+    getPlantillas();
+    vImagen();
+    vFondo();
+    dataButtons();
+    vDevImagen();
+    vDevFondo();
+    getPaisesMod();
+    cambioTab();
+    //getEstadosMod();
+})
+function check(e){
+    tecla = (document.all) ? e.keycode : e.which;
+
+    if(tecla == 8){
+        return true;
+    }
+
+    patron = /[A-Za-z0-9-_]/;
+    tecla__final = String.fromCharCode(tecla);
+    return patron.test(tecla__final);
+}
+
+function getPaises(){
+    $("#pais").empty();
+    Data = {
+        action: "buscarPaises"
+    }
+    $.ajax({
+        url: '../assets/data/Controller/eventos/eventosController.php',
+        type: 'POST',
+        data: Data,
+        dataType: 'JSON',
+        success : function(data){
+            $("#pais").html('<option selected="true" disabled="disabled">Seleccione</option>');
+            $.each(data, function(key,registro){
+                $("#pais").append('<option value='+registro.IDPais+'>'+registro.Pais+'</option>');
+            });
+        },
+        complete : function(){
+
+        }
+    });
+}
+
+$("#pais").on('change', function(){
+    $("#estado").empty();
+    idPais = $("#pais").val();
+    $.ajax({
+        url: '../assets/data/Controller/eventos/eventosController.php',
+        type: 'POST',
+        data: {
+                action: "buscarEstados", 
+                idPais: idPais
+            },
+        dataType: 'JSON',
+        success : function(data){
+            $("#estado").html('<option selected="true" disabled="disabled">Seleccione</option>');
+            $.each(data, function(key,registro){
+                $("#estado").append('<option value ='+registro.IDEstado+'>'+registro.Estado+'</option>');
+            });
+        },
+        complete : function (){
+
+        }
+    });
+})
+
+function getPaisesMod(){
+    $("#devPais").empty();
+    Data = {
+        action: "buscarPaises"
+    }
+    $.ajax({
+        url: '../assets/data/Controller/eventos/eventosController.php',
+        type: 'POST',
+        data: Data,
+        dataType: 'JSON',
+        success : function(data){
+            $("#devPais").html('<option selected="true" disabled="disabled">Seleccione</option>');
+            $.each(data, function(key,registro){
+                $("#devPais").append('<option value='+registro.IDPais+'>'+registro.Pais+'</option>');
+            });
+        },
+        complete : function(){
+            
+        }
+    });
+}
+
+function getEstadosMod(){
+    //$("#devEstado").empty();
+    idPais = $("#devPais").val();
+    $.ajax({
+        url: '../assets/data/Controller/eventos/eventosController.php',
+        type: 'POST',
+        data: {
+                action: "buscarEstados", 
+                idPais: idPais
+            },
+        dataType: 'JSON',
+        success : function(data){
+            $("#devEstado").html('<option selected="true" disabled="disabled">Seleccione</option>');
+            $.each(data, function(key,registro){
+                $("#devEstado").append('<option value ='+registro.IDEstado+'>'+registro.Estado+'</option>');
+            });
+        },
+        complete : function (){
+
+        }
+    });
+}
+
+$("#devPais").on('change', function(){
+    $("#devEstado").empty();
+    idPais = $("#devPais").val();
+    $.ajax({
+        url: '../assets/data/Controller/eventos/eventosController.php',
+        type: 'POST',
+        data: {
+                action: "buscarEstados", 
+                idPais: idPais
+            },
+        dataType: 'JSON',
+        success : function(data){
+            $("#devEstado").html('<option selected="true" disabled="disabled">Seleccione</option>');
+            $.each(data, function(key,registro){
+                $("#devEstado").append('<option value ='+registro.IDEstado+'>'+registro.Estado+'</option>');
+            });
+        },
+        complete : function (){
+
+        }
+    });
+})
+
+
+function getInstituciones(){
+    Data = {
+        action: "buscarInstituciones"
+    }
+    $.ajax({
+        url: '../assets/data/Controller/eventos/eventosController.php',
+        type: 'POST',
+        data: Data,
+        dataType: 'JSON',
+        success: function(data){
+            $("#idInstitucion").html('<option selected="true" disabled="disabled">Seleccione</option>');
+            $.each(data, function(key,registro){
+                $("#idInstitucion").append('<option value='+registro.id_institucion+'>'+registro.nombre+'</option>');
+                $("#devIDInst").append('<option value='+registro.id_institucion+'>'+registro.nombre+'</option>');
+            });
+        },
+        complete : function(){
+
+        }
+    });
+}
+
+function getPlantillas(){
+    Data = {
+        action: "buscarPlantillas"
+    }
+    $.ajax({
+        url: '../assets/data/Controller/eventos/eventosController.php',
+        type: "POST",
+        data: Data,
+        dataType: "json",
+        success: function(data){
+            $("#plantilla_bienvenida").html('<option selected="true" disabled="disabled">Seleccione</option>');
+            //$("#newPlantilla").html('<option selected="true" disabled="disabled">Seleccione</option>');
+            $.each(data, function(key, registro){
+                $("#plantilla_bienvenida").append('<option value='+registro.plantilla_bienvenida+'>'+registro.plantilla_bienvenida+'</option>');
+                $("#newPlantilla").append('<option value='+registro.plantilla_bienvenida+'>'+registro.plantilla_bienvenida+'</option>');
+            });
+        }
+    });
+}
+
+function vImagen(){
+    const $seleccionArchivos = document.querySelector("#imagen"),
+        $imagenPrevisualizacion = document.querySelector("#vImagen");
+        //Escuchar cuando cambie
+        $seleccionArchivos.addEventListener("change", () =>{
+            const archivos = $seleccionArchivos.files;
+            //si no hay archivos salimos de la función y quitamos la imagen
+            if(!archivos || !archivos.length){
+                $imagenPrevisualizacion.src = "";
+                $("#vImagen").hide();  
+                return;
+            }
+            const primerArchivo = archivos[0];
+            const objetoURL = URL.createObjectURL(primerArchivo);
+            
+            $imagenPrevisualizacion.src = objetoURL;
+            $("#vImagen").show();     
+        });
+}
+
+
+function vFondo(){
+    const $seleccionArchivos = document.querySelector("#imgFondo"),
+        $imagenPrevisualizacion = document.querySelector("#vFondo");
+        //Escuchar cuando cambie
+        $seleccionArchivos.addEventListener("change", () =>{
+            const archivos = $seleccionArchivos.files;
+            //si no hay archivos salimos de la función y quitamos la imagen
+            if(!archivos || !archivos.length){
+                $imagenPrevisualizacion.src = "";
+                $("#vFondo").hide();
+                return;
+            }
+            const primerArchivo = archivos[0];
+            const objetoURL = URL.createObjectURL(primerArchivo);
+            
+            $imagenPrevisualizacion.src = objetoURL;
+            $("#vFondo").show();
+        });
+}
+
+function vDevImagen(){
+    const $seleccionArchivos = document.querySelector("#newImagen"),
+        $imagenPrevisualizacion = document.querySelector("#devImagen");
+        //Escuchar cuando cambie
+        $seleccionArchivos.addEventListener("change", () =>{
+            const archivos = $seleccionArchivos.files;
+            //si no hay archivos salimos de la función y quitamos la imagen
+            if(!archivos || !archivos.length){
+                $imagenPrevisualizacion.src = "";
+                //$("#devFondo").hide();
+                return;
+            }
+            const primerArchivo = archivos[0];
+            const objetoURL = URL.createObjectURL(primerArchivo);
+            
+            $imagenPrevisualizacion.src = objetoURL;
+            //$("#devFondo").show();
+        });
+}
+
+function vDevFondo(){
+    const $seleccionArchivos = document.querySelector("#newFondo"),
+        $imagenPrevisualizacion = document.querySelector("#devFondo");
+        //Escuchar cuando cambie
+        $seleccionArchivos.addEventListener("change", () =>{
+            const archivos = $seleccionArchivos.files;
+            //si no hay archivos salimos de la función y quitamos la imagen
+            if(!archivos || !archivos.length){
+                $imagenPrevisualizacion.src = "";
+                //$("#devFondo").hide();
+                return;
+            }
+            const primerArchivo = archivos[0];
+            const objetoURL = URL.createObjectURL(primerArchivo);
+            
+            $imagenPrevisualizacion.src = objetoURL;
+            //$("#devFondo").show();
+        });
+}
+
+$("#formularioRegistrar").off('submit').on("submit", function(e){
+    e.preventDefault();
+    fData = new FormData(this);
+    fData.append('action', 'registrarEvento');
+    $.ajax({
+        url: '../assets/data/Controller/eventos/eventosController.php',
+        type: 'POST',
+        data: fData,
+        contentType: false,
+        processData: false,
+
+        beforeSend : function(){
+
+        },
+        success : function(data){
+            try{
+                pr = JSON.parse(data)
+                console.log(pr)
+                if (pr.estatus == 'ok'){
+                    //$("#formularioRegistrar")[0].reset();
+                    $(".clave").hide();
+                    swal({
+                        title: 'Registrado Correctamente',
+                        icon: 'success',
+                        text: 'Espere un momento...',
+                        button: false,
+                        timer: 2500,
+                    }).then((result)=>{
+                        $("#formularioRegistrar")[0].reset();
+                        $("#vImagen").attr('src','');
+                        $("#vImagen").hide();
+                        $("#vFondo").attr('src','');
+                        $("#vFondo").hide();
+                        $("#estado").empty();
+                        //$("#idInstitucion").empty();
+                        //$("#plantilla_bienvenida").empty();
+                        tEventos.ajax.reload();
+                        /*$('html, body').animate({scrollTop:0}, 'slow');*/
+                    })
+                }
+                if(data == 1){
+                    Swal.fire({
+                        title: 'No se puede repetir el nombre clave',
+                        confirmButtonColor: '#ef5c6a',
+                    }).then((result)=>{
+                        //$('html,body').animate({scrollTop:0}, 'slow');
+                        $(".clave").show();
+                        //$(".clave").css("color","red"); 
+                    })       
+                }  
+            }catch(e){
+                console.log(e);
+                console.log(data);
+            }
+        },
+        error : function(){
+        },
+        complete: function(){
+            $(".outerDiv_S").css("display","none")
+        }
+    }); 
+})
+
+$("#reiniciar").off('click').on("click", function(){
+    $("#formularioRegistrar")[0].reset();
+    $('html, body').animate({scrollTop:0}, 'slow');
+    $("#vImagen").attr('src','');
+    $("#vImagen").hide();
+    $("#vFondo").attr('src','');
+    $("#vFondo").hide();
+})
+
+
+function dataButtons(){
+    tEventos = $("#datatable-eventos").DataTable({
+        responsive: true,
+        Processing: true,
+        ServerSide: true,
+        "dom" :'Bfrtip',
+        buttons:[{
+            /*extend:"copy",
+            className: "btn-success"
+        },{
+            extend: "csv"
+        }, {*/
+            extend: "excel",
+            className: "btn-primary"
+        /*}, {
+            extend: "pdf"
+        }, {
+            extend: "print"*/
+        }],
+        "ajax": {
+            url: '../assets/data/Controller/eventos/eventosController.php',
+            type: 'POST',
+            data: {action: 'consultarEventos'},
+            dataType: "JSON",
+            error: function(e){
+                console.log(e.responseText);	
+            }
+        },
+        'language':{
+            'sLengthMenu': 'Mostrar _MENU_ registros',
+            'sInfo': 'Mostrando registro del _START_ al _END_ de un total de _TOTAL_ registros',
+            'sInfoEmpty': 'Mostrando registros del 0 al 0 de un total de 0 registros',
+            'sInfoFiltered': '(filtrado de un total de _MAX_ registros)',
+            'sSearch': 'Buscar:',
+            'sLoadingRecords': 'Cargando',
+            'oPaginate':{
+                'sFirst': 'Primero',
+                'sLast': 'Último',
+                'sNext': 'Siguiente',
+                'sPrevious': 'Anterior'
+            },
+            buttons: {
+                copyTitle: 'Tabla Copiada de manera exitósa',
+                copySuccess: {
+                    _: 'Se copio %d filas',
+                    1: 'Se copio1 fila'
+                }
+            }
+        },
+        'bDestroy': true,
+        'iDisplayLength': 10,
+        'order':[
+            [0,'asc']
+        ]
+    });
+
+}
+
+function cambioTab(){
+    /*$('[data-toggle="tab"]').on('click',function(e) {
+            dataButtons();
+        }*/
+        $("a[data-toggle=\"tab\"]").on("shown.bs.tab",function(e){
+            tEventos.columns.adjust();
+        });
+}
+
+function buscarEvento(event){
+    Data = {
+        action: 'buscarEvento',
+        idEditar: event
+    }
+    $.ajax({
+        url: '../assets/data/Controller/eventos/eventosController.php',
+        type: 'POST',
+        data: Data,
+        success: function(data){
+            try{
+                $("#devImagen").show();
+                $("#devFondo").show();
+                $("#modalModify").modal('show');
+                pr = JSON.parse(data);
+                $("#devTipo").val(pr.data[0].tipo);
+                $("#devTitulo").val(pr.data[0].titulo);
+                $("#devClave").val(pr.data[0].nombreClave);
+                $("#devFE").val(pr.data[0].fechaE);
+                $("#devFD").val(pr.data[0].fechaDisponible);
+                $("#devFL").val(pr.data[0].fechaLimite);
+                $("#devLimite").val(pr.data[0].limiteProspectos);
+                $("#devDuracion").val(pr.data[0].duracion);
+                $("#devTipoD").val(pr.data[0].tipoDuracion);
+                $("#devPais").val(pr.data[0].pais);
+                getEstadosMod();
+                setTimeout(function(){ $("#devEstado").val(pr.data[0].estado)}, 1000);
+                $("#devDireccion").val(pr.data[0].direccion);
+                $("#devModalidad").val(pr.data[0].modalidadEvento);
+                $("#devIDInst").val(pr.data[0].idInstitucion);
+                $("#devPromocion").val(pr.data[0].codigoPromocional);
+                $("#devImagen").attr('src', '../assets/images/generales/flyers/'+ pr.data[0].imagen);
+                $("#devFondo").attr('src', '../assets/images/generales/fondos/' + pr.data[0].imgFondo);
+                $("#newPlantilla").val(pr.data[0].plantilla_bienvenida);
+                $("#devDescripcion").val(pr.data[0].descripcion);
+                $("#idModify").val(pr.data[0].idEvento);
+            }catch(e){
+                console.log(e)
+                console.log(data)
+            }
+        },
+        error : function(){
+
+        },
+        complete : function(){
+            $(".outerDiv_S").css("display","none")
+        }
+    });
+}
+
+$("#ocultar").on("click", function(){
+    $("#formularioModificar")[0].reset();
+    //$("#formMod").hide();
+    $("#devImagen").attr('src','');
+    $("#devImagen").hide();
+    $("#devFondo").attr('src','');
+    $("#devFondo").hide();
+})
+
+$("#formularioModificar").on("submit", function(e){
+    e.preventDefault();
+    fData = new FormData(this);
+    fData.append('action', 'modificarEvento');
+    $.ajax({
+        url: '../assets/data/Controller/eventos/eventosController.php',
+        type: 'POST',
+        data: fData,
+        contentType: false,
+        processData: false,
+        success : function(data){
+            try{
+                pr = JSON.parse(data)
+                console.log(pr)
+                if(pr.estatus == 'ok'){
+                    swal({
+                        title: 'Modificado Correctamente',
+                        icon: 'success',
+                        text: 'Espere un momento...',
+                        button: false,
+                        timer: 2500,
+                    }).then((result)=>{
+                        $("#formularioModificar")[0].reset();
+                        //$("#devIDInst").empty();
+                        //$("#newPlantilla").empty();
+                        $(".devMessC").hide();
+                        //$("#formMod").hide();
+                        $("#devImagen").attr('src','');
+                        $("#devImagen").hide();
+                        $("#devFondo").attr('src','');
+                        $("#devFondo").hide();
+                        tEventos.ajax.reload(); 
+                        $("#modalModify").modal("hide");
+                    })
+                }
+                if(data == 1){
+                    Swal.fire({
+                        title: 'No se puede repetir el nombre clave',
+                        confirmButtonColor: '#ef5c6a',
+                    }).then((result)=>{
+                    $(".devMessC").show();
+                    })
+                }
+            }catch(e){
+                console.log(e)
+                console.log(data)
+            }
+        },
+        error : function(){
+
+        },
+        complete : function(){
+            $(".outerDiv_S").css("display", "none")
+        }
+    });
+})
+
+function validarEliminar(event){
+    swal({
+        title: 'Estas seguro de Eliminarlo',
+        icon: 'info',
+        buttons: {cancel: 'Cancelar',
+                  confirm: 'Aceptar'
+                }, 
+        dangerMode: true,
+    }).then((isConfirm)=>{
+        if(isConfirm){
+            eliminarEvento(event);
+        }else{
+            swal("Cancelado Correctamente");
+        }
+    });
+}
+
+function eliminarEvento(event){
+    Data = {
+        action: "eliminarEvento",
+        idEliminar: event
+    }
+    $.ajax({
+        url: '../assets/data/Controller/eventos/eventosController.php',
+        type: 'POST',
+        data: Data,
+        success : function(){
+            try{
+                swal({
+                    title: 'Eliminado Correctamente',
+                    icon: 'success',
+                    text: 'Espere un momento...',
+                    button: false,
+                    timer: 2500,
+                })
+                .then((result)=>{
+                    tEventos.ajax.reload();
+                })
+                //$("#datatableEventos").load('');
+            }catch(e){
+                console.log(e);
+                console.log(data);
+            }
+        },
+        error: function(){
+            
+        },
+        complete : function(){
+            $(".outerDiv_S").css("display", "none")
+        }
+    });
+
+}

@@ -1,0 +1,96 @@
+<?php 
+if (isset($_POST["action"])) {
+	date_default_timezone_set("America/Mexico_City");
+	require_once '../Model/conexion/conexion.php';
+	require_once '../Model/acceso/accesoModel.php';
+	
+	$acc = new Acceso();
+	switch ($_POST["action"]) {
+		case 'validarLogin':
+			unset($_POST["action"]);
+			$resp = ["desd"];
+			if((isset($_POST["inpCorreo"]) && $_POST["inpCorreo"] !== "") && (isset($_POST["inpPassw"]) && $_POST["inpPassw"] !== "")){
+				$usrAcc = $acc->consultarAcceso($_POST);
+				if($usrAcc["estatus"] == "ok" && sizeof($usrAcc["data"]) > 0){
+					session_start();
+					$ur = $usrAcc["data"][0];
+					# (1-Alumno, 2-Colaborador)
+					switch ($ur["idTipo_Persona"]) {
+						case 1:
+							/*require_once '../Model/alumnoModel.php';
+							$alum = new Alumno();
+							$alumnData = $alum->consultarAlumno_ById($ur["idPersona"]);
+							$ur["persona"] = (sizeof($alumnData["data"]) > 0)? $alumnData["data"][0] : "error";
+							$ur["directorio"] = "alumnos";*/
+							break;
+						case 2:
+							require_once '../Model/colaboradores/colaboradorModel.php';
+							$clbr = new Colaborador();
+							$clbrData = $clbr->consultarColaborador_ById($ur["idPersona"]);
+							$ur["persona"] = (sizeof($clbrData["data"]) > 0)? $clbrData["data"] : "error";
+							$ur["directorio"] = "colaboradores";
+							break;
+						case 3:
+							require_once '../Model/marketing/marketingModel.php';
+							$mktM = new Marketing();
+							$mktData = $mktM->consultarPersonaMktng_ById($ur["idPersona"]);
+							$ur["persona"] = (sizeof($mktData["data"]) > 0)? $mktData["data"] : "error";
+							if($ur["persona"] != 'error'){
+								if($_POST["inpCorreo"] != 'master-marketing@mk.com' && $_POST["inpCorreo"] != 'market1@mk.com'){
+									$mktM->actualizarFecha_login($ur["idPersona"]);
+								}
+							}
+							$ur["directorio"] = "marketing-educativo";
+							break;
+						case 8:
+							require_once '../Model/hoteles/hotelModel.php';
+							$htl = new Hotel();
+							$htlData = $htl->consultarHoteles_ById($ur["idPersona"]);
+							$ur["persona"] = (sizeof($htlData["data"]) > 0)? $htlData["data"] : "error";
+							$ur["directorio"] = "hoteles";
+							break;
+						case 30:
+							require_once '../Model/maestros/maestrosModel.php';
+							$maestro = new Maestro();
+							$maestroData = $maestro->consultarMaestro_ById($ur["idPersona"]);
+							$ur["persona"] = (sizeof($maestroData["data"]) > 0)? $maestroData["data"] : "error";
+							$ur["directorio"] = "maestros";
+							break;
+						case 31:
+							require_once '../Model/controlescolar/controlEscolarModel.php';
+							$controlEscolar = new ControlEscolar();
+							$controlEscolarData = $controlEscolar->consultarControlEscolar_ById($ur["idPersona"]);
+							$ur["persona"] = (sizeof($controlEscolarData["data"]) > 0)? $controlEscolarData["data"] : "error";
+							$ur["directorio"] = "controlescolar";
+							break;
+						case 32: //Usuario de Estadísticas
+							require_once '../Model/estadisticas/estadisticasModel.php';
+							$estadisticas = new Estadisticas();
+							$estadisticasData = $estadisticas->consultarEstadisticas_ById($ur["idPersona"]);
+							$ur["persona"] = (sizeof($estadisticasData["data"]) > 0)? $estadisticasData["data"] : "error";
+							$ur["directorio"] = "estadisticas";
+							break;
+						default:
+							$ur["directorio"] = null;
+							break;
+					}
+
+					$_SESSION["usuario"] = $ur;
+					$resp = ["estatus"=>"ok", "data"=>$ur];
+				}else{
+					$resp = $usrAcc;
+				}
+			}else{
+				$resp = ["estatus"=>"error", "info"=>"faltan_datos", "message"=>"Por favor, complete el formulario."];
+			}
+			
+			echo json_encode($resp);
+			break;
+		default:
+			echo json_encode(["estatus"=>"error","info"=>"noaction"]);
+			break;
+	}
+}else{
+	header('Location: ../../../index.php');
+}
+?>

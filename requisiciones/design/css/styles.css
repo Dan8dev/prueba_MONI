@@ -1,0 +1,120 @@
+.wrapper .container{
+    max-width: 1300px;
+}
+.no-scroll{
+    overflow: hidden;
+}
+.hidden{
+    display: none!important;
+}
+.nav-bar{
+    background: #181F3B;
+    padding: 30px;
+}
+#logout{
+    color: #fff;
+    float: right;
+    cursor: pointer;
+    text-decoration: none;
+}
+#logout:hover,#logout:focus{
+    color: #fff;
+    text-decoration: none;
+    outline: none;
+}
+select.form-control{
+    -webkit-appearance: auto;
+    -moz-appearance: auto;
+    appearance: auto;
+}
+.btn-danger{
+    background-color: brown;
+}
+.card{
+    padding-top: 30px;
+    margin-bottom: 20px;
+}
+.card-body{
+    overflow: auto;
+    margin: 0 0 10px 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.modal.active{
+    opacity: 1;
+    display: block;
+    background: #00000087;
+    color: #717171;
+    padding: 10px 20px;
+    overflow: auto;
+}
+.btn-closed{
+    font-size: 2.3rem;
+    background-color: transparent;
+    color: #717171;
+    border: none;
+}
+#proveedor .modal-body{
+    overflow: auto;
+    height: 700px;
+}
+.btn-gin,.btn-ginmin{
+    padding: 15px;
+    cursor: pointer;
+    border: 1px solid #AA262C;
+    border-bottom: none;
+    border-radius: 5px 5px 0 0;
+}
+.taps{
+    margin-bottom: 12px;
+}
+.btn-gin.active,.btn-ginmin.active{
+    color: #fff;
+    background-color: #AA262C;
+}
+.btn-gin.active:hover{
+    color: #fff;
+}
+table.dataTable tbody tr{
+    font-size: 12px;
+}
+.btn_transparent{
+    background-color: transparent;
+    border: none;
+}
+#breakdown .btn-closed,#comprRq .btn-closed,#comPayBill .btn-closed{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5em;
+}
+.bold_green{
+    background-color: green;
+    border-radius: 50%;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+}
+input[type=number] { -moz-appearance:textfield; }
+.navbar-custom{
+    background-color: #ffffff;
+    border-bottom: 2px solid rgba(62, 68, 94, 0.1);
+}
+
+.navigation-menu{
+    list-style: none;
+    display: flex;
+}
+.navigation-menu a{
+    color: #717171  ;
+    text-decoration: none;
+    margin-right: 10px;
+    padding: 20px 20px;
+    display: block;
+    font-size: 15px;
+}
+.sendReq.btn-danger,.concepts.odd .btn-danger{
+    background-color: #AA262C!important;
+    border: none!important;
+}

@@ -158,31 +158,31 @@ if(!isset($_SESSION["usuario"]) || $_SESSION["usuario"]['idTipo_Persona'] != 3){
 								<li class="nav-item">
 									<a class="nav-link active" id="nuevo-tab" data-toggle="tab" href="#nuevo" role="tab" aria-controls="nuevo" aria-selected="true">
 										<span class="d-block d-sm-none"><i class="ion ion-md-add"></i></span>
-										<span class="d-none d-sm-block">Crear Nuevo</span>
+										<span class="d-none d-sm-block"><i class="ion ion-md-add"></i> Crear Nuevo</span>
 									</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" id="eventos-tab" data-toggle="tab" data-target="#eventos" href="#eventos" role="tab" aria-controls="eventos" aria-selected="false">
-										<span class="d-block d-sm-none"><i class="mdi mdi-view-comfy"></i></span>
-										<span class="d-none d-sm-block">Ver Eventos</span>
+										<span class="d-block d-sm-none"><i class="fas fa-book"></i></span>
+										<span class="d-none d-sm-block"><i class="fas fa-book"></i> Ver Eventos</span>
 									</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" id="asistencias-tab" data-toggle="tab" data-target="#asistencias" href="#asistencias" role="tab" aria-controls="asistencias" aria-selected="false">
-										<span class="d-block d-sm-none"><i class="mdi mdi-view-comfy"></i></span>
-										<span class="d-none d-sm-block"></i>Ver Asistencia Eventos</span>
+										<span class="d-block d-sm-none"><i class="fas fa-check"></i></span>
+										<span class="d-none d-sm-block"></i><i class="fas fa-check"></i> Ver Asistencia Eventos</span>
 									</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" id="talleres-tab" data-toggle="tab" data-target="#talleres" href="#talleres" role="tab" aria-controls="talleres" aria-selected="false">
-										<span class="d-block d-sm-none"><i class="mdi mdi-view-comfy"></i></span>
-										<span class="d-none d-sm-block">Ver Talleres</span>
+										<span class="d-block d-sm-none"><i class="fas fa-list-alt"></i></span>
+										<span class="d-none d-sm-block"><i class="fas fa-list-alt"></i> Ver Talleres</span> 
 									</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" id="ponencias-tab" data-toggle="tab" data-target="#ponencias" href="#ponencias" role="tab" aria-controls="ponencias" aria-selected="false">
-										<span class="d-block d-sm-none"><i class="mdi mdi-view-comfy"></i></span>
-										<span class="d-none d-sm-block">Ver Ponencias</span>
+										<span class="d-block d-sm-none"><i class="fas fa-user"></i></span>
+										<span class="d-none d-sm-block"><i class="fas fa-user"></i> Ver Ponencias</span>
 									</a>
 								</li>
 							</ul>

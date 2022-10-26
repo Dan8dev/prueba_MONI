@@ -28,16 +28,16 @@ date_default_timezone_set("America/Mexico_City");
 			return $statement;
 		}
 
-		public function duracionEventos($duracion){
+		public function asistenciasMinimas($idEvento){
 			
 			$conexion = new Conexion();
 			$con = $conexion->conectar();
 			$con = $con["conexion"];
 			
-			$sql =  "SELECT duracion, tipoDuracion FROM ev_evento where idEvento = :idEvento;";
+			$sql =  "SELECT cantidad_asis_min FROM ev_evento where idEvento = :idEvento;";
 			
 			$statement = $con->prepare($sql);
-			$statement->bindParam(":idEvento", $duracion);
+			$statement->bindParam(":idEvento", $idEvento);
 			$statement->execute();
 			
 			return $statement->fetchAll(PDO::FETCH_ASSOC);

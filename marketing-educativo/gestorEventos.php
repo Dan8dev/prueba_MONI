@@ -168,6 +168,12 @@ if(!isset($_SESSION["usuario"]) || $_SESSION["usuario"]['idTipo_Persona'] != 3){
 									</a>
 								</li>
 								<li class="nav-item">
+									<a class="nav-link" id="asistencias-tab" data-toggle="tab" data-target="#asistencias" href="#asistencias" role="tab" aria-controls="asistencias" aria-selected="false">
+										<span class="d-block d-sm-none"><i class="mdi mdi-view-comfy"></i></span>
+										<span class="d-none d-sm-block"></i>Ver Asistencia Eventos</span>
+									</a>
+								</li>
+								<li class="nav-item">
 									<a class="nav-link" id="talleres-tab" data-toggle="tab" data-target="#talleres" href="#talleres" role="tab" aria-controls="talleres" aria-selected="false">
 										<span class="d-block d-sm-none"><i class="mdi mdi-view-comfy"></i></span>
 										<span class="d-none d-sm-block">Ver Talleres</span>
@@ -177,12 +183,6 @@ if(!isset($_SESSION["usuario"]) || $_SESSION["usuario"]['idTipo_Persona'] != 3){
 									<a class="nav-link" id="ponencias-tab" data-toggle="tab" data-target="#ponencias" href="#ponencias" role="tab" aria-controls="ponencias" aria-selected="false">
 										<span class="d-block d-sm-none"><i class="mdi mdi-view-comfy"></i></span>
 										<span class="d-none d-sm-block">Ver Ponencias</span>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" id="asistencias-tab" data-toggle="tab" data-target="#asistencias" href="#asistencias" role="tab" aria-controls="asistencias" aria-selected="false">
-										<span class="d-block d-sm-none"><i class="mdi mdi-view-comfy"></i></span>
-										<span class="d-none d-sm-block"></i> Asistencias</span>
 									</a>
 								</li>
 							</ul>
@@ -267,16 +267,24 @@ if(!isset($_SESSION["usuario"]) || $_SESSION["usuario"]['idTipo_Persona'] != 3){
 													</div>
 												</div>
 												<div class="form-group row">
-													<label for="duracion" class="col-sm-3 control-label">Numero Sesiones *</label>
+													<label for="duracion" class="col-sm-3 control-label">Duración *</label>
 													<div class="col-sm-4">
-														<input type="number" class="form-control" id="duracion" name="duracion" placeholder="Numérico" min="1" max="" required>
+														<input type="number" class="form-control" id="duracion" name="duracion" placeholder="Numérico" min="1" required>
 													</div>
 													<div class="col-sm-4">
 														<select class="form-control" name="tipoDuracion" id="inptipoDuracion" required>
 															<option selected="true" disabled="disabled">Seleccione</option>
 															<option value="h">Hora</option>
 															<option value="d">Día</option>
+															<option value="s">Semana</option>
+															<option value="m">Mes</option>
 														</select>
+													</div>
+												</div>
+												<div class="form-group row">
+													<label for="asistenciasMin" class="col-sm-3 control-label">Asistencias mínimas *</label>
+													<div class="col-sm-4">
+														<input type="number" class="form-control" id="asistenciasMin" name="asistenciasMin" placeholder="Numérico" min="1" required>
 													</div>
 												</div>
 												<div class="form-group row">
@@ -375,6 +383,7 @@ if(!isset($_SESSION["usuario"]) || $_SESSION["usuario"]['idTipo_Persona'] != 3){
 															<th>Número Asistentes</th>
 															<th>Duración</th>
 															<th>Tipo De Duración</th>
+															<th>Cantidad mínima de asistencias</th>
 															<th>Dirección</th>
 															<th>Estado</th>
 															<th>País</th>
@@ -398,6 +407,34 @@ if(!isset($_SESSION["usuario"]) || $_SESSION["usuario"]['idTipo_Persona'] != 3){
 										</div>
 									</div>	
 								</div>
+
+								<!-- Tabla asistencias eventos -->
+
+								<div class="tab-pane fade" id="asistencias" role="tabpanel" aria-labelledby="asistencias-tab">
+                  					<div class="container-liquid">
+                    					<div class="card">
+                      						<div class="card-body">
+                        						<div class="table-responsive text-left">											
+                          							<h2>Asistencia a Eventos</h2>
+                          							<table id="datatable-tablaAsistecias" class="table table-striped table-bordered nowrap" style="font-size:small; border-collapse: collapse; width: 100%;">
+                            							<thead>
+                            							<tr>
+                              								<th>Evento</th>
+                              								<th>Fecha</th>
+                              								<th>Opciones</th>
+                            							</tr>
+                            							</thead>
+                            							<tbody>
+                            							</tbody>
+                          							</table>
+                        						</div>
+                      						</div>
+                    					</div>
+
+                  					</div>
+                				</div>
+
+								<!-- Fin tabla asistencias eventos -->
 
 								<div class="row tab-pane fade" id="talleres" role="tabpanel" aria-labelledby="talleres-tab">
 									<!--col-lg-12-->
@@ -478,53 +515,54 @@ if(!isset($_SESSION["usuario"]) || $_SESSION["usuario"]['idTipo_Persona'] != 3){
 									</div>	
 								</div>
 								<!-- Modal  Asistencias -->
-								<div class="row tab-pane fade" id="asistencias" role="tabpanel" aria-labelledby="asistencias-tab">
+								<div class="modal fade" id="modalAsistenciasEventos" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+									<input class ="d-none" type="text" id = "idEventos">
 									<div class="modal-dialog modal-xl" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h4 class="modal-title">Asistencia Evento</h4>
-												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-												</button>
-											</div>
-											<div class="modal-body">
-												<div class="row">
-													<div class="col-md-12">
-														<div class="table-reponsive">
-															<table id = "TablaAsistenciaEventos" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; width: 100%;">
-																<thead>
-																<tr>
-																<th>Alumno</th>
-																<th>Correo</th>
-																<th>Acciones</th>
-																<th>Agregar asistencia</th>
-																</tr>
-																</thead>
-																<tbody>
-																</tbody>
-															</table>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<div class="row">
-													<div class="col-md-6">
-														<button type="button" id ="BtnEnvioSeleccionarTodos" class="btn btn-primary">Seleccionar Todos</button>
-													</div>
+									<div class="modal-content">
+										<div class="modal-header">
+										<h5 class="modal-title">Asistencia Evento</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="table-reponsive">
+												<table id = "TablaAsistenciaEventos" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; width: 100%;">
+													<thead>
+													<tr>
+														<th>Alumno</th>
+														<th>Correo</th>
+														<th>Acciones</th>
+														<th>Registrar asistencia</th>
+													</tr>
+													</thead>
+													<tbody>
 
-													<div class="col-md-6">
-														<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-														<button type="button" id ="BtnEnvioCertificados" class="btn btn-primary">Guardar</button>
-													</div>
+													</tbody>
+												</table>
 												</div>
-											
 											</div>
 										</div>
+										</div>
+										<div class="modal-footer">
+										<div class="row">
+											<div class="col-md-6">
+											<button type="button" id ="BtnEnvioSeleccionarTodos" class="btn btn-primary">Seleccionar Todos</button>
+											</div>
+
+											<div class="col-md-6">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+											<button type="button" id ="BtnEnvioCertificados" class="btn btn-primary">Guardar</button>
+											</div>
+										</div>
+										
+										</div>
+									</div>
 									</div>
 								</div>
-							</div>
-							<!--///////////////////////////////////////--->
+								<!--///////////////////////////////////////--->
 
 							<div class="modal fade bs-example-modal-lg" id="modalModify" tabindex="-1" role="dialog" aria-labelledy="myLargeModalLabel" aria-hidden="true">
 								<div class="modal-dialog modal-lg">
@@ -614,7 +652,7 @@ if(!isset($_SESSION["usuario"]) || $_SESSION["usuario"]['idTipo_Persona'] != 3){
 													</div>
 												</div>
 												<div class="form-group row">
-													<label for="devDuracion" class="col-sm-3 control-label">Numero Sesiones</label>
+													<label for="devDuracion" class="col-sm-3 control-label">Número Sesiones</label>
 													<div class="col-sm-4">
 														<input type="number" class="form-control" name="devDuracion" id="devDuracion" placeholder="Numérico"  min="" max="" required>
 													</div>
@@ -626,6 +664,12 @@ if(!isset($_SESSION["usuario"]) || $_SESSION["usuario"]['idTipo_Persona'] != 3){
 															<option value="s">Semana</option> 
 															<option value="m">Mes</option> 
 														</select>
+													</div>
+												</div>
+												<div class="form-group row">
+													<label for="devAsistenciasM" class="col-sm-3 control-label">Asistencias mínimas</label>
+													<div class="col-sm-4">
+														<input type="number" class="form-control" name="devAsistenciasM" id="devAsistenciasM" placeholder="Numérico"  min="" max="" required>
 													</div>
 												</div>
 												<div class="form-group row">
@@ -1039,6 +1083,7 @@ if(!isset($_SESSION["usuario"]) || $_SESSION["usuario"]['idTipo_Persona'] != 3){
 	<script src="../assets/js/template/jquery.scrollTo.min.js"></script>
 	<script src="../assets/js/template/jquery.maskMoney.js"></script>
 	
+	<!-- Sweet-Alert  -->
 	<script src="../assets/plugins/sweetalert2/sweetalert2.all.min.js"></script>
 	<script src="../assets/plugins/sweetalert2/sweetalert2.min.js"></script>
 

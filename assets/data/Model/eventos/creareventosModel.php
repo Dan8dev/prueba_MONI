@@ -136,9 +136,9 @@ class eventos{
 
 				$sql = "INSERT INTO ev_evento
 				(tipo, titulo, nombreClave, fechaE, fechaDisponible, fechaLimite, limiteProspectos, duracion,tipoDuracion, direccion, estado, pais, 
-				codigoPromocional, estatus, modalidadEvento, idInstitucion, imagen, imgFondo, descripcion, plantilla_bienvenida)VALUES(:tipo, :titulo, :nombreClave, 
+				codigoPromocional, estatus, modalidadEvento, idInstitucion, imagen, imgFondo, descripcion, plantilla_bienvenida, cantidad_asis_min)VALUES(:tipo, :titulo, :nombreClave, 
 				:fechaE, :fechaDisponible,:fechaLimite, :limiteProspectos, :duracion, :tipoDuracion, :direccion, :estado, :pais, :codigoPromocional, 1, 
-				:modalidadEvento, :idInstitucion, :nName, :nNameF, :descripcion, :plantilla_bienvenida)";
+				:modalidadEvento, :idInstitucion, :nName, :nNameF, :descripcion, :plantilla_bienvenida, :asistenciasMin)";
 
 				$statement = $con->prepare($sql);
 				$statement->execute($evento);
@@ -163,7 +163,7 @@ class eventos{
 			if($con['info'] == 'ok'){
 				$con = $con['conexion'];
 
-				$sql = "SELECT evt.*, pa.ISO3 as pais_nom,est.Estado as estado_nom, (SELECT COUNT(*) 
+				$sql = "SELECT evt.*, pa.ISO3 as pais_nom, est.Estado as estado_nom, (SELECT COUNT(*) 
 				 FROM a_prospectos ea 
 				 INNER JOIN a_marketing_atencion ma ON ma.prospecto = ea.idAsistente 
 				 WHERE ma.tipo_atencion = 'evento' AND ea.idEvento = evt.idEvento AND ma.etapa IN (2, 0, 1)) AS numAsistentes
@@ -259,7 +259,7 @@ class eventos{
 				$sql = "UPDATE ev_evento SET tipo = :devTipo ,titulo = :devTitulo, nombreClave = :devClave, fechaE = :devFE, fechaDisponible = :devFD,
 				 	fechaLimite = :devFL, limiteProspectos = :devLimite, duracion = :devDuracion, tipoDuracion = :devTipoD, direccion = :devDireccion, 
 					estado = :devEstado, pais = :devPais, codigoPromocional = :devPromocion, estatus = 1, modalidadEvento = :devModalidad, idInstitucion =
-					:devIDInst, imagen = :nImagen, imgFondo = :nImagenF, descripcion = :devDescripcion, plantilla_bienvenida = :newPlantilla {$str_enl} WHERE idEvento = :idModify";
+					:devIDInst, imagen = :nImagen, imgFondo = :nImagenF, descripcion = :devDescripcion, plantilla_bienvenida = :newPlantilla {$str_enl}, cantidad_asis_min = :devAsistenciasM WHERE idEvento = :idModify";
 
 				$statement = $con->prepare($sql);
 				$statement->execute($event);
@@ -291,7 +291,7 @@ class eventos{
 				$sql = "UPDATE ev_evento SET tipo = :devTipo ,titulo = :devTitulo, nombreClave = :devClave, fechaE = :devFE, fechaDisponible = 
 					:devFD,fechaLimite = :devFL, limiteProspectos = :devLimite, duracion = :devDuracion, tipoDuracion = :devTipoD, direccion = 
 					:devDireccion, estado = :devEstado, pais = :devPais, codigoPromocional = :devPromocion, estatus = 1, modalidadEvento = :devModalidad, 
-					idInstitucion = :devIDInst, imagen = :nImagen, descripcion = :devDescripcion, plantilla_bienvenida = :newPlantilla {$str_enl} WHERE idEvento = :idModify";
+					idInstitucion = :devIDInst, imagen = :nImagen, descripcion = :devDescripcion, plantilla_bienvenida = :newPlantilla {$str_enl}, cantidad_asis_min = :devAsistenciasM WHERE idEvento = :idModify";
 				$statement = $con->prepare($sql);
 				$statement->execute($modify);
 
@@ -321,7 +321,7 @@ class eventos{
 				$sql = "UPDATE ev_evento SET tipo = :devTipo ,titulo = :devTitulo, nombreClave = :devClave, fechaE = :devFE, fechaDisponible = :devFD, 
 				fechaLimite = :devFL, limiteProspectos = :devLimite, duracion = :devDuracion, tipoDuracion = :devTipoD, direccion = :devDireccion, 
 				estado = :devEstado, pais = :devPais, codigoPromocional = :devPromocion, estatus = 1, modalidadEvento = :devModalidad, idInstitucion = 
-				:devIDInst, imgFondo = :nImagenF, descripcion = :devDescripcion, plantilla_bienvenida = :newPlantilla {$str_enl} WHERE idEvento = :idModify";
+				:devIDInst, imgFondo = :nImagenF, descripcion = :devDescripcion, plantilla_bienvenida = :newPlantilla {$str_enl}, cantidad_asis_min = :devAsistenciasM WHERE idEvento = :idModify";
 
 				$statement = $con->prepare($sql);
 				$statement->execute($modify);
@@ -353,7 +353,7 @@ class eventos{
 				$sql = "UPDATE ev_evento SET tipo = :devTipo, titulo = :devTitulo, nombreClave = :devClave, fechaE = :devFE, fechaDisponible = :devFD, 
 					fechaLimite = :devFL, limiteProspectos = :devLimite, duracion = :devDuracion, tipoDuracion = :devTipoD, direccion = :devDireccion, 
 					estado = :devEstado, pais = :devPais, codigoPromocional = :devPromocion, estatus = 1, modalidadEvento = :devModalidad, idInstitucion = :devIDInst, 
-					descripcion = :devDescripcion, plantilla_bienvenida = :newPlantilla {$str_enl} WHERE idEvento = :idModify";
+					descripcion = :devDescripcion, plantilla_bienvenida = :newPlantilla {$str_enl}, cantidad_asis_min = :devAsistenciasM WHERE idEvento = :idModify";
 
 				$statement = $con->prepare($sql);
 				//$statement->bindParam(':idModify', $modify, PDO::PARAM_INT);
@@ -381,7 +381,7 @@ class eventos{
 				$sql = "UPDATE ev_evento SET tipo = :devTipo ,titulo = :devTitulo, fechaE = :devFE, fechaDisponible = :devFD, fechaLimite = :devFL, 
 					limiteProspectos = :devLimite, duracion = :devDuracion, tipoDuracion = :devTipoD, direccion = :devDireccion, estado = :devEstado, pais = 
 					:devPais, codigoPromocional = :devPromocion, estatus = 1, modalidadEvento = :devModalidad, idInstitucion = :devIDInst, descripcion = :devDescripcion,
-					plantilla_bienvenida = :newPlantilla WHERE idEvento = :idModify";
+					plantilla_bienvenida = :newPlantilla, cantidad_asis_min = :devAsistenciasM WHERE idEvento = :idModify";
 
 				$statement = $con->prepare($sql);
 				$statement->execute($modify);

@@ -13,6 +13,8 @@ $(document).ready(()=>{
     cambioTab();
     //getEstadosMod();
 
+    ver_todo_asistencias();
+
     select_eventos();
     $("#btn-taller-evento").attr('disabled', true)
 })
@@ -300,6 +302,9 @@ $("#formularioRegistrar").on("submit", function(e){
     if($("#plantilla_bienvenida").val() == null){swal('Seleccione la plantilla de correo que recibirán los prospectos'); return;}
 
     fData = new FormData(this);
+
+    //console.log(fData);
+
     fData.append('action', 'registrarEvento');
     $.ajax({
         url: '../assets/data/Controller/eventos/eventosController.php',
@@ -504,6 +509,7 @@ function buscarEvento(event){
                 $("#devLimite").val(pr.data[0].limiteProspectos);
                 $("#devDuracion").val(pr.data[0].duracion);
                 $("#devTipoD").val(pr.data[0].tipoDuracion);
+                $("#devAsistenciasM").val(pr.data[0].cantidad_asis_min);
                 $("#devPais").val(pr.data[0].pais);
                 getEstadosMod();
                 setTimeout(function(){ 
@@ -512,8 +518,8 @@ function buscarEvento(event){
                         //console.log('entre')
                         $("#devEstado").prop('disabled', true);
                     }else{
-                    //console.log('no ent')
-                    $("#devEstado").prop('disabled', false);
+                        //console.log('no ent')
+                        $("#devEstado").prop('disabled', false);
                     }
                     $("#devEstado").val(pr.data[0].estado);
                 }, 1000);
@@ -1521,3 +1527,258 @@ function editar_ponencia(taller){
         }
     });
 }
+
+function ver_todo_asistencias(){
+    tablaAsistenciaEventos();
+}
+
+//Tabla asistencia eventos
+function tablaAsistenciaEventos(){
+    tAlumnos = $("#datatable-tablaAsistecias").DataTable({
+    responsive: true,
+    Processing: true,
+    ServerSide: true,
+    "dom" :'Bfrtip',
+    buttons:[{
+        extend: "excel",
+        className: "btn-primary"
+    }, {
+        extend: "pdf"
+    }, {
+        extend: "print"
+    }],
+    "ajax": {
+        url: '../assets/data/Controller/controlescolar/controlescolarControl.php',
+        type: 'POST',
+        data: {action: 'consultarAsistenciaEventos'},
+        dataType: "JSON",
+        error: function(e){
+            console.log(e.responseText);
+        }
+    },
+    'language':{
+        'sLengthMenu': 'Mostrar _MENU_ registros',
+        'sInfo': 'Mostrando registro del _START_ al _END_ de un total de _TOTAL_ registros',
+        'sInfoEmpty': 'Mostrando registros del 0 al 0 de un total de 0 registros',
+        'sInfoFiltered': '(filtrado de un total de _MAX_ registros)',
+        'sSearch': 'Buscar:',
+        'sLoadingRecords': 'Cargando',
+        'oPaginate':{
+            'sFirst': 'Primero',
+            'sLast': 'Último',
+            'sNext': 'Siguiente',
+            'sPrevious': 'Anterior'
+        }
+    },
+    'bDestroy': true,
+    'iDisplayLength': 10,
+    'order':[
+        [0,'asc']
+    ],
+    });
+}
+
+//Mostrar modal con alumnos que asistieron al evento
+function verAsistencia(idEvento){
+    $("#modalAsistenciasEventos").modal("show");
+    $("#idEventos").val(idEvento);
+
+    tAsistencias = $("#TablaAsistenciaEventos").DataTable({
+        responsive: true,
+        Processing: true,
+        ServerSide: true,
+        "dom" :'Bfrtip',
+        buttons:[{
+            extend: "excel",
+            className: "btn-primary"
+        }, {
+            extend: "pdf"
+        }, {
+            extend: "print"
+        }],
+        "ajax": {
+            url: '../assets/data/Controller/adminwebex/adminwebexControl.php',
+            type: 'POST',
+            data: {action: 'consultarAsistenciaEventos',
+                    Evento:  idEvento},
+            dataType: "JSON",
+            error: function(e){
+                console.log(e.responseText);
+            }
+        },
+        'language':{
+            'sLengthMenu': 'Mostrar _MENU_ registros',
+            'sInfo': 'Mostrando registro del _START_ al _END_ de un total de _TOTAL_ registros',
+            'sInfoEmpty': 'Mostrando registros del 0 al 0 de un total de 0 registros',
+            'sInfoFiltered': '(filtrado de un total de _MAX_ registros)',
+            'sSearch': 'Buscar:',
+            'sLoadingRecords': 'Cargando',
+            'oPaginate':{
+                'sFirst': 'Primero',
+                'sLast': 'Último',
+                'sNext': 'Siguiente',
+                'sPrevious': 'Anterior'
+            }
+        },
+        'bDestroy': true,
+        'iDisplayLength': 20,
+        'order':[
+            [0,'asc']
+        ],
+        });
+}
+function agregarAsistencia(idAsistente){
+    let idEvento = $("#idEventos").val();
+    let fechaTiempo = $(`#inputDateTime_${idAsistente}`).val();
+
+    //console.log(`Esta es la fecha y hora enviada: ${fechaTiempo}`);
+
+    if(fechaTiempo != ''){
+        $.ajax({
+            url: '../assets/data/Controller/adminwebex/adminwebexControl.php',
+            type: "POST",
+            data: {
+                action: 'agregarAsistencia', 
+                idAsistente: idAsistente, 
+                idEvento: idEvento,
+                fecha: fechaTiempo
+            },
+            success: function(data){
+                try{
+                    resp = JSON.parse(data);
+                    if(resp.estatus == 'ok'){
+                        swal({
+                            title: "La asistencia se ha registrado",
+                            icon: 'success',
+                            //showConfirmButton: false,
+                            timer: 2500
+                        }).then(result => {
+                            tAsistencias.ajax.reload(null, false);
+                        })
+                    }else{
+                        swal.fire({
+                            title: "Error",
+                            text:resp.info,
+                            type: "warning"
+                        })
+                    }
+                }catch(e){
+                    console.log(e);
+                    console.log(data);
+                }
+            }
+        });
+    }else{
+        swal({
+            title: "Error",
+            text:"Ingresa una fecha y hora válida",
+            icon: "error",
+            //showConfirmButton: false,
+            timer: 2500
+        }).then(result => {
+            tAsistencias.ajax.reload(null, false);
+        })
+
+    }
+}
+
+//Array para almacenar uno o varios id de alumnos
+var id_Certificados = [];
+
+//Agrega idAlumno al arreglo 
+function obtenerCertificados(idAlumno){
+
+    //Obtiene index del idAlumno existe en el array id_Certificados
+    let Comprobacion = id_Certificados.indexOf(idAlumno);
+    console.log(Comprobacion);
+ 
+    //Si no existe en el array, se agrega al final del arreglo
+    if(Comprobacion == -1){
+        id_Certificados.push(idAlumno);
+        console.log(id_Certificados);
+    }else{
+        //Si existe el idAlumno en el array, se elimina.
+        id_Certificados.splice(Comprobacion, 1);
+    }
+
+    //Si el array no tiene elementos, se desactiva el botón para enviar certificados
+    if(id_Certificados.length<1){
+        $("#BtnEnvioCertificados").prop('disabled', true);
+    }else{
+        //Sino, se activa
+        $("#BtnEnvioCertificados").prop('disabled', false);
+    }
+
+    console.log(id_Certificados);
+
+}
+
+//Se agregan todos los idAlumno al array
+$("#BtnEnvioSeleccionarTodos").on("click",function(e){
+
+    //Reasignamos el array como vacío
+    id_Certificados = [];
+
+    tAsistencias.cells().every((ix, g) => {
+        if(g == 2 && id_Certificados.length < 50){
+            nodelm = tAsistencias.cell({row:ix, column:g}).node();
+            //console.log(nodelm);
+            CalNueva = $(nodelm).find('input').val();
+            
+            idCompuesto = $(nodelm).find('input').prop("checked", true);
+            //console.log(idCompuesto.is(':checked'));
+
+            if(idCompuesto.is(':checked') == true){
+                id_Certificados.push(parseInt(CalNueva));
+            }
+           
+        }            
+    });
+
+   console.log(id_Certificados);
+});
+
+$("#BtnEnvioCertificados").on("click",function(e){
+    var idEvent = $("#idEventos").val();
+
+    $.ajax({
+        type: 'POST',
+        url: '../assets/data/Controller/adminwebex/enviocertificados.php',
+        data:{
+            evento: idEvent,
+            ids: id_Certificados
+        },
+        success: function(data){
+            //console.log(data);
+            json = JSON.parse(data);
+
+            console.log(json);
+            if(json.estatus == 'ok'){
+               
+                swal({
+                    title: 'Certificación generada correctamente',
+                    type: 'success',
+                    text: 'Espere un momento...',
+                    timer: 2500,
+                }).then(result => {
+                    //Ponerasd
+                    tAsistencias.ajax.reload(null,false);
+                    id_Certificados = [];
+                    //LlenarTablaServicio();
+                });
+
+            }else{
+
+                Swal.fire({
+                    title: "Error",
+                    text: "No se pudo generar la certficación",
+                    type: "warning",
+                    showCancelButton: false,
+                    confirmButtonColor: "#ef5c6a",
+                    confirmButtonText: "ok"
+                  });
+                
+            }
+        },
+    });
+});

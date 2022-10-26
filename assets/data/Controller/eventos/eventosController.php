@@ -122,19 +122,20 @@ if (isset($_POST["action"])) {
                 7=> $dato->limiteProspectos,
                 8=> $dato->duracion,
                 9=> $dato->tipoDuracion,
-                10=> $dato->direccion,
-                11=> $dato->estado_nom,
-                12=> $dato->pais_nom,
-                13=> $dato->codigoPromocional,
-                14=> $dato->estatus,
-                15=> $dato->modalidadEvento,
-                16=> $dato->idInstitucion,
-                17=> $dato->imagen,
-                18=> $dato->imgFondo,
-                19=> $dato->descripcion,
-                20=> $dato->plantilla_bienvenida,
-                21=>'<a class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="buscarEvento('.$dato->idEvento.')">Modificar</a>',
-                22=>'<a class="btn btn-danger" onclick="validarEliminar('.$dato->idEvento.')">Eliminar</a>'
+                10=> $dato->cantidad_asis_min,
+                11=> $dato->direccion,
+                12=> $dato->estado_nom,
+                13=> $dato->pais_nom,
+                14=> $dato->codigoPromocional,
+                15=> $dato->estatus,
+                16=> $dato->modalidadEvento,
+                17=> $dato->idInstitucion,
+                18=> $dato->imagen,
+                19=> $dato->imgFondo,
+                20=> $dato->descripcion,
+                21=> $dato->plantilla_bienvenida,
+                22=>'<a class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="buscarEvento('.$dato->idEvento.')">Modificar</a>',
+                23=>'<a class="btn btn-danger" onclick="validarEliminar('.$dato->idEvento.')">Eliminar</a>'
                 );
             }
             $result = array(

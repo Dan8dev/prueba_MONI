@@ -11,7 +11,7 @@ if (isset($_POST["action"])) {
         case 'consultarAsistenciaEventos':
             unset($_POST['action']);
             $ceventos = $adminwebex->consultarAsistenciaEventos($_POST);
-            $duracion = $adminwebex->duracionEventos($_POST['Evento']);
+            $cantidadAsis = $adminwebex->asistenciasMinimas($_POST['Evento']);
             
             //var_dump($duracion[0]['duracion'], $duracion[0]['tipoDuracion']);
 
@@ -22,41 +22,48 @@ if (isset($_POST["action"])) {
                     $mensaje = "<b>Certificado Enviado</b>";
                 }
 
-                $tipoDuracion = $duracion[0]['tipoDuracion'];
-                $cantidadDuracion = $duracion[0]['duracion'];
+                //$tipoDuracion = $duracion[0]['tipoDuracion'];
+                //$cantidadDuracion = $duracion[0]['duracion'];
+                $asistenciasMin = $cantidadAsis[0]['cantidad_asis_min'];
 
-                switch($tipoDuracion) {
+                // switch($tipoDuracion) {
 
-                    case $tipoDuracion == 'h': 
-                        if(intval($cantidadDuracion < 24)){
-                            if(intval($dato->TotalAsistencias < 1)){
-                                $mensaje = "<b>Sin asistencias necesarias</b>";
-                            }else if(intval($dato->TotalAsistencias >= 1)){
-                                $mensaje = "<input type='checkbox' value='{$dato->id_asistente}' onClick = 'obtenerCertificados({$dato->id_asistente})'>";
-                            }
-                        }else if(intval($cantidadDuracion > 24) && intval($cantidadDuracion < 48)){
-                            if(intval($dato->TotalAsistencias < 2)){
-                                $mensaje = "<b>Sin asistencias necesarias</b>";
-                            }else if(intval($dato->TotalAsistencias >= 2)){
-                                $mensaje = "<input type='checkbox' value='{$dato->id_asistente}' onClick = 'obtenerCertificados({$dato->id_asistente})'>";
-                            }
-                        }
-                        break;
+                //     case $tipoDuracion == 'h': 
+                //         if(intval($cantidadDuracion < 24)){
+                //             if(intval($dato->TotalAsistencias < 1)){
+                //                 $mensaje = "<b>Sin asistencias necesarias</b>";
+                //             }else if(intval($dato->TotalAsistencias >= 1)){
+                //                 $mensaje = "<input type='checkbox' value='{$dato->id_asistente}' onClick = 'obtenerCertificados({$dato->id_asistente})'>";
+                //             }
+                //         }else if(intval($cantidadDuracion > 24) && intval($cantidadDuracion < 48)){
+                //             if(intval($dato->TotalAsistencias < 2)){
+                //                 $mensaje = "<b>Sin asistencias necesarias</b>";
+                //             }else if(intval($dato->TotalAsistencias >= 2)){
+                //                 $mensaje = "<input type='checkbox' value='{$dato->id_asistente}' onClick = 'obtenerCertificados({$dato->id_asistente})'>";
+                //             }
+                //         }
+                //         break;
 
-                    case $tipoDuracion == 'd':
-                        if(intval($dato->TotalAsistencias < $cantidadDuracion)){
-                            $mensaje = "<b>Sin asistencias necesarias</b>";
-                        }else if(intval($dato->TotalAsistencias >= $cantidadDuracion)){
-                            $mensaje = "<input type='checkbox' value='{$dato->id_asistente}' onClick = 'obtenerCertificados({$dato->id_asistente})'>";
-                        }
-                        break;
+                //     case $tipoDuracion == 'd':
+                //         if(intval($dato->TotalAsistencias < $cantidadDuracion)){
+                //             $mensaje = "<b>Sin asistencias necesarias</b>";
+                //         }else if(intval($dato->TotalAsistencias >= $cantidadDuracion)){
+                //             $mensaje = "<input type='checkbox' value='{$dato->id_asistente}' onClick = 'obtenerCertificados({$dato->id_asistente})'>";
+                //         }
+                //         break;
+                // }
+
+                if(intval($dato->TotalAsistencias < $asistenciasMin)){
+                    $mensaje = "<b>Sin asistencias necesarias</b>";
+                }else if(intval($dato->TotalAsistencias >= $asistenciasMin)){
+                    $mensaje = "<input type='checkbox' value='{$dato->id_asistente}' onClick = 'obtenerCertificados({$dato->id_asistente})'>";
                 }
                 
                 $data[]=array(
                     0=> $dato->nombre,
                     1=> $dato->correo,
                     2=> $mensaje,
-                    3=> "<input type='datetime-local' step='1' class='form-control' id='inputDateTime_{$dato->id_asistente}' onchange='toggleButton()'> <input type='button' id='btnAdd' value='Registrar' class='btn btn-primary' onClick = 'agregarAsistencia({$dato->id_asistente})' onchange='toggleButton()'>"
+                    3=> "<input type='datetime-local' step='1' class='form-control' id='inputDateTime_{$dato->id_asistente}'><button id='btnAdd' class='btn btn-primary' onClick='agregarAsistencia({$dato->id_asistente})'>Registrar</button>"
                 );
             }
 

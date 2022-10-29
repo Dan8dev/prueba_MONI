@@ -1627,60 +1627,6 @@ function verAsistencia(idEvento){
         ],
         });
 }
-function agregarAsistencia(idAsistente){
-    let idEvento = $("#idEventos").val();
-    let fechaTiempo = $(`#inputDateTime_${idAsistente}`).val();
-
-    //console.log(`Esta es la fecha y hora enviada: ${fechaTiempo}`);
-
-    if(fechaTiempo != ''){
-        $.ajax({
-            url: '../assets/data/Controller/adminwebex/adminwebexControl.php',
-            type: "POST",
-            data: {
-                action: 'agregarAsistencia', 
-                idAsistente: idAsistente, 
-                idEvento: idEvento,
-                fecha: fechaTiempo
-            },
-            success: function(data){
-                try{
-                    resp = JSON.parse(data);
-                    if(resp.estatus == 'ok'){
-                        swal({
-                            title: "La asistencia se ha registrado",
-                            icon: 'success',
-                            //showConfirmButton: false,
-                            timer: 2500
-                        }).then(result => {
-                            tAsistencias.ajax.reload(null, false);
-                        })
-                    }else{
-                        swal.fire({
-                            title: "Error",
-                            text:resp.info,
-                            type: "warning"
-                        })
-                    }
-                }catch(e){
-                    console.log(e);
-                    console.log(data);
-                }
-            }
-        });
-    }else{
-        swal({
-            title: "Error",
-            text:"Ingresa una fecha y hora válida",
-            icon: "error",
-            //showConfirmButton: false,
-            timer: 2500
-        }).then(result => {
-            tAsistencias.ajax.reload(null, false);
-        })
-
-    }
-}
 
 //Array para almacenar uno o varios id de alumnos
 var id_Certificados = [];
@@ -1690,12 +1636,12 @@ function obtenerCertificados(idAlumno){
 
     //Obtiene index del idAlumno existe en el array id_Certificados
     let Comprobacion = id_Certificados.indexOf(idAlumno);
-    console.log(Comprobacion);
+    //console.log(Comprobacion);
  
     //Si no existe en el array, se agrega al final del arreglo
     if(Comprobacion == -1){
         id_Certificados.push(idAlumno);
-        console.log(id_Certificados);
+        //console.log(id_Certificados);
     }else{
         //Si existe el idAlumno en el array, se elimina.
         id_Certificados.splice(Comprobacion, 1);
@@ -1709,7 +1655,7 @@ function obtenerCertificados(idAlumno){
         $("#BtnEnvioCertificados").prop('disabled', false);
     }
 
-    console.log(id_Certificados);
+    //console.log(id_Certificados);
 
 }
 
@@ -1735,7 +1681,7 @@ $("#BtnEnvioSeleccionarTodos").on("click",function(e){
         }            
     });
 
-   console.log(id_Certificados);
+   //console.log(id_Certificados);
 });
 
 $("#BtnEnvioCertificados").on("click",function(e){
@@ -1757,7 +1703,7 @@ $("#BtnEnvioCertificados").on("click",function(e){
                
                 swal({
                     title: 'Certificación generada correctamente',
-                    type: 'success',
+                    icon: 'success',
                     text: 'Espere un momento...',
                     timer: 2500,
                 }).then(result => {
@@ -1769,10 +1715,10 @@ $("#BtnEnvioCertificados").on("click",function(e){
 
             }else{
 
-                Swal.fire({
+                swal({
                     title: "Error",
                     text: "No se pudo generar la certficación",
-                    type: "warning",
+                    icon: "warning",
                     showCancelButton: false,
                     confirmButtonColor: "#ef5c6a",
                     confirmButtonText: "ok"
@@ -1782,3 +1728,68 @@ $("#BtnEnvioCertificados").on("click",function(e){
         },
     });
 });
+
+function obtenerValorFecha(value){
+    //console.log(`Esto es value: ${value}`);
+    $('#fechaA').val(value);
+}
+
+function agregarAsistencia(este, events){
+    // console.log(este);
+    events.preventDefault();
+    var idEvento = $("#idEventos").val();
+    var fechaA = $("#fechaA").val();
+
+    fData = new FormData($(este)[0]);
+    fData.append('action','agregarAsistencia');
+    fData.append('idEvento',idEvento);
+
+    if(fechaA != ''){
+        $.ajax({
+            url: '../assets/data/Controller/adminwebex/adminwebexControl.php',
+            type: "POST",
+            data: fData,
+            contentType: false,
+            processData: false,
+            success: function(data){
+                try{
+                    resp = JSON.parse(data);
+                    if(resp.estatus == 'ok'){
+                        swal({
+                            title: "La asistencia se ha registrado",
+                            icon: 'success',
+                            //showConfirmButton: false,
+                            timer: 2500
+                        }).then(result => {
+                            if(result){
+                                tAsistencias.ajax.reload(null, false);
+                            }
+                        })
+                    }else{
+                        swal({
+                            title: "Error",
+                            text:resp.info,
+                            icon: "warning"
+                        })
+                    }
+                }catch(e){
+                    console.log(e);
+                    console.log(data);
+                }
+            }
+        });
+    }else{
+        swal({
+            title: "Error",
+            text:"Ingresa una fecha y hora válida",
+            icon: "error",
+            //showConfirmButton: false,
+            timer: 2500
+        }).then(result => {
+            if(result){
+                tAsistencias.ajax.reload(null, false);
+            }
+        })
+
+    }
+}

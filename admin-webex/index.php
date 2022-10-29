@@ -515,11 +515,11 @@ if(!isset($_SESSION["usuario"]) || !in_array($_SESSION["usuario"]['idTipo_Person
                     <div class="table-reponsive">
                       <table id = "TablaAsistenciaEventos" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; width: 100%;">
                         <thead>
-                          <tr>
+                          <tr style="display:none">
                             <th>Alumno</th>
                             <th>Correo</th>
                             <th>Acciones</th>
-                            <th>Registrar asistencia</th>
+                            <th>Agregar asistencia</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -532,21 +532,49 @@ if(!isset($_SESSION["usuario"]) || !in_array($_SESSION["usuario"]['idTipo_Person
             </div>
             <div class="modal-footer">
               <div class="row">
-                <div class="col-md-6">
-                  <button type="button" id ="BtnEnvioSeleccionarTodos" class="btn btn-primary">Seleccionar Todos</button>
+                <div clas="btn group">
+                      <button type="button" id ="BtnEnvioSeleccionarTodos" class="btn btn-primary">Seleccionar Todos</button>
+                      <button type="button" id ="BtnEnvioCertificados" class="btn btn-primary">Enviar Certificado</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal" ><i class="fas fa-times"></i></button>
+                   
                 </div>
-
-                <div class="col-md-6">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <button type="button" id ="BtnEnvioCertificados" class="btn btn-primary">Guardar</button>
-                </div>
-              </div>
+              </div><!-- end row --->
               
             </div>
           </div>
         </div>
       </div>
       
+      <!-- Modal agregar asistencias -->
+      <!-- Button trigger modal -->
+      <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+        Launch demo modal
+      </button> -->
+
+      <!-- Modal -->
+      <!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Registrar Asistencia</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Aquí debe mostrarse el input date
+              <input class ="d-none" type="text" id = "idEventos">
+              <form onsubmit = 'agregarAsistencia()'>
+                <input type='text' class='d-none' name = 'idAsistente' value = '$dato->id_asistente' >
+                <input type='date' class='form-control' name = 'fecha' id='inputDateTime' >
+                <button type = 'submit' class='btn btn-primary' id='buttonDateTime'>Registrar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+
       <div class="modal fade modal-right" id="modalModificarDatosDirectorio">
 					<div class="modal-dialog modal-lg">
 							<div class="modal-content">

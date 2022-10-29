@@ -40,7 +40,7 @@ date_default_timezone_set("America/Mexico_City");
 			$statement->bindParam(":idEvento", $idEvento);
 			$statement->execute();
 			
-			return $statement->fetchAll(PDO::FETCH_ASSOC);
+			return $statement->fetch(PDO::FETCH_ASSOC);
 		}
 
 		public function agregarAsistencia($data){

@@ -14,6 +14,7 @@ if (isset($_POST["action"])) {
             $cantidadAsis = $adminwebex->asistenciasMinimas($_POST['Evento']);
             
             //var_dump($duracion[0]['duracion'], $duracion[0]['tipoDuracion']);
+            $asistenciasMin = $cantidadAsis['cantidad_asis_min'];
 
             $data = Array();
             while($dato=$ceventos->fetchObject()){
@@ -24,7 +25,6 @@ if (isset($_POST["action"])) {
 
                 //$tipoDuracion = $duracion[0]['tipoDuracion'];
                 //$cantidadDuracion = $duracion[0]['duracion'];
-                $asistenciasMin = $cantidadAsis[0]['cantidad_asis_min'];
 
                 // switch($tipoDuracion) {
 
@@ -54,18 +54,35 @@ if (isset($_POST["action"])) {
                 // }
 
                 if(intval($dato->TotalAsistencias < $asistenciasMin)){
-                    $mensaje = "<b>Sin asistencias necesarias</b>";
+                    $mensaje = "<b>Sin asistencias suficientes</b>";
+                    $formMsj = "<form onsubmit = 'agregarAsistencia(this,event)'>
+                                    <input type='text' class='d-none' name='idAsistente' value='$dato->id_asistente'>
+                                    <input type='text' class='d-none' name='fecha' id='fechaA'>
+                                    <input type='date' class='form-control' name='fecha' id='inputDateTime_{$dato->id_asistente}' onchange='obtenerValorFecha(value)'>
+                                    <h5></h5><button type='submit' class='btn btn-primary' id='buttonDateTime_{$dato->id_asistente}'>Registrar</button>
+                                </form>";
                 }else if(intval($dato->TotalAsistencias >= $asistenciasMin)){
                     $mensaje = "<input type='checkbox' value='{$dato->id_asistente}' onClick = 'obtenerCertificados({$dato->id_asistente})'>";
+                    $formMsj = "<b>Se han cubierto las asistencias mínimas</b>";
                 }
                 
                 $data[]=array(
                     0=> $dato->nombre,
                     1=> $dato->correo,
                     2=> $mensaje,
-                    3=> "<input type='datetime-local' step='1' class='form-control' id='inputDateTime_{$dato->id_asistente}'><button id='btnAdd' class='btn btn-primary' onClick='agregarAsistencia({$dato->id_asistente})'>Registrar</button>"
+                    3=> $formMsj
                 );
             }
+
+            /*
+            
+                "<form onsubmit = 'agregarAsistencia(this,event,{$dato->id_asistente})'>
+                                    <input type='text' class='d-none' name = 'idAsistente' value = '$dato->id_asistente' >
+                                    <input type='date' class='form-control' name = 'fecha' id='inputDateTime_{$dato->id_asistente}' oninput = 'val(this,value,$dato->id_asistente)'>
+                                    <button type = 'submit' class='btn btn-primary' id='buttonDateTime_{$dato->id_asistente}'>Registrar</button>
+                                </form>";
+
+            */
 
             $result = array(
                 'sEcho'=>1,

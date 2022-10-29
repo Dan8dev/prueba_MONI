@@ -408,7 +408,7 @@ if(!isset($_SESSION["usuario"]) || $_SESSION["usuario"]['idTipo_Persona'] != 3){
 									</div>	
 								</div>
 
-								<!-- Tabla asistencias eventos -->
+								<!-- Tabla Asistencias eventos -->
 
 								<div class="tab-pane fade" id="asistencias" role="tabpanel" aria-labelledby="asistencias-tab">
                   					<div class="container-liquid">
@@ -434,7 +434,7 @@ if(!isset($_SESSION["usuario"]) || $_SESSION["usuario"]['idTipo_Persona'] != 3){
                   					</div>
                 				</div>
 
-								<!-- Fin tabla asistencias eventos -->
+								<!-- Fin tabla Asistencias eventos -->
 
 								<div class="row tab-pane fade" id="talleres" role="tabpanel" aria-labelledby="talleres-tab">
 									<!--col-lg-12-->
@@ -514,7 +514,8 @@ if(!isset($_SESSION["usuario"]) || $_SESSION["usuario"]['idTipo_Persona'] != 3){
 										</div>
 									</div>	
 								</div>
-								<!-- Modal  Asistencias -->
+
+								<!-- Modal  Asistencias eventos -->
 								<div class="modal fade" id="modalAsistenciasEventos" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
 									<input class ="d-none" type="text" id = "idEventos">
 									<div class="modal-dialog modal-xl" role="document">
@@ -562,7 +563,7 @@ if(!isset($_SESSION["usuario"]) || $_SESSION["usuario"]['idTipo_Persona'] != 3){
 									</div>
 									</div>
 								</div>
-								<!--///////////////////////////////////////--->
+								<!-- Fin modal Asistencias eventos --->
 
 							<div class="modal fade bs-example-modal-lg" id="modalModify" tabindex="-1" role="dialog" aria-labelledy="myLargeModalLabel" aria-hidden="true">
 								<div class="modal-dialog modal-lg">

@@ -5,53 +5,33 @@ $(document).ready(function () {
     init();
 });
 
-//Array para almacenar uno o varios id de alumnos
 var id_Certificados = [];
-
-//Agrega idAlumno al arreglo
 function obtenerCertificados(idAlumno){
-
-    //Obtiene index del idAlumno en el array id_Certificados
     var Comprobacion = id_Certificados.indexOf(idAlumno);
-    console.log(Comprobacion);
 
-    //Si no existe en el array, se agrega al final del arreglo
     if(Comprobacion == -1){
         id_Certificados.push(idAlumno);
-        console.log(id_Certificados);
     }else{
-        //Si existe el idAlumno en el array, se elimina
         id_Certificados.splice(id_Certificados.indexOf(idAlumno), 1);
-        console.log(id_Certificados);
     }
 
-    //Si el array no tiene elementos, se desactiva el botón para enviar certificados
     if(id_Certificados.length<1){
         $("#BtnEnvioCertificados").prop('disabled',true);
     }else{
-        //Sino, se activa
         $("#BtnEnvioCertificados").prop('disabled',false);
     }
-    
-    //console.log(id_Certificados);
 }
 
-//Agrega todos los idAlumno al array
 $("#BtnEnvioSeleccionarTodos").on("click",function(e){
-
-    //Se reasigna el array como vacío
     id_Certificados = [];
 
     tAsistencias.cells().every((ix, g)=>{
         if(g == 2 && id_Certificados.length < 50){
             nodelm = tAsistencias.cell({row:ix, column:g}).node();
-            //console.log(nodelm);
             
             CalNueva = $(nodelm).find('input').val();
-            //console.log(CalNueva);
             
             idCompuesto = $(nodelm).find('input').prop("checked", true);
-            //console.log(idCompuesto.is(':checked'));
 
             if(idCompuesto.is(':checked') == true){
                 id_Certificados.push(parseInt(CalNueva));
@@ -59,13 +39,10 @@ $("#BtnEnvioSeleccionarTodos").on("click",function(e){
            
         }            
     });
-   
-    console.log(id_Certificados);
 });
 
 $("#BtnEnvioCertificados").on("click",function(e){
     var idEvent = $("#idEventos").val();
-
 
     $.ajax({
         type: 'POST',
@@ -426,7 +403,7 @@ function tablaAsistenciaEventos(){
         [0,'asc']
     ],
     });
-}//FIN tablaAsistenciaEventos
+}
 
 function tablaAsistenciaTalleres(){
     tAlumnos = $("#datatable-tablaAsisteciasTalleres").DataTable({
@@ -878,33 +855,39 @@ $("#sesion_type").on('change', function(){
     }
 });
 
-function agregarAsistencia(idAsistente){
-    let idEvento = $("#idEventos").val();
-    let fechaTiempo = $(`#inputDateTime_${idAsistente}`).val();
+function obtenerValorFecha(value){
+    $('#fechaA').val(value);
+}
 
-    //console.log(`Esta es la fecha y hora enviada: ${fechaTiempo}`);
+function agregarAsistencia(este, events){
+    events.preventDefault();
+    var idEvento = $("#idEventos").val();
+    var fechaA = $("#fechaA").val();
 
-    if(fechaTiempo != ''){
+    fData = new FormData($(este)[0]);
+    fData.append('action','agregarAsistencia');
+    fData.append('idEvento',idEvento);
+
+    if(fechaA != ''){
         $.ajax({
             url: '../assets/data/Controller/adminwebex/adminwebexControl.php',
             type: "POST",
-            data: {
-                action: 'agregarAsistencia', 
-                idAsistente: idAsistente, 
-                idEvento: idEvento,
-                fecha: fechaTiempo
-            },
+            data: fData,
+            contentType: false,
+            processData: false,
             success: function(data){
                 try{
                     resp = JSON.parse(data);
                     if(resp.estatus == 'ok'){
                         swal.fire({
                             title: "La asistencia se ha registrado",
+                            text: 'espere un momento...',
                             type: 'success',
-                            //showConfirmButton: false,
                             timer: 2500
                         }).then(result => {
-                            tAsistencias.ajax.reload(null, false);
+                            if(result){
+                                tAsistencias.ajax.reload(null, false);
+                            }
                         })
                     }else{
                         swal.fire({
@@ -924,10 +907,11 @@ function agregarAsistencia(idAsistente){
             title: "Error",
             text:"Ingresa una fecha y hora válida",
             type: "error",
-            //showConfirmButton: false,
-            timer: 2000
+            timer: 2500
         }).then(result => {
-            tAsistencias.ajax.reload(null, false);
+            if(result){
+                tAsistencias.ajax.reload(null, false);
+            }
         })
 
     }
